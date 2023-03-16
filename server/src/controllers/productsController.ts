@@ -3,7 +3,7 @@ import {db} from "../app.js";
 import {Users} from "../models/users";
 import {QueryError, ResultSetHeader} from "mysql2";
 
-export class UserController {
+export class UsersController {
     public static async getAllUsers(req: Request, res: Response): Promise<void> {
         try {
             db.query(
@@ -87,34 +87,60 @@ export class UserController {
     }
 
 
-    // public static async updateUser(req: Request, res: Response): Promise<void> {
-    //     const body = req.body;
-    //     const requestId = parseInt(req.params.id);
-    //     const updateUser: Users = {
-    //         userId: requestId,
-    //         firstName: body.first_name,
-    //         lastName: body.last_name,
-    //         email: body.email,
-    //         phone: body.phone,
-    //         password: body.password,
-    //         role: body.role
-    //     };
-    //     try {
-    //         db.execute(
-    //             `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE user_id = ${requestId}`,
-    //             [updateUser.firstName, updateUser.lastName, updateUser.email, updateUser.phone, updateUser.password], (error: any, results: any) => {
-    //                 if (error) throw error;
-    //                 else if (results.affectedRows === 0) {
-    //                     res.status(404).send("Id doesn't exist or doesn't have the right format");
-    //                 } else {
-    //                     res.status(204).send('User updated!');
-    //                 }
-    //             })
-    //     } catch (error) {
-    //         console.log(error);
-    //         res.status(500).json({message: "Internal server error"});
-    //     }
-    // }
+    public static async updateUser(req: Request, res: Response): Promise<void> {
+        const body = req.body;
+        const requestId = parseInt(req.params.id);
+        const user: Users = {
+            userId: requestId,
+            firstName: body.first_name,
+            lastName: body.last_name,
+            email: body.email,
+            phone: body.phone,
+            password: body.password,
+            role: body.role
+        };
+        try {
+            if (user.role === 'customer') {
+                if (user.firstName !== '' && user.lastName !== '' && user.email !== '' && user.phone !== '' && user.password !== '' && user.address !== '' && user.postCode !== '' && user.city !== '' && Object.keys(body).length === 9) {
+                    const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, address = ?, postCode = ?, city = ? WHERE user_id = ${requestId}`;
+                    const params = [user.firstName, user.lastName, user.email, user.phone, user.password, user.address, user.postCode, user.city];
+                    db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                        if (error) throw error;
+                        else if (results.affectedRows === 0) {
+                            res.status(404).send("Id doesn't exist or doesn't have the right format");
+                        }
+                        else {
+                            res.status(201).send(`User with role ${user.role} updated!`);
+                        }
+                    })
+                } else {
+                    res.status(400).json({error: 'Missing or incorrect values'});
+                }
+            }else if (user.role === 'restaurant owner' || user.role === 'admin') {
+                if (user.firstName !== '' && user.lastName !== '' && user.email !== '' && user.phone !== '' && user.password !== '' && Object.keys(body).length === 6) {
+                    const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE user_id = ${requestId}`;
+                    const params = [user.firstName, user.lastName, user.email, user.phone, user.password];
+                    db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                        if (error) throw error;
+                        else if (results.affectedRows === 0) {
+                            res.status(404).send("Id doesn't exist or doesn't have the right format");
+                        }
+                        else {
+                            res.status(201).send(`User with role ${user.role} updated!`);
+                        }
+                    })
+                }else {
+                    res.status(400).json({error: 'Missing or incorrect values'});
+                }
+            }else {
+                res.status(400).json({error: 'Incorrect values'});
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({error: 'Missing values'});
+        }
+    }
+
 
     public static async deleteUser(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
