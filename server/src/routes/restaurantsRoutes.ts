@@ -4,11 +4,11 @@ import {RestaurantsController} from "../controllers/restaurantsController";
 const router = express.Router();
 
 export const restaurantsRoutes = () => {
-    router.get('/get-users', RestaurantsController.getAllRestaurants);
-    router.get('/get-user/:id', RestaurantsController.getRestaurantById);
-    router.post('/create-user', RestaurantsController.createRestaurant);
-    router.put('/user/:id', RestaurantsController.updateRestaurant);
-    router.delete('/user/:id', RestaurantsController.deleteRestaurant);
+    router.get('/get-restaurants', RestaurantsController.getAllRestaurants);
+    router.get('/get-restaurant/:id', RestaurantsController.getRestaurantById);
+    router.post('/create-restaurant', RestaurantsController.createRestaurant);
+    router.put('/restaurant/:id', RestaurantsController.updateRestaurant);
+    router.delete('/restaurant/:id', RestaurantsController.deleteRestaurant);
 
     return router;
 }
