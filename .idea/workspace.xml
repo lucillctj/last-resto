@@ -7,6 +7,12 @@
     <list default="true" id="2ebcf970-d89e-41a0-8579-106d087a8492" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/customerController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/productsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/productsController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/restaurantsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/restaurantsController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/models/products.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/products.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/models/restaurants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/restaurants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/restaurantsRoutes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/restaurantsRoutes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
