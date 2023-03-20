@@ -1,9 +1,9 @@
 export class Products {
-    productId: number;
+    productId?: number;
     name: string;
     description: string;
     price: number;
-    userId: number;
+    userId?: number;
     restaurantId: number;
 
     constructor(productId: number, name: string, description: string, price: number, userId: number, restaurantId: number) {

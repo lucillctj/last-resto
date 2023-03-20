@@ -22,7 +22,6 @@ export class RestaurantsController {
             db.query(
                 `SELECT * FROM restaurants WHERE restaurant_id = ${requestId}`,
                 (error: Error | null, results: any) => {
-
                     if (error) throw error;
                     else if (results.length === 0) {
                         res.status(404).send("Id doesn't exist or doesn't have the right format");

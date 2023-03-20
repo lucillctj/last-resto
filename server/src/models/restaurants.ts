@@ -1,8 +1,8 @@
 export class Restaurants {
-    restaurantId: number;
+    restaurantId?: number;
     name: string;
     description: string;
-    adress: string;
+    address: string;
     postCode: string;
     city: string;
     phone: string;
@@ -10,11 +10,11 @@ export class Restaurants {
     isReserved: boolean;
     userId: number;
 
-    constructor(restaurantId: number, name: string, description: string, adress: string, postCode: string, city: string, phone: string, website: string, isReserved: boolean, userId: number) {
+    constructor(restaurantId: number, name: string, description: string, address: string, postCode: string, city: string, phone: string, website: string, isReserved: boolean, userId: number) {
         this.restaurantId = restaurantId;
         this.name = name;
         this.description = description;
-        this.adress = adress;
+        this.address = address;
         this.postCode = postCode;
         this.city = city;
         this.phone = phone;
