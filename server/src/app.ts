@@ -1,13 +1,13 @@
 import express, { Express } from 'express';
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
-import {userRoutes} from "./routes/userRoutes.js";
+import {usersRoutes} from "./routes/usersRoutes.js";
 
 dotenv.config();
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', userRoutes());
+app.use('/api/v1', usersRoutes());
 // app.use(cors());
 
 

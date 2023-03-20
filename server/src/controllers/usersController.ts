@@ -3,6 +3,7 @@ import {db} from "../app.js";
 import {Users} from "../models/users";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
+import { generateAccessToken, generateRefreshToken } from "../middleware/auth"
 
 export class UsersController {
     public static async createUserAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -25,11 +26,15 @@ export class UsersController {
                 if (bodyUser.firstName !== '' && bodyUser.lastName !== '' && bodyUser.email !== '' && bodyUser.phone !== '' && bodyUser.password !== '' && bodyUser.role && bodyUser.address !== '' && bodyUser.postCode !== '' && bodyUser.city !== '' && Object.keys(body).length === 9) {
                     const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role, address, post_code, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
                     const params = [bodyUser.firstName, bodyUser.lastName, bodyUser.email, bodyUser.phone, hashPassword, 'customer', bodyUser.address, bodyUser.postCode, bodyUser.city];
-                    db.execute(sql, params, async (error: QueryError | null) => {
+                    db.execute(sql, params, async (error: QueryError | null, results: any) => {
                         if (error) {
                             await errorValues(req, res, error, bodyUser);
                         } else {
-                            res.status(201).send(`Utilisateur avec le rôle ${bodyUser.role} a été créé !`);
+                            const accessToken = generateAccessToken(results[0].user_id);
+                            res.status(201).send({
+                                message: `Utilisateur avec le rôle ${bodyUser.role} a été créé !`,
+                                accessToken
+                            });
                         }
                     })
                 } else {
@@ -39,11 +44,15 @@ export class UsersController {
                 if (bodyUser.firstName !== '' && bodyUser.lastName !== '' && bodyUser.email !== '' && bodyUser.phone !== '' && bodyUser.password !== '' && bodyUser.role && Object.keys(body).length === 6) {
                     const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, ?)`;
                     const params = [bodyUser.firstName, bodyUser.lastName, bodyUser.email, bodyUser.phone, hashPassword, bodyUser.role];
-                    db.execute(sql, params, async (error: QueryError | null) => {
+                    db.execute(sql, params, async (error: QueryError | null, results: any) => {
                         if (error) {
                             await errorValues(req, res, error, bodyUser);
                         } else {
-                            res.status(201).send(`Utilisateur avec le rôle ${bodyUser.role} a été créé !`);
+                            const accessToken = generateAccessToken(results[0].user_id);
+                            res.status(201).send({
+                                message: `Utilisateur avec le rôle ${bodyUser.role} a été créé !`,
+                                accessToken
+                            });
                         }
                     })
                 }else {
@@ -75,14 +84,20 @@ export class UsersController {
             db.query('SELECT * FROM users WHERE email = ?', [bodyUser.email], async (error: QueryError | null, results: any) => {
                 if (error) throw error;
                 else if (results.length === 0) {
-                    return res.status(401).json({message: 'Aucun utilisateur n\'a été trouvé avec cet email !'});
+                    return res.status(401).send({message: 'Aucun utilisateur trouvé !', accessToken: null});
                 } else {
                     const compareHashPassword = await bcrypt.compare(bodyUser.password, results[0].password);
                     if (!compareHashPassword) {
                         return res.status(401).json({message: "Mot de passe invalide"});
                     }
-                    return res.status(200).json({
-                        message: "Authentification réussie"});
+                    const accessToken = generateAccessToken(results[0].user_id);
+                    const refreshToken = generateRefreshToken(results[0].user_id);
+
+                    return res.status(200).send({
+                        message: "Authentification réussie",
+                        accessToken,
+                        refreshToken
+                    });
                 }
             });
         }
@@ -122,56 +137,56 @@ export class UsersController {
         }
     }
 
-    public static async createUser(req: Request, res: Response): Promise<void> {
-        const body = req.body;
-        const bodyUser: Users = {
-            firstName: body.first_name,
-            lastName: body.last_name,
-            email: body.email,
-            phone: body.phone,
-            password: body.password,
-            role: body.role,
-            address: body.address,
-            postCode: body.post_code,
-            city: body.city
-        };
-        try{
-            if (bodyUser.role === 'customer') {
-                if (bodyUser.firstName !== '' && bodyUser.lastName !== '' && bodyUser.email !== '' && bodyUser.phone !== '' && bodyUser.password !== '' && bodyUser.role && bodyUser.address !== '' && bodyUser.postCode !== '' && bodyUser.city !== '' && Object.keys(body).length === 9) {
-                    const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role, address, post_code, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-                    const params = [bodyUser.firstName, bodyUser.lastName, bodyUser.email, bodyUser.phone, bodyUser.password, 'customer', bodyUser.address, bodyUser.postCode, bodyUser.city];
-                    db.execute(sql, params, async (error: QueryError | null) => {
-                        if (error) {
-                            await errorValues(req, res, error, bodyUser);
-                        } else {
-                            res.status(201).send(`Utilisateur avec le rôle ${bodyUser.role} a été créé !`);
-                        }
-                    })
-                } else {
-                    res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
-                }
-            }else if (bodyUser.role === 'restaurant owner' || bodyUser.role === 'admin') {
-                if (bodyUser.firstName !== '' && bodyUser.lastName !== '' && bodyUser.email !== '' && bodyUser.phone !== '' && bodyUser.password !== '' && bodyUser.role && Object.keys(body).length === 6) {
-                    const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, ?)`;
-                    const params = [bodyUser.firstName, bodyUser.lastName, bodyUser.email, bodyUser.phone, bodyUser.password, bodyUser.role];
-                    db.execute(sql, params, async (error: QueryError | null) => {
-                        if (error) {
-                            await errorValues(req, res, error, bodyUser);
-                        } else {
-                            res.status(201).send(`Utilisateur avec le rôle ${bodyUser.role} a été créé !`);
-                        }
-                    })
-                }else {
-                    res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
-                }
-            }else {
-                res.status(400).json({error: 'Erreur !'});
-            }
-        } catch (error) {
-            console.log(error);
-            res.status(400).json({error: 'Erreur !'});
-        }
-    }
+    // public static async createUser(req: Request, res: Response): Promise<void> {
+    //     const body = req.body;
+    //     const bodyUser: Users = {
+    //         firstName: body.first_name,
+    //         lastName: body.last_name,
+    //         email: body.email,
+    //         phone: body.phone,
+    //         password: body.password,
+    //         role: body.role,
+    //         address: body.address,
+    //         postCode: body.post_code,
+    //         city: body.city
+    //     };
+    //     try{
+    //         if (bodyUser.role === 'customer') {
+    //             if (bodyUser.firstName !== '' && bodyUser.lastName !== '' && bodyUser.email !== '' && bodyUser.phone !== '' && bodyUser.password !== '' && bodyUser.role && bodyUser.address !== '' && bodyUser.postCode !== '' && bodyUser.city !== '' && Object.keys(body).length === 9) {
+    //                 const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role, address, post_code, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    //                 const params = [bodyUser.firstName, bodyUser.lastName, bodyUser.email, bodyUser.phone, bodyUser.password, 'customer', bodyUser.address, bodyUser.postCode, bodyUser.city];
+    //                 db.execute(sql, params, async (error: QueryError | null) => {
+    //                     if (error) {
+    //                         await errorValues(req, res, error, bodyUser);
+    //                     } else {
+    //                         res.status(201).send(`Utilisateur avec le rôle ${bodyUser.role} a été créé !`);
+    //                     }
+    //                 })
+    //             } else {
+    //                 res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
+    //             }
+    //         }else if (bodyUser.role === 'restaurant owner' || bodyUser.role === 'admin') {
+    //             if (bodyUser.firstName !== '' && bodyUser.lastName !== '' && bodyUser.email !== '' && bodyUser.phone !== '' && bodyUser.password !== '' && bodyUser.role && Object.keys(body).length === 6) {
+    //                 const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, ?)`;
+    //                 const params = [bodyUser.firstName, bodyUser.lastName, bodyUser.email, bodyUser.phone, bodyUser.password, bodyUser.role];
+    //                 db.execute(sql, params, async (error: QueryError | null) => {
+    //                     if (error) {
+    //                         await errorValues(req, res, error, bodyUser);
+    //                     } else {
+    //                         res.status(201).send(`Utilisateur avec le rôle ${bodyUser.role} a été créé !`);
+    //                     }
+    //                 })
+    //             }else {
+    //                 res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
+    //             }
+    //         }else {
+    //             res.status(400).json({error: 'Erreur !'});
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         res.status(400).json({error: 'Erreur !'});
+    //     }
+    // }
 
 
     public static async updateUser(req: Request, res: Response): Promise<void> {
