@@ -1,4 +1,8 @@
-<html><body>
+<html>
+<head>
+  <link rel="stylesheet" href="../../../styles.css">
+</head>
+<body>
 <div class="container mt-auto">
   <div class="row">
     <div class="col-md-6 col-sm-12 text-center">
@@ -7,8 +11,8 @@
       <p class="sub-title">& réserve tes tables à la dernière minute</p>
     </div>
     <div class="col-md-6 col-sm-12 text-center">
-      <button class="btn-orange mb-4" type="button">Je suis un client</button>
-      <button class="btn-green" type="button">Je suis un restaurateur</button>
+      <button class="btn-orange mb-4" type="button" (click)="showFormToCreateAccountCustomer()">Je suis un client</button>
+      <button class="btn-green" type="button" (click)="showFormToCreateAccountRestaurant()">Je suis un restaurateur</button>
     </div>
   </div>
   <section class="images">
@@ -38,7 +42,8 @@
   </div>
   </section>
 </div>
-</body></html>
+</body>
+</html>
 
 
 

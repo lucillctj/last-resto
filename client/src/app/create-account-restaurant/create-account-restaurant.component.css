@@ -46,21 +46,10 @@ form{
   color: white;
 }
 
-button {
-  margin-top: 1em;
-  width: 80%;
-  height: 2.2em;
-  border-radius: 4em;
-  border: 0;
+.btn-primary {
   background: #317765;
-  font-family: Helvetica, sans-serif;
-  color: #FFFFFF;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.3em;
-  text-align: center;
 }
 
-button:hover {
+.btn-primary:hover {
   background: #BF5D44;
 }
