@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
-import {SignUpComponent} from "./pages/sign-up/sign-up.component";
+import {SignUpCustomerComponent} from "./pages/sign-up-customer/sign-up-customer.component";
+import {SignUpRestaurantComponent} from "./pages/sign-up-restaurant/sign-up-restaurant.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'sign-up', component: SignUpComponent },
+  { path: 'sign-up-customer', component: SignUpCustomerComponent },
+  { path: 'sign-up-restaurant', component: SignUpRestaurantComponent }
 
 ];
 
