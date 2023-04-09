@@ -7,8 +7,6 @@
 .title {
   position: relative;
   margin-bottom: 0.5em;
-  /*top: 33%;*/
-  /*left: 15%;*/
   font-family: Helvetica, sans-serif;
   color: #F1A549;
   font-style: normal;
@@ -70,9 +68,8 @@
 }
 
 .images{
-  margin-top: 35%;
+  margin-top: 25vh;
   margin-bottom: 0;
-
 }
 .img{
   border-top-left-radius: 1.6em;
