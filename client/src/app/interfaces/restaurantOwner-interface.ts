@@ -1,4 +1,4 @@
-export interface RestaurantOwner {
+export interface Admin {
   userId?: number;
   firstName: string;
   lastName: string;
