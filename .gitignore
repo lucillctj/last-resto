@@ -3,3 +3,4 @@ server/.env
 .idea/
 workspace.xml
 server/dist/
+.DS_Store
