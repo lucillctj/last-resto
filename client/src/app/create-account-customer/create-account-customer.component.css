@@ -1,0 +1,47 @@
+body{
+  background-color: white;
+  border-radius: 2em;
+}
+.title{
+  padding-top: 1em;
+  font-family: Helvetica, sans-serif;
+  color: #E3785C;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2em;
+}
+
+form{
+  padding: 0.5em 2em 2em;
+}
+.form-group{
+  margin-top: 0.6em;
+}
+
+.form-control{
+  border-radius: 5em;
+  border: 0;
+  background-color: rgba(227, 120, 92, 0.4);
+}
+
+.form-control::placeholder{
+  padding-left: 0.6em;
+  color: white;
+}
+
+.form-check{
+  padding-top: 1em;
+  text-align: left;
+}
+
+.placeholder{
+  color: white;
+}
+
+.btn-primary {
+  background: #E3785C;
+}
+
+.btn-primary:hover {
+  background: #BF5D44;
+}
