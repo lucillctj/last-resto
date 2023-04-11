@@ -1,17 +1,21 @@
 import express, { Express } from 'express';
 import mysql, {QueryError} from 'mysql2';
 import dotenv from 'dotenv';
-import {usersRoutes} from "./routes/usersRoutes.js";
-import {restaurantsRoutes} from "./routes/restaurantsRoutes";
-import {productsRoutes} from "./routes/productsRoutes";
+import {customerRoutes} from "./routes/customerRoutes.js";
+import {restaurantOwnerRoutes} from "./routes/restaurantOwnerRoutes.js";
+import {restaurantRoutes} from "./routes/restaurantRoutes.js";
+import {productRoutes} from "./routes/productRoutes.js";
+import {adminRoutes} from "./routes/adminRoutes.js";
 
 dotenv.config();
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', usersRoutes());
-app.use('/api/v1', restaurantsRoutes());
-app.use('/api/v1', productsRoutes());
+app.use('/api/v1', customerRoutes());
+app.use('/api/v1', restaurantOwnerRoutes());
+app.use('/api/v1', adminRoutes());
+app.use('/api/v1', restaurantRoutes());
+app.use('/api/v1', productRoutes());
 
 // app.use(cors());
 
