@@ -5,12 +5,12 @@ import {verifyAuthToken} from "../middleware/auth.js";
 const router = express.Router();
 
 export const customerRoutes = () => {
-    router.post('/signup-customer', CustomerController.createCustomerAccount);
-    router.post('/login-customer', verifyAuthToken, CustomerController.loginToCustomerAccount);
-    router.get('/customers', CustomerController.getAllCustomers);
-    router.get('/customer/:id', CustomerController.getCustomerById);
-    router.put('/customer/:id', CustomerController.updateCustomer);
-    router.delete('/customer/:id', CustomerController.deleteCustomer);
+    router.post('/', CustomerController.createCustomerAccount);
+    router.post('/login', verifyAuthToken, CustomerController.loginToCustomerAccount);
+    router.get('/', CustomerController.getAllCustomers);
+    router.get('/:id', CustomerController.getCustomerById);
+    router.put('/:id', CustomerController.updateCustomer);
+    router.delete('/:id', CustomerController.deleteCustomer);
 
     return router;
 }

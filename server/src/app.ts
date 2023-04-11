@@ -11,11 +11,11 @@ dotenv.config();
 
 const app: Express = express();
 app.use(express.json());
-app.use('/api/v1', customerRoutes());
-app.use('/api/v1', restaurantOwnerRoutes());
-app.use('/api/v1', adminRoutes());
-app.use('/api/v1', restaurantRoutes());
-app.use('/api/v1', productRoutes());
+app.use('/api/v1/customer', customerRoutes());
+app.use('/api/v1/restaurant-owner', restaurantOwnerRoutes());
+app.use('/api/v1/admin', adminRoutes());
+app.use('/api/v1/restaurant', restaurantRoutes());
+app.use('/api/v1/product', productRoutes());
 
 // app.use(cors());
 

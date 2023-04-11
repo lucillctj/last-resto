@@ -4,11 +4,11 @@ import { ProductController } from "../controllers/productController.js";
 const router = express.Router();
 
 export const productRoutes = () => {
-    router.get('/get-products', ProductController.getAllProducts);
-    router.get('/get-product/:id', ProductController.getProductById);
-    router.post('/create-product', ProductController.createProduct);
-    router.put('/product/:id', ProductController.updateProduct);
-    router.delete('/product/:id', ProductController.deleteProduct);
+    router.get('/', ProductController.getAllProducts);
+    router.get('/:id', ProductController.getProductById);
+    router.post('/', ProductController.createProduct);
+    router.put('/:id', ProductController.updateProduct);
+    router.delete('/:id', ProductController.deleteProduct);
 
     return router;
 }
