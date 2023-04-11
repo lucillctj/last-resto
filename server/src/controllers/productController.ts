@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
 import {db} from "../app.js";
 import {QueryError, ResultSetHeader} from "mysql2";
-import {Products} from "../models/products";
+import {Product} from "../models/product.js";
 
-export class ProductsController {
+export class ProductController {
     public static async getAllProducts(req: Request, res: Response): Promise<void> {
         try {
             db.query(
@@ -36,7 +36,7 @@ export class ProductsController {
 
     public static async createProduct(req: Request, res: Response): Promise<void> {
         const body = req.body;
-        const product: Products = {
+        const product: Product = {
             productId: body.product_id,
             name: body.name,
             description: body.description,
@@ -66,7 +66,7 @@ export class ProductsController {
     public static async updateProduct(req: Request, res: Response): Promise<void> {
         const body = req.body;
         const requestId = parseInt(req.params.id);
-        const product: Products = {
+        const product: Product = {
             productId: body.product_id,
             name: body.name,
             description: body.description,

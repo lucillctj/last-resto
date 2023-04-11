@@ -3,12 +3,13 @@
     "compilerOptions": {
         "target": "ES2022",
         "module": "es2022",
+        "moduleResolution": "node",
         "outDir": "dist",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
     },
-    "include": ["src", "src/models"],
+    "include": ["src"],
     "exclude": ["node_modules"]
   }
