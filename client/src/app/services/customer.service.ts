@@ -7,7 +7,7 @@ import {Customer} from "../interfaces/customer-interface";
   // {providedIn: 'root'}
 )
 export class CustomerService {
-  private apiUrl = 'http://localhost:3000/api/v1/customer'; // Remplacez par votre URL d'API
+  private apiUrl = 'http://localhost:3000/api/v1/customer';
 
   constructor(private http: HttpClient) { }
 

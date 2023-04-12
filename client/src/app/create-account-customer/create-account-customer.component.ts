@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CustomerService} from "../service/customer-service";
+import {CustomerService} from "../services/customer.service";
 import {Customer} from "../interfaces/customer-interface";
 
 @Component({
@@ -17,24 +17,21 @@ export class CreateAccountCustomerComponent {
     this.errorMessage = null;
   }
 
-  createAccountCustomer(user: Customer){
-    this.customerService.createCustomer(user)
-      .subscribe(() => {
+  createAccountCustomer(newUser: Customer){
+    this.customerService.createCustomer(newUser)
+      .subscribe((response) => {
           this.successMessage = 'Votre compte a bien été créé !';
-          console.log('Utilisateur créé avec succès :', user);
           // envoyer sur la page du profil
         },
         error => {
-          console.error('Erreur lors de la création du client :', error);
-          console.log(`------> SQL message :`, error.sqlMessage)
-          if (error.status === 400){
-            this.errorMessage = 'Certains champs sont manquants ou incorrects !';
-          }
-          else if (error.sqlMessage === `Duplicate entry '${user.email}' for key 'users.email'`) {
+          if (error.status === 400 && error.error === "Cet email existe déjà !") {
             this.errorMessage = 'Cet email existe déjà !';
           }
-          else if (error.sqlMessage === `Duplicate entry '${user.phone}' for key 'users.phone'`) {
+          else if (error.status === 400 && error.error === "Ce numéro de téléphone existe déjà !") {
             this.errorMessage = 'Ce numéro de téléphone existe déjà !';
+          }
+          else if (error.status === 400){
+            this.errorMessage = 'Certains champs sont manquants ou incorrects !';
           }
           else{
             this.errorMessage = 'Erreur lors de l\'inscription, veuillez rééssayer ultérieurement.';

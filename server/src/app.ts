@@ -1,5 +1,6 @@
 import express, { Express } from 'express';
 import mysql, {QueryError} from 'mysql2';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import {customerRoutes} from "./routes/customerRoutes.js";
 import {restaurantOwnerRoutes} from "./routes/restaurantOwnerRoutes.js";
@@ -10,15 +11,14 @@ import {adminRoutes} from "./routes/adminRoutes.js";
 dotenv.config();
 
 const app: Express = express();
+app.use(cors());
+
 app.use(express.json());
 app.use('/api/v1/customer', customerRoutes());
 app.use('/api/v1/restaurant-owner', restaurantOwnerRoutes());
 app.use('/api/v1/admin', adminRoutes());
 app.use('/api/v1/restaurant', restaurantRoutes());
 app.use('/api/v1/product', productRoutes());
-
-// app.use(cors());
-
 
 export const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -37,7 +37,7 @@ db.connect((error: QueryError | null) => {
         console.error('Error connecting to MySQL database: ', error);
         return;
     }
-    console.log('Connected to MySQL database');
+    console.log('Connected to MySQL database :)');
 });
 
 
