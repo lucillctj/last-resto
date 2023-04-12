@@ -9,26 +9,28 @@
 
 <form>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Prénom" required title="Veuillez remplir ce champ">
+    <input type="text" class="form-control" placeholder="Prénom" [(ngModel)]="newUser.first_name" name="firstName">
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Nom" required title="Veuillez remplir ce champ">
+    <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="newUser.first_name" name="firstName">
   </div>
   <div class="form-group">
-    <input type="email" class="form-control" placeholder="Email" required title="Veuillez remplir ce champ">
+    <input type="email" class="form-control" placeholder="Email" [(ngModel)]="newUser.email" name="email">
   </div>
   <div class="form-group">
-    <input type="tel" class="form-control" placeholder="Téléphone" required title="Veuillez remplir ce champ">
+    <input type="tel" class="form-control" placeholder="Téléphone" [(ngModel)]="newUser.phone" name="phone">
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" placeholder="Mot de passe" required title="Veuillez remplir ce champ">
+    <input type="password" class="form-control" placeholder="Mot de passe" [(ngModel)]="newUser.password" name="password">
   </div>
   <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" required title="Veuillez remplir ce champ">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">J'accepte la politique de confidentialité</label>
   </div>
-  <button type="submit" class="btn btn-primary">Go !</button>
+  <button type="submit" class="btn btn-primary" (click)="createAccountRestaurantOwner(newUser)">Go !</button>
 </form>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
 </body>
 </html>

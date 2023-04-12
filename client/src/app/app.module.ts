@@ -11,6 +11,7 @@ import { SignUpCustomerComponent } from './pages/sign-up-customer/sign-up-custom
 import { CreateAccountRestaurantComponent } from "./create-account-restaurant/create-account-restaurant.component";
 import { SignUpRestaurantComponent } from './pages/sign-up-restaurant/sign-up-restaurant.component';
 import {CustomerService} from "./services/customer.service";
+import {RestaurantOwnerService} from "./services/restaurant-owner.service";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {CustomerService} from "./services/customer.service";
     HttpClientModule,
     FormsModule
   ],
-  providers: [CustomerService],
+  providers: [CustomerService, RestaurantOwnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
