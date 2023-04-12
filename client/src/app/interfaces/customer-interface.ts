@@ -1,12 +1,12 @@
 export interface Customer {
   userId?: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   password: string;
   address: string;
-  postCode: string;
+  post_code: string;
   city: string;
   productId?: number;
   role: 'customer';
