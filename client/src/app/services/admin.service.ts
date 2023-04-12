@@ -7,7 +7,7 @@ import {Admin} from "../interfaces/admin-interface";
   // {providedIn: 'root'}
 )
 export class AdminService {
-  private apiUrl = 'http://localhost:3000/api/v1/restaurant-owner';
+  private apiUrl = 'http://localhost:3000/api/v1/admin';
 
   constructor(private http: HttpClient) { }
 

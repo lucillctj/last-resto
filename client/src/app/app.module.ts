@@ -10,7 +10,7 @@ import { CreateAccountCustomerComponent } from './create-account-customer/create
 import { SignUpCustomerComponent } from './pages/sign-up-customer/sign-up-customer.component';
 import { CreateAccountRestaurantComponent } from "./create-account-restaurant/create-account-restaurant.component";
 import { SignUpRestaurantComponent } from './pages/sign-up-restaurant/sign-up-restaurant.component';
-import {CustomerService} from "./service/customer-service";
+import {CustomerService} from "./services/customer.service";
 
 @NgModule({
   declarations: [

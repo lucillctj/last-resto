@@ -1,18 +1,17 @@
-export class Users {
+export class Customer {
     userId?: number;
     firstName: string;
     lastName: string;
     email: string;
     phone: string;
     password: string;
-    role: 'admin' | 'customer' | 'restaurant owner';
-    address?: string;
-    postCode?: string;
-    city?: string;
+    address: string;
+    postCode: string;
+    city: string;
     productId?: number;
-    restaurantId?: number;
+    role: 'customer';
 
-    constructor(userId: number, firstName: string, lastName: string, email: string, phone: string, password: string, role: 'admin' | 'customer' | 'restaurant owner', address: string, postCode: string, city: string, productId: number, restaurantId: number) {
+    constructor(userId: number, firstName: string, lastName: string, email: string, phone: string, password: string, role: 'customer', address: string, postCode: string, city: string, productId: number) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,6 +23,5 @@ export class Users {
         this.postCode = postCode;
         this.city = city;
         this.productId = productId;
-        this.restaurantId = restaurantId;
     }
 }

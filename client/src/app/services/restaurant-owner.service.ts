@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Admin} from "../interfaces/restaurantOwner-interface";
+import {RestaurantOwner} from "../interfaces/restaurantOwner-interface";
 
 @Injectable(
   // {providedIn: 'root'}
@@ -11,22 +11,22 @@ export class RestaurantOwnerService {
 
   constructor(private http: HttpClient) { }
 
-  getRestaurantOwners(): Observable<Admin[]> {
-    return this.http.get<Admin[]>(this.apiUrl);
+  getRestaurantOwners(): Observable<RestaurantOwner[]> {
+    return this.http.get<RestaurantOwner[]>(this.apiUrl);
   }
 
-  getRestaurantOwnerById(userId: number): Observable<Admin> {
+  getRestaurantOwnerById(userId: number): Observable<RestaurantOwner> {
     const url = `${this.apiUrl}/${userId}`;
-    return this.http.get<Admin>(url);
+    return this.http.get<RestaurantOwner>(url);
   }
 
-  createRestaurantOwner(user: Admin): Observable<Admin> {
-    return this.http.post<Admin>(this.apiUrl, user);
+  createRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
+    return this.http.post<RestaurantOwner>(this.apiUrl, user);
   }
 
-  updateRestaurantOwner(user: Admin): Observable<Admin> {
+  updateRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
     const url = `${this.apiUrl}/${user.userId}`;
-    return this.http.put<Admin>(url, user);
+    return this.http.put<RestaurantOwner>(url, user);
   }
 
   deleteRestaurantOwner(userId: number): Observable<void> {

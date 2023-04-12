@@ -1,4 +1,4 @@
-export class Restaurants {
+export class Restaurant {
     restaurantId?: number;
     name: string;
     description: string;
