@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {RestaurantOwner} from "../interfaces/restaurantOwner-interface";
-import {RestaurantOwnerService} from "../services/restaurant-owner.service";
+import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
+import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
 
 @Component({
   selector: 'app-create-account-restaurant',
   templateUrl: './create-account-restaurant.component.html',
-  styleUrls: ['./create-account-restaurant.component.css', '../../styles.css']
+  styleUrls: ['./create-account-restaurant.component.css', '../../../styles.css']
 })
 export class CreateAccountRestaurantComponent {
   newUser: RestaurantOwner;

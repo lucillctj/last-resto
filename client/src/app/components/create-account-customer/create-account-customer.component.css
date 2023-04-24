@@ -12,7 +12,7 @@ body{
 }
 
 form{
-  padding: 0.5em 2em 2em;
+  padding: 0 2em 2em;
 }
 .form-group{
   margin-top: 0.6em;
@@ -30,7 +30,6 @@ form{
 }
 
 .form-check{
-  padding-top: 1em;
   text-align: left;
 }
 

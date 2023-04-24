@@ -6,12 +6,15 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
+import { CreateAccountCustomerComponent } from './components/create-account-customer/create-account-customer.component';
 import { SignUpCustomerComponent } from './pages/sign-up-customer/sign-up-customer.component';
-import { CreateAccountRestaurantComponent } from "./create-account-restaurant/create-account-restaurant.component";
-import { SignUpRestaurantComponent } from './pages/sign-up-restaurant/sign-up-restaurant.component';
-import {CustomerService} from "./services/customer.service";
-import {RestaurantOwnerService} from "./services/restaurant-owner.service";
+import { CreateAccountRestaurantComponent } from "./components/create-account-restaurant/create-account-restaurant.component";
+import { SignUpRestaurantOwnerComponent } from './pages/sign-up-restaurant-owner/sign-up-restaurant-owner.component';
+import {CustomerService} from "./services/api/customer.service";
+import {RestaurantOwnerService} from "./services/api/restaurant-owner.service";
+import { UserProfilComponent } from './pages/user-profil/user-profil.component';
+import { CustomerProfilComponent } from './components/customer-profil/customer-profil.component';
+import { RestaurantOwnerProfilComponent } from './components/restaurant-owner-profil/restaurant-owner-profil.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import {RestaurantOwnerService} from "./services/restaurant-owner.service";
     CreateAccountCustomerComponent,
     SignUpCustomerComponent,
     CreateAccountRestaurantComponent,
-    SignUpRestaurantComponent
+    SignUpRestaurantOwnerComponent,
+    UserProfilComponent,
+    CustomerProfilComponent,
+    RestaurantOwnerProfilComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import {UserRoleService} from "../../services/user-role.service";
 
 @Component({
   selector: 'app-home',
@@ -7,13 +8,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css', '../../../styles.css']
 })
 export class HomeComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userRoleService: UserRoleService) {
+  }
   showFormToCreateAccountCustomer(){
+    this.userRoleService.userRole = 'customer';
+    this.userRoleService.userRoleChanged.emit(this.userRoleService.userRole);
     this.router.navigate(['/sign-up-customer']);
   }
 
   showFormToCreateAccountRestaurant(){
-    this.router.navigate(['/sign-up-restaurant']);
+    this.userRoleService.userRole = 'restaurant owner';
+    this.userRoleService.userRoleChanged.emit(this.userRoleService.userRole);
+    this.router.navigate(['/sign-up-restaurant-owner']);
   }
-
 }

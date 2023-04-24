@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import {CustomerService} from "../services/customer.service";
-import {Customer} from "../interfaces/customer-interface";
+import {CustomerService} from "../../services/api/customer.service";
+import {Customer} from "../../interfaces/customer-interface";
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account-customer',
   templateUrl: './create-account-customer.component.html',
-  styleUrls: ['./create-account-customer.component.css', '../../styles.css']
+  styleUrls: ['./create-account-customer.component.css', '../../../styles.css']
 })
 export class CreateAccountCustomerComponent {
   newUser: Customer;
