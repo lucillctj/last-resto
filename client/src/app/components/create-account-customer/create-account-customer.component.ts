@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {CustomerService} from "../services/customer.service";
 import {Customer} from "../interfaces/customer-interface";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account-customer',
@@ -11,7 +12,9 @@ export class CreateAccountCustomerComponent {
   newUser: Customer;
   successMessage: string | null;
   errorMessage: string| null;
-  constructor(private customerService: CustomerService) {
+  constructor(
+    private customerService: CustomerService,
+    private router: Router) {
     this.newUser = {} as Customer;
     this.successMessage = null;
     this.errorMessage = null;
@@ -21,6 +24,7 @@ export class CreateAccountCustomerComponent {
     this.customerService.createCustomer(newUser)
       .subscribe((response) => {
           this.successMessage = 'Votre compte a bien été créé !';
+          this.router.navigate(['/user-profil']);
           // envoyer sur la page du profil
         },
         error => {
