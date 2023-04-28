@@ -1,11 +1,13 @@
 /*variables : */
 
 //colors
-$orange: #E3785C;
-$orange-hover: #BF5D44;
+$salmon: #E3785C;
+$salmon-hover: #BF5D44;
+$orange: #F1A549;
 $green: #317765;
 $green-hover: #184F40;
-$background-orange: #ecdfdc;
+$grey: #494949;
+
 //fonts
 $font-family: 'Noto Sans', sans-serif;
 
@@ -19,9 +21,25 @@ body {
   position: relative;
 }
 
+h1{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 2.3rem;
+}
+
+p{
+  color: $grey;
+  font-weight: 300;
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+}
+
 .btn-back{
   position: absolute;
-  width: 10em;
+  width: 14em;
   height: 2em;
   left: 2em;
   top: 93%;
