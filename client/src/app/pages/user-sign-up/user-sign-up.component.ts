@@ -5,7 +5,7 @@
 // @Component({
 //   selector: 'app-user-sign-up',
 //   templateUrl: './user-sign-up.component.html',
-//   styleUrls: ['./user-sign-up.component.css', '../../../styles.css']
+//   styleUrls: ['./user-sign-up.component.scss', '../../../styles.scss']
 // })
 // export class UserSignUpComponent implements OnInit {
 //   userRole: string = 'customer' || 'restaurant owner';

@@ -1,19 +1,21 @@
-body{
+@import "../../../styles.scss";
+
+section{
   background-color: white;
   border-radius: 2em;
 }
 .title{
   padding-top: 1em;
   font-family: Helvetica, sans-serif;
-  color: #317765;
+  color: $green;
   font-style: normal;
   font-weight: 600;
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 .sub-title{
   font-family: Helvetica, sans-serif;
-  color: #317765;
+  color: $green;
   font-style: normal;
   font-weight: 400;
   font-size: 2em;
@@ -47,9 +49,9 @@ form{
 }
 
 .btn-primary {
-  background: #317765;
+  background: $green;
 }
 
 .btn-primary:hover {
-  background: #184F40;
+  background: $green-hover;
 }

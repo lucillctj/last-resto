@@ -5,7 +5,7 @@ import {RestaurantOwnerService} from "../../services/api/restaurant-owner.servic
 @Component({
   selector: 'app-create-account-restaurant',
   templateUrl: './create-account-restaurant.component.html',
-  styleUrls: ['./create-account-restaurant.component.css', '../../../styles.css']
+  styleUrls: ['./create-account-restaurant.component.scss', '../../../styles.scss']
 })
 export class CreateAccountRestaurantComponent {
   newUser: RestaurantOwner;

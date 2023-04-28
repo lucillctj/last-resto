@@ -1,7 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="../../../styles.css">
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../../styles.scss">
 </head>
+
 <body>
 <div class="container mt-auto">
   <div class="row">
@@ -10,7 +17,7 @@
       <h1 class="title">Créer ton compte<br>aujourd’hui !</h1>
       <p class="sub-title">& réserve tes tables à la dernière minute</p>
     </div>
-    <div class="col-md-6 col-sm-12 text-center">
+    <div class="col-md-6 col-sm-12">
       <button class="btn-orange mb-4" type="button" (click)="showFormToCreateAccountCustomer()">Je suis un client</button>
       <button class="btn-green" type="button" (click)="showFormToCreateAccountRestaurant()">Je suis un restaurateur</button>
     </div>

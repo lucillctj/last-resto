@@ -1,0 +1,17 @@
+@import "../../../../styles";
+
+body{
+  background-color: $background-orange;
+  margin-top: 0;
+}
+
+.card{
+
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 1em;
+  border: none;
+  width: 40%;
+  height: 40%;
+}

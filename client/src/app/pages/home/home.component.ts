@@ -5,7 +5,7 @@ import {UserRoleService} from "../../services/user-role.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css', '../../../styles.css']
+  styleUrls: ['./home.component.scss', '../../../styles.scss']
 })
 export class HomeComponent {
   constructor(private router: Router, private userRoleService: UserRoleService) {

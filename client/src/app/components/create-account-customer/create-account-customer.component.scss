@@ -1,11 +1,13 @@
-body{
+@import "../../../styles.scss";
+
+section{
   background-color: white;
   border-radius: 2em;
 }
 .title{
   padding-top: 1em;
   font-family: Helvetica, sans-serif;
-  color: #E3785C;
+  color: $orange;
   font-style: normal;
   font-weight: 600;
   font-size: 2em;
@@ -38,9 +40,9 @@ form{
 }
 
 .btn-primary {
-  background: #E3785C;
+  background: $orange;
 }
 
 .btn-primary:hover {
-  background: #BF5D44;
+  background: $orange-hover;
 }
