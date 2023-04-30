@@ -1,31 +1,34 @@
 import { Component } from '@angular/core';
-import {CustomerService} from "../../services/api/customer.service";
 import {Customer} from "../../interfaces/customer-interface";
+import {CustomerService} from "../../services/api/customer.service";
 import { Router } from '@angular/router';
 
+
 @Component({
-  selector: 'app-create-account-customer',
-  templateUrl: './create-account-customer.component.html',
-  styleUrls: ['./create-account-customer.component.scss', '../../../styles.scss']
+  selector: 'app-popup-update-customer',
+  templateUrl: './popup-update-customer.component.html',
+  styleUrls: ['./popup-update-customer.component.css']
 })
-export class CreateAccountCustomerComponent {
-  newUser: Customer;
+export class PopupUpdateCustomerComponent {
+
+  // currentUser: Customer;
+  updatedUser: Customer;
   successMessage: string | null;
   errorMessage: string| null;
+
   constructor(
     private customerService: CustomerService,
     private router: Router) {
-    this.newUser = {} as Customer;
+    this.updatedUser = {} as Customer;
     this.successMessage = null;
     this.errorMessage = null;
   }
 
-  createAccountCustomer(newUser: Customer){
-    this.customerService.createCustomer(newUser)
+  updateAccountCustomer(updatedUser: Customer){
+    this.customerService.updateCustomer(updatedUser)
       .subscribe(() => {
-          this.successMessage = 'Votre compte a bien été créé !';
+          this.successMessage = 'Vos informations ont bien été mises à jour !';
           this.router.navigate(['/customer-profil']);
-          // envoyer sur la page du profil
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {

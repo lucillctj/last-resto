@@ -14,6 +14,8 @@ import {CustomerService} from "./services/api/customer.service";
 import {RestaurantOwnerService} from "./services/api/restaurant-owner.service";
 import { CustomerProfilComponent } from './pages/user-profil/customer-profil/customer-profil.component';
 import { RestaurantOwnerProfilComponent } from './pages/user-profil/restaurant-owner-profil/restaurant-owner-profil.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PopupUpdateCustomerComponent } from './components/popup-update-customer/popup-update-customer.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,15 @@ import { RestaurantOwnerProfilComponent } from './pages/user-profil/restaurant-o
     CreateAccountRestaurantComponent,
     SignUpRestaurantOwnerComponent,
     CustomerProfilComponent,
-    RestaurantOwnerProfilComponent
+    RestaurantOwnerProfilComponent,
+    PopupUpdateCustomerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [CustomerService, RestaurantOwnerService],
   bootstrap: [AppComponent]
