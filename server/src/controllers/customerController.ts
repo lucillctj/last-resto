@@ -3,7 +3,7 @@ import {db} from "../app.js";
 import {Customer} from "../models/customer.js";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import { generateAccessToken, generateRefreshToken } from "../middleware/auth.js"
+import {generateAccessToken, setTokenCookie} from "../middleware/auth.js"
 
 export class CustomerController {
     public static async createCustomerAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -30,6 +30,8 @@ export class CustomerController {
                         await errorValues(req, res, error, bodyCustomer);
                     } else {
                         const accessToken = generateAccessToken(results.insertId);
+                        setTokenCookie(res, accessToken);
+
                         res.status(201).send({
                             message: `Utilisateur avec le rôle 'customer' a été créé !`,
                             accessToken
@@ -43,6 +45,14 @@ export class CustomerController {
             res.status(400).json({error: 'Erreur !'});
         }
     }
+
+
+//pour delete cookie (logout...)
+//     app.get('/deletecookie', (req, res) => {
+//     //show the saved cookies
+//     res.clearCookie()
+//     res.send('Cookie has been deleted successfully');
+// });
 
     public static async loginToCustomerAccount(req: Request, res: Response): Promise<void> {
         const body = req.body;
@@ -67,13 +77,14 @@ export class CustomerController {
                     if (!compareHashPassword) {
                         return res.status(401).json({message: "Mot de passe invalide"});
                     }
-                    const accessToken = generateAccessToken(results[0].user_id);
-                    const refreshToken = generateRefreshToken(results[0].user_id);
+                    const accessToken = generateAccessToken(results[0].userId);
+                    setTokenCookie(res, accessToken);
+                    // const refreshToken = generateRefreshToken(results[0].user);
 
                     return res.status(200).send({
                         message: "Authentification réussie",
                         accessToken,
-                        refreshToken
+                        // refreshToken
                     });
                 }
             });
