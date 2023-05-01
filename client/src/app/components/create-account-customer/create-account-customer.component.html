@@ -30,7 +30,7 @@
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">J'accepte la politique de confidentialité</label>
   </div>
-  <button type="submit" class="btn btn-primary" (click)="createAccountCustomer(newUser)">Go !</button>
+  <button type="submit" class="btn" (click)="createAccountCustomer(newUser)">Go !</button>
 </form>
 <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>

@@ -31,7 +31,6 @@ export class CustomerController {
                     } else {
                         const accessToken = generateAccessToken(results.insertId);
                         setTokenCookie(res, accessToken);
-
                         res.status(201).send({
                             message: `Utilisateur avec le rôle 'customer' a été créé !`,
                             accessToken
@@ -45,14 +44,6 @@ export class CustomerController {
             res.status(400).json({error: 'Erreur !'});
         }
     }
-
-
-//pour delete cookie (logout...)
-//     app.get('/deletecookie', (req, res) => {
-//     //show the saved cookies
-//     res.clearCookie()
-//     res.send('Cookie has been deleted successfully');
-// });
 
     public static async loginToCustomerAccount(req: Request, res: Response): Promise<void> {
         const body = req.body;
@@ -180,6 +171,13 @@ export class CustomerController {
         }
     }
 }
+
+//pour delete cookie (logout...)
+//     app.get('/deletecookie', (req, res) => {
+//     //show the saved cookies
+//     res.clearCookie()
+//     res.send('Cookie has been deleted successfully');
+// });
 
 function errorValues(req: Request, res: Response, error: any, newCustomer: Customer): any {
     if (error.sqlMessage === `Duplicate entry '${newCustomer.email}' for key 'users.email'`) {

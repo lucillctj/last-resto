@@ -13,12 +13,12 @@ export class HomeComponent {
   showFormToCreateAccountCustomer(){
     this.userRoleService.userRole = 'customer';
     this.userRoleService.userRoleChanged.emit(this.userRoleService.userRole);
-    this.router.navigate(['/sign-up-customer']);
+    this.router.navigate(['/signup-customer']);
   }
 
   showFormToCreateAccountRestaurant(){
     this.userRoleService.userRole = 'restaurant owner';
     this.userRoleService.userRoleChanged.emit(this.userRoleService.userRole);
-    this.router.navigate(['/sign-up-restaurant-owner']);
+    this.router.navigate(['/signup-restaurant-owner']);
   }
 }

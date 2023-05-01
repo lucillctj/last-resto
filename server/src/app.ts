@@ -1,5 +1,5 @@
 import express, { Express } from 'express';
-import cookieParser from "cookie-parser";
+import cookieParser from 'cookie-parser';
 import mysql, {QueryError} from 'mysql2';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -8,18 +8,25 @@ import {restaurantOwnerRoutes} from "./routes/restaurantOwnerRoutes.js";
 import {restaurantRoutes} from "./routes/restaurantRoutes.js";
 import {productRoutes} from "./routes/productRoutes.js";
 import {adminRoutes} from "./routes/adminRoutes.js";
+import {usersRoutes} from "./routes/usersRoutes";
 
 dotenv.config();
 
 const app: Express = express();
-app.use(cors());
+const corsOptions = {
+    origin: true,
+    credentials: true
+};
+app.use(cors(corsOptions));
 app.use(cookieParser());
-
-
 app.use(express.json());
+
+
+
 app.use('/api/v1/customer', customerRoutes());
 app.use('/api/v1/restaurant-owner', restaurantOwnerRoutes());
 app.use('/api/v1/admin', adminRoutes());
+app.use('/api/v1/user', usersRoutes());
 app.use('/api/v1/restaurant', restaurantRoutes());
 app.use('/api/v1/product', productRoutes());
 

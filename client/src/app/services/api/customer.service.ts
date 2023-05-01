@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
 
+
 @Injectable(
   // {providedIn: 'root'}
 )
@@ -11,6 +12,15 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
+  createCustomer(user: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.apiUrl, user, {withCredentials: true});
+  }
+
+  login(user: Customer): Observable<Customer> {
+    const url = `${this.apiUrl}/login`;
+    return this.http.post<Customer>(url, user, {withCredentials: true});
+  }
+
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.apiUrl);
   }
@@ -18,10 +28,6 @@ export class CustomerService {
   getCustomerById(userId: number): Observable<Customer> {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.get<Customer>(url);
-  }
-
-  createCustomer(user: Customer): Observable<Customer> {
-    return this.http.post<Customer>(this.apiUrl, user);
   }
 
   updateCustomer(user: Customer): Observable<Customer> {

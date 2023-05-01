@@ -1,11 +1,15 @@
-// import {Request, Response, NextFunction} from "express";
-// import {db} from "../app.js";
-// import {Users} from "../models/users";
-// import {QueryError, ResultSetHeader} from "mysql2";
-// import bcrypt from 'bcryptjs';
-// import { generateAccessToken, generateRefreshToken } from "../middleware/auth"
-//
-// export class UsersController {
+import {Request, Response} from "express";
+
+export class UsersController {
+    public static async logoutToAccount(req: Request, res: Response): Promise<void> {
+        try {
+            res.clearCookie('token');
+            res.status(200).json({message: "Utilisateur déconnecté"});
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+}
 //     public static async createUserAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
 //         const body = req.body;
 //         const bodyUser: Users = {
