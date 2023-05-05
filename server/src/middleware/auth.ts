@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
-export const verifyAuthTokenCookies = (req: Request, res: Response, next: NextFunction) => {
+export const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized' });
@@ -26,11 +26,11 @@ export const setTokenCookie = (res: Response, token: string) => {
 };
 
 export function generateAccessToken(userId: any) {
-    return jwt.sign({userId: userId}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '1800s'});
+    return jwt.sign({userId}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '1800s'});
 }
 
-export function generateRefreshToken(user: any) {
-    return jwt.sign({userId: user.userId, userRole: user.role}, process.env.REFRESH_TOKEN_SECRET!, {expiresIn: '60d'});
+export function generateRefreshToken(userId: any) {
+    return jwt.sign({userId}, process.env.REFRESH_TOKEN_SECRET!, {expiresIn: '60d'});
 }
 
 // export const verifyAuthTokenHeader = (req: Request, res: Response, next: NextFunction) => {

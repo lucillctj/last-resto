@@ -3,7 +3,7 @@ import {db} from "../app.js";
 import {RestaurantOwner} from "../models/restaurantOwner.js";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import { generateAccessToken, generateRefreshToken } from "../middleware/auth.js"
+import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth.js"
 
 export class RestaurantOwnerController {
     public static async createRestaurantOwnerAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -19,23 +19,24 @@ export class RestaurantOwnerController {
         const hashPassword = await bcrypt.hash(bodyRestaurantOwner.password, 10);
 
         try{
-                        if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
-                    const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, ?)`;
-                    const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword, 'restaurant owner'];
-                    db.execute(sql, params, async (error: QueryError | null, results: any) => {
-                        if (error) {
-                            await errorValues(req, res, error, bodyRestaurantOwner);
-                        } else {
-                            const accessToken = generateAccessToken(results.insertId);
-                            res.status(201).send({
-                                message: `Utilisateur avec le rôle 'restaurant owner' a été créé !`,
-                                accessToken
-                            });
-                        }
-                    })
-                }else {
-                    res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
-                }
+            if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
+                const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, ?)`;
+                const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword, 'restaurant owner'];
+                db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                    if (error) {
+                        await errorValues(req, res, error, bodyRestaurantOwner);
+                    } else {
+                        const accessToken = generateAccessToken(results.insertId);
+                        setTokenCookie(res, accessToken);
+                        res.status(201).send({
+                            message: `Utilisateur avec le rôle 'restaurant owner' a été créé !`,
+                            accessToken
+                        });
+                    }
+                })
+            }else {
+                res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
+            }
 
         } catch (error) {
             res.status(400).json({error: 'Erreur !'});
@@ -62,8 +63,9 @@ export class RestaurantOwnerController {
                     if (!compareHashPassword) {
                         return res.status(401).json({message: "Mot de passe invalide"});
                     }
-                    const accessToken = generateAccessToken(results.insertId);
-                    const refreshToken = generateRefreshToken(results.insertId);
+                    const accessToken = generateAccessToken(results[0].userId);
+                    setTokenCookie(res, accessToken);
+                    const refreshToken = generateRefreshToken(results[0].userId);
 
                     return res.status(200).send({
                         message: "Authentification réussie",
@@ -122,21 +124,21 @@ export class RestaurantOwnerController {
             role: 'restaurant owner'
         };
         try {
-                if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
-                    const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
-                    const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, bodyRestaurantOwner.password];
-                    db.execute(sql, params, async (error: QueryError | null, results: any) => {
-                        if (error) throw error;
-                        else if (results.affectedRows === 0) {
-                            res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
-                        }
-                        else {
-                            res.status(201).send(`Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`);
-                        }
-                    })
-                }else {
-                    res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
-                }
+            if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
+                const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
+                const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, bodyRestaurantOwner.password];
+                db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                    if (error) throw error;
+                    else if (results.affectedRows === 0) {
+                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                    }
+                    else {
+                        res.status(201).send(`Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`);
+                    }
+                })
+            }else {
+                res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
+            }
         } catch (error) {
             res.status(400).json({error: 'Erreur !'});
         }

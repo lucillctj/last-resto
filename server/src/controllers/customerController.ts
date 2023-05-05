@@ -3,7 +3,7 @@ import {db} from "../app.js";
 import {Customer} from "../models/customer.js";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import {generateAccessToken, setTokenCookie} from "../middleware/auth.js"
+import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth.js"
 
 export class CustomerController {
     public static async createCustomerAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -70,12 +70,12 @@ export class CustomerController {
                     }
                     const accessToken = generateAccessToken(results[0].userId);
                     setTokenCookie(res, accessToken);
-                    // const refreshToken = generateRefreshToken(results[0].user);
+                    const refreshToken = generateRefreshToken(results[0].userId);
 
                     return res.status(200).send({
                         message: "Authentification réussie",
                         accessToken,
-                        // refreshToken
+                        refreshToken
                     });
                 }
             });
