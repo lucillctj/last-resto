@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth.js"
 
 export class CustomerController {
-    public static async createCustomerAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public static async createCustomerAccount(req: Request, res: Response): Promise<void> {
         const body = req.body;
         const bodyCustomer: Customer = {
             firstName: body.first_name,

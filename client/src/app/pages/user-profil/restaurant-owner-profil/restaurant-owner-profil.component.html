@@ -1,1 +1,52 @@
-<p>restaurant-owner-profil works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant owner profil</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="../../../../styles.scss">
+</head>
+
+<body>
+<h1 class="page-title">Mon profil restaurateur</h1>
+
+<div class="card card-profil">
+
+  <div class="row">
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <p class="name">Eliot Magnin</p>
+      <p class="address">4 rue des champs 59203 Loita</p>
+      <p class="email">eliotmagnin@gmail.com</p>
+      <p class="phone">0601020304</p>
+      <div class="bloc-buttons">
+        <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
+        <button class="btn-account btn-delete" type="button">Supprimer mon compte</button>
+      </div>
+    </div>
+
+      <div class="col-lg-6 col-md-3 col-sm-6">
+        <section class="restaurants-list-section">
+        <h3>Mes restaurants</h3>
+        <div class="card card-restaurant">
+          <div class="row icons">
+            <div class="col-lg-10 restaurant-name">
+              The Old Spaghetti
+            </div>
+            <div class="col-lg-1">
+              <i class="bi bi-trash-fill" style="color: red"></i>
+            </div>
+            <div class="col-lg-1">
+              <i class="bi bi-pencil" style="color: black"></i>
+            </div>
+          </div>
+        </div>
+    </section>
+      </div>
+
+  </div>
+</div>
+
+</body>
+</html>

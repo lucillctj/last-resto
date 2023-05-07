@@ -1,57 +1,25 @@
 @import "../../../styles.scss";
+@import "../styles-form.scss";
 
-section{
-  background-color: white;
-  border-radius: 2em;
-}
 .title{
-  padding-top: 1em;
-  font-family: Helvetica, sans-serif;
   color: $green;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 2rem;
 }
 
 .sub-title{
-  font-family: Helvetica, sans-serif;
   color: $green;
   font-style: normal;
   font-weight: 400;
   font-size: 2em;
 }
 
-form{
-  padding: 0 2em 2em;
-  margin-bottom: 5em;
-}
-.form-group{
-  margin-top: 0.6em;
-}
-
 .form-control{
-  border-radius: 5em;
-  border: 0;
   background-color: rgba(49, 119, 101, 0.4);
 }
 
-.form-control::placeholder{
-  padding-left: 0.6em;
-  color: white;
-}
-
-.form-check{
-  text-align: left;
-}
-
-.placeholder{
-  color: white;
-}
-
-.btn-primary {
+.btn {
   background: $green;
 }
 
-.btn-primary:hover {
+.btn:hover {
   background: $green-hover;
 }

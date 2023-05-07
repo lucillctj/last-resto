@@ -17,6 +17,9 @@ import { RestaurantOwnerProfilComponent } from './pages/user-profil/restaurant-o
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PopupUpdateCustomerComponent } from './components/popup-update-customer/popup-update-customer.component';
 import { LogInComponent } from './pages/log-in/log-in/log-in.component';
+import {
+  PopupUpdateRestaurantOwnerComponent
+} from "./components/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { LogInComponent } from './pages/log-in/log-in/log-in.component';
     CustomerProfilComponent,
     RestaurantOwnerProfilComponent,
     PopupUpdateCustomerComponent,
+    PopupUpdateRestaurantOwnerComponent,
     LogInComponent
   ],
   imports: [

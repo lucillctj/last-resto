@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-popup-update-customer',
   templateUrl: './popup-update-customer.component.html',
-  styleUrls: ['./popup-update-customer.component.css']
+  styleUrls: ['./popup-update-customer.component.scss', '../../../styles.scss']
 })
 export class PopupUpdateCustomerComponent {
 

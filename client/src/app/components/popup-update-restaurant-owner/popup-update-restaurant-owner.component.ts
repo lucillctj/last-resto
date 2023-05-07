@@ -1,26 +1,32 @@
 import { Component } from '@angular/core';
-import {Customer} from "../../../interfaces/customer-interface";
-import {CustomerService} from "../../../services/api/customer.service";
 import { Router } from '@angular/router';
+import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
+import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
+
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss', '../../../../styles.scss']
+  selector: 'app-popup-update-customer',
+  templateUrl: './popup-update-restaurant-owner.component.html',
+  styleUrls: ['./popup-update-restaurant-owner.component.scss', '../../../styles.scss']
 })
-export class LogInComponent {
-  user: Customer;
+export class PopupUpdateRestaurantOwnerComponent {
+
+  updatedUser: RestaurantOwner;
+  successMessage: string | null;
   errorMessage: string| null;
+
   constructor(
-    private customerService: CustomerService,
+    private restaurantOwnerService: RestaurantOwnerService,
     private router: Router) {
-    this.user = {} as Customer;
+    this.updatedUser = {} as RestaurantOwner;
+    this.successMessage = null;
     this.errorMessage = null;
   }
 
-  loginToAccount(user: Customer){
-    this.customerService.login(user)
+  updateAccountCustomer(updatedUser: RestaurantOwner){
+    this.restaurantOwnerService.updateRestaurantOwner(updatedUser)
       .subscribe(() => {
+          this.successMessage = 'Vos informations ont bien été mises à jour !';
           this.router.navigate(['/customer-profil']);
         },
         error => {
@@ -39,5 +45,4 @@ export class LogInComponent {
         }
       )
   }
-
 }

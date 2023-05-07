@@ -11,6 +11,16 @@
 
 <body>
 <h1 class="page-title">Mon profil</h1>
+
+
+<div *ngIf="user">
+  <h2>Profil de l'utilisateur</h2>
+  <p>Nom: {{ user.first_name }}</p>
+  <p>Email: {{ user.email }}</p>
+  <!-- Autres informations de l'utilisateur -->
+</div>
+
+
 <div class="card">
   <p class="name">Alice Romana</p>
   <p class="address">3 chemin des peupliers 76038 Laroche</p>

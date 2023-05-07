@@ -23,6 +23,7 @@ export const setTokenCookie = (res: Response, token: string) => {
         httpOnly: true,
         sameSite: 'lax'
     });
+
 };
 
 export function generateAccessToken(userId: any) {
