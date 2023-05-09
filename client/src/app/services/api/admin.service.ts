@@ -15,7 +15,7 @@ export class AdminService {
     return this.http.get<Admin[]>(this.apiUrl);
   }
 
-  getAdminById(userId: number): Observable<Admin> {
+  getAdminDashboard(userId: number): Observable<Admin> {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.get<Admin>(url);
   }

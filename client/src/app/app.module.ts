@@ -20,6 +20,8 @@ import { LogInComponent } from './pages/log-in/log-in/log-in.component';
 import {
   PopupUpdateRestaurantOwnerComponent
 } from "./components/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
+import { RestaurantPageComponent } from './pages/restaurant-page/restaurant-page.component';
+import { PopupUpdateRestaurantComponent } from './components/popup-update-restaurant/popup-update-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import {
     RestaurantOwnerProfilComponent,
     PopupUpdateCustomerComponent,
     PopupUpdateRestaurantOwnerComponent,
-    LogInComponent
+    LogInComponent,
+    RestaurantPageComponent,
+    PopupUpdateRestaurantComponent
   ],
   imports: [
     BrowserModule,

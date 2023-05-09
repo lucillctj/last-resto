@@ -29,7 +29,7 @@ export class CustomerService {
     return this.http.get<Customer[]>(this.apiUrl);
   }
 
-  getCustomerById(userId: number): Observable<Customer> {
+  getCustomerDashboard(userId: number): Observable<Customer> {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.get<Customer>(url);
   }

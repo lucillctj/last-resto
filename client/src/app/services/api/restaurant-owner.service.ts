@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
 
 @Injectable(
-  // {providedIn: 'root'}
+  {providedIn: 'root'}
 )
 export class RestaurantOwnerService {
   private apiUrl = 'http://localhost:3000/api/v1/restaurant-owner';
@@ -15,7 +15,7 @@ export class RestaurantOwnerService {
     return this.http.get<RestaurantOwner[]>(this.apiUrl);
   }
 
-  getRestaurantOwnerById(userId: number): Observable<RestaurantOwner> {
+  getRestaurantOwnerDashboard(userId: number): Observable<RestaurantOwner> {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.get<RestaurantOwner>(url);
   }

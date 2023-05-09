@@ -1,4 +1,4 @@
-@import "../../../../styles.scss";
+@import "../../../styles.scss";
 
 body{
   background-color: $green;
@@ -8,7 +8,7 @@ body{
 .page-title{
   top: 1.5em;
 }
-.card-profil{
+.card-restaurant{
   top: 5em;
   margin-left: auto;
   margin-right: auto;
@@ -20,12 +20,6 @@ body{
   height: auto;
 }
 
-.name{
-  color: $green;
-  font-size: 1.2em;
-  font-weight: 500;
-}
-
 .bloc-buttons{
   margin-top: 1em;
   position: relative;
@@ -35,7 +29,6 @@ body{
   flex-wrap: wrap;
   align-content: flex-start;
 }
-
 .btn-account{
   margin: 0 auto 0.7em;
   border-radius: 3em;
@@ -64,21 +57,14 @@ body{
   color: white;
 }
 
-h3{
-  color: $green;
-  display: flex;
-  justify-content: center;
-}
-
-.restaurants-list-section{
+.details-restaurant-section{
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-
 }
 
-.card-restaurant {
+.card-availability {
   position: relative;
   top: 1.2em;
   background-color: $grey-bright;
@@ -88,17 +74,28 @@ h3{
   width: 80%;
   color: white;
 }
-.restaurant-name{
+.text-availability{
   font-size: 0.9em;
   font-weight: 600;
-  color: $green;
+  color: $grey;
   display: flex;
   align-items: center
 }
+.form-switch{
+  padding-left: 0;
+}
 
-.icons{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-padding-right: 0.7em;
+.form-check{
+  margin-bottom: 0;
+}
+.form-check-input{
+  position: relative;
+  right: 1em;
+  width: 3em;
+  margin-left: 0;
+}
+
+.form-check-input:checked{
+  background-color: green;
+  border: none;
 }

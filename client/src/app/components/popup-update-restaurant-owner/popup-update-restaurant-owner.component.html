@@ -22,7 +22,7 @@
       <label>Mot de passe</label>
       <input type="password" class="form-control" placeholder="Mot de passe" [(ngModel)]="updatedUser.password" name="password">
     </div>
-    <button type="submit" class="btn" (click)="updateAccountCustomer(updatedUser)">Mettre à jour !</button>
+    <button type="submit" class="btn" (click)="updateAccount(updatedUser)">Mettre à jour !</button>
   </form>
   <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>

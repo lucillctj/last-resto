@@ -24,7 +24,7 @@ export class PopupUpdateCustomerComponent {
     this.errorMessage = null;
   }
 
-  updateAccountCustomer(updatedUser: Customer){
+  updateAccount(updatedUser: Customer){
     this.customerService.updateCustomer(updatedUser)
       .subscribe(() => {
           this.successMessage = 'Vos informations ont bien été mises à jour !';
@@ -37,11 +37,8 @@ export class PopupUpdateCustomerComponent {
           else if (error.status === 400 && error.error === "Ce numéro de téléphone existe déjà !") {
             this.errorMessage = 'Ce numéro de téléphone existe déjà !';
           }
-          else if (error.status === 400){
-            this.errorMessage = 'Certains champs sont manquants ou incorrects !';
-          }
           else{
-            this.errorMessage = 'Erreur lors de l\'inscription, veuillez rééssayer ultérieurement.';
+            this.errorMessage = 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
           }
         }
       )

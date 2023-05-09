@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant page</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="../../../styles.scss">
+</head>
+
+<body>
+<h1 class="page-title">Mon restaurant : The Old Spaghetti</h1>
+
+<div class="card card-restaurant">
+
+  <div class="row">
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <p class="name">The Old Spaghetti</p>
+      <p class="description">Cuisine tradictionnelle</p>
+      <p class="address">34 chemin du liège 34370 Crat</p>
+      <p class="phone">0438350304</p>
+      <div class="bloc-buttons">
+        <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>
+        <button class="btn-account btn-delete" type="button">Supprimer ce restaurant</button>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <section class="details-restaurant-section">
+        <div class="card card-availability">
+          <div class="form-check form-switch">
+            <div class="row">
+              <div class="col-lg-9">
+                <label class="form-check-label text-availability" for="flexSwitchCheckDefault">Disponibilité</label>
+              </div>
+              <div class="col-lg-3">
+                <input class="form-check-input switch" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </section>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
