@@ -1,9 +1,9 @@
 import {Request, Response, NextFunction} from "express";
-import {db} from "../app.js";
-import {RestaurantOwner} from "../models/restaurantOwner.js";
+import {db} from "../app";
+import {RestaurantOwner} from "../models/restaurantOwner";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth.js"
+import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth"
 
 export class RestaurantOwnerController {
     public static async createRestaurantOwnerAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -92,7 +92,7 @@ export class RestaurantOwnerController {
         }
     }
 
-    public static async getRestaurantOwnerById(req: Request, res: Response): Promise<void> {
+    public static async getRestaurantOwnerDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
             db.query(

@@ -1,9 +1,9 @@
 import {Request, Response, NextFunction} from "express";
-import {db} from "../app.js";
-import {Customer} from "../models/customer.js";
+import {db} from "../app";
+import {Customer} from "../models/customer";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth.js"
+import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth"
 
 export class CustomerController {
     public static async createCustomerAccount(req: Request, res: Response): Promise<void> {
@@ -72,10 +72,13 @@ export class CustomerController {
                     setTokenCookie(res, accessToken);
                     const refreshToken = generateRefreshToken(results[0].userId);
 
+                    console.log('-----> result userId: ', results[0].userId);
+
                     return res.status(200).send({
                         message: "Authentification réussie",
                         accessToken,
-                        refreshToken
+                        refreshToken,
+                        userId: results[0].userId
                     });
                 }
             });
@@ -97,18 +100,18 @@ export class CustomerController {
         }
     }
 
-    public static async getCustomerById(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
+    public static async getCustomerDashboard(req: Request, res: Response): Promise<void> {
+        const userId = parseInt(req.params.id);
         try {
             db.query(
-                `SELECT * FROM users WHERE role = 'customer' AND user_id = ${requestId}`,
+                `SELECT * FROM users WHERE role = 'customer' AND user_id = ${userId}`,
                 (error: Error | null, results: any) => {
 
                     if (error) throw error;
                     else if (results.length === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send(results);
+                        res.status(200).send({results});
                     }
                 })
         } catch (error) {

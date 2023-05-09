@@ -3,11 +3,11 @@ import cookieParser from 'cookie-parser';
 import mysql, {QueryError} from 'mysql2';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {customerRoutes} from "./routes/customerRoutes.js";
-import {restaurantOwnerRoutes} from "./routes/restaurantOwnerRoutes.js";
-import {restaurantRoutes} from "./routes/restaurantRoutes.js";
-import {productRoutes} from "./routes/productRoutes.js";
-import {adminRoutes} from "./routes/adminRoutes.js";
+import {customerRoutes} from "./routes/customerRoutes";
+import {restaurantOwnerRoutes} from "./routes/restaurantOwnerRoutes";
+import {restaurantRoutes} from "./routes/restaurantRoutes";
+import {productRoutes} from "./routes/productRoutes";
+import {adminRoutes} from "./routes/adminRoutes";
 import {usersRoutes} from "./routes/usersRoutes";
 
 dotenv.config();
@@ -23,12 +23,12 @@ app.use(express.json());
 
 
 
-app.use('/api/v1/customer', customerRoutes());
-app.use('/api/v1/restaurant-owner', restaurantOwnerRoutes());
-app.use('/api/v1/admin', adminRoutes());
-app.use('/api/v1/user', usersRoutes());
-app.use('/api/v1/restaurant', restaurantRoutes());
-app.use('/api/v1/product', productRoutes());
+app.use('/api/v1/customers', customerRoutes());
+app.use('/api/v1/restaurant-owners', restaurantOwnerRoutes());
+app.use('/api/v1/admins', adminRoutes());
+app.use('/api/v1/users', usersRoutes());
+app.use('/api/v1/restaurants', restaurantRoutes());
+app.use('/api/v1/products', productRoutes());
 
 export const db = mysql.createConnection({
     host: process.env.DB_HOST,

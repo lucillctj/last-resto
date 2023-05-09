@@ -1,9 +1,9 @@
 import {Request, Response, NextFunction} from "express";
-import {db} from "../app.js";
-import {Admin} from "../models/admin.js";
+import {db} from "../app";
+import {Admin} from "../models/admin";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import { generateAccessToken, generateRefreshToken } from "../middleware/auth.js"
+import { generateAccessToken, generateRefreshToken } from "../middleware/auth"
 
 export class AdminController {
     public static async createAdminAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -90,7 +90,7 @@ export class AdminController {
         }
     }
 
-    public static async getAdminById(req: Request, res: Response): Promise<void> {
+    public static async getAdminDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
             db.query(

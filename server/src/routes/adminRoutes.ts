@@ -1,5 +1,5 @@
 import express from "express";
-import {AdminController} from "../controllers/adminController.js";
+import {AdminController} from "../controllers/adminController";
 
 const router = express.Router();
 
@@ -7,9 +7,9 @@ export const adminRoutes = () => {
     router.post('/', AdminController.createAdminAccount);
     router.post('/login', AdminController.loginToAdminAccount);
     router.get('/', AdminController.getAllAdmins);
-    router.get('/:id', AdminController.getAdminById);
-    router.put('/:id', AdminController.updateAdmin);
-    router.delete('/:id', AdminController.deleteAdmin);
+    router.get('/dashboard/:id', AdminController.getAdminDashboard);
+    router.put('/update/:id', AdminController.updateAdmin);
+    router.delete('/delete/:id', AdminController.deleteAdmin);
 
     return router;
 }

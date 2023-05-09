@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
-import {db} from "../app.js";
+import {db} from "../app";
 import {QueryError, ResultSetHeader} from "mysql2";
-import {Product} from "../models/product.js";
+import {Product} from "../models/product";
 
 export class ProductController {
     public static async getAllProducts(req: Request, res: Response): Promise<void> {
@@ -16,7 +16,7 @@ export class ProductController {
         }
     }
 
-    public static async getProductById(req: Request, res: Response): Promise<void> {
+    public static async getProductDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
             db.query(
