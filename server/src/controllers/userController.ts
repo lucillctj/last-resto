@@ -27,9 +27,6 @@ export class UserController {
                     setTokenCookie(res, accessToken);
                     const refreshToken = generateRefreshToken(results[0].user_id);
 
-                    console.log('-----> result[0].user_id ', results[0].user_id);
-
-
                     return res.status(200).send({
                         message: "Authentification réussie",
                         userId: results[0].user_id,

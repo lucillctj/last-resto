@@ -45,8 +45,8 @@ export class CreateAccountCustomerComponent {
     this.submitted = true;
 
     this.customerService.createCustomer(this.newUser)
-      .subscribe(() => {
-          this.router.navigate(['/api/v1/customers/dashboard/:id']);
+      .subscribe((res) => {
+          this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {

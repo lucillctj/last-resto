@@ -12,12 +12,12 @@
 
   <div class="form-group">
     <input type="email" [(ngModel)]="newUser.email" class="form-control" placeholder="Email" name="email" required>
-    <div *ngIf="errorMessageEmail" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="errorMessageEmail" class="error-message">{{ errorMessageEmail }}</div>
   </div>
 
   <div class="form-group">
     <input type="tel" [(ngModel)]="newUser.phone" class="form-control" placeholder="Téléphone" name="phone" required>
-    <div *ngIf="errorMessagePhone" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="errorMessagePhone" class="error-message">{{ errorMessagePhone }}</div>
   </div>
 
   <div class="form-group">

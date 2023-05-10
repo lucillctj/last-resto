@@ -6,28 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" type="text/css" href="../../../../styles.scss">
+  <link rel="stylesheet" type="text/scss" href="../../../../styles.scss">
 </head>
 
-<body>
+<body *ngIf="currentUser">
 <h1 class="page-title">Mon profil</h1>
-
-
-<!--<div *ngIf="user">-->
-<!--  <h2>Profil de l'utilisateur</h2>-->
-<!--  <p>Nom: {{ user.first_name }}</p>-->
-<!--  <p>Email: {{ user.email }}</p>-->
-<!--  &lt;!&ndash; Autres informations de l'utilisateur &ndash;&gt;-->
-<!--</div>-->
-
-
 <div class="card">
-  <p class="name">Alice Romana</p>
-  <p class="address">3 chemin des peupliers 76038 Laroche</p>
-  <p class="email">aliceromana@gmail.com</p>
-  <p class="phone">0601020304</p>
+  <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
+  <p class="address">{{ currentUser.address }} {{ currentUser.post_code }} {{ currentUser.city }}</p>
+  <p class="email">{{ currentUser.email }}</p>
+  <p class="phone">{{ currentUser.phone }}</p>
 <div class="bloc-buttons">
-<!--  <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>-->
+  <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
   <button class="btn-account btn-delete" type="button">Supprimer mon compte</button>
 </div>
 </div>

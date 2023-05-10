@@ -28,8 +28,8 @@ export class CreateAccountRestaurantComponent {
   onSubmit() {
     this.submitted = true;
     this.restaurantOwnerService.createRestaurantOwner(this.newUser)
-      .subscribe(() => {
-          this.router.navigate(['/api/v1/restaurant-owners/dashboard/:id']);
+      .subscribe((res) => {
+          this.router.navigate([`/api/v1/restaurant-owners/dashboard/${res.userId}`]);
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {
