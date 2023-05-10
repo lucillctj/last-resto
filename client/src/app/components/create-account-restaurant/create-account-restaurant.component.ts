@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
 import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account-restaurant',
@@ -8,28 +9,33 @@ import {RestaurantOwnerService} from "../../services/api/restaurant-owner.servic
   styleUrls: ['./create-account-restaurant.component.scss', '../../../styles.scss']
 })
 export class CreateAccountRestaurantComponent {
+  submitted = false;
   newUser: RestaurantOwner;
-  successMessage: string | null;
-  errorMessage: string| null;
-  constructor(private restaurantOwnerService: RestaurantOwnerService) {
+  errorMessageEmail: string | null;
+  errorMessagePhone: string | null;
+  errorMessage: string | null;
+
+  constructor(
+    private restaurantOwnerService: RestaurantOwnerService,
+    private router: Router
+  ) {
     this.newUser = {} as RestaurantOwner;
-    this.successMessage = null;
+    this.errorMessageEmail = null;
+    this.errorMessagePhone = null;
     this.errorMessage = null;
   }
 
-  createAccountRestaurantOwner(newUser: RestaurantOwner){
-    this.restaurantOwnerService.createRestaurantOwner(newUser)
-      .subscribe((response) => {
-          this.successMessage = 'Votre compte a bien été créé !';
-          // envoyer sur la page du profil
+  onSubmit() {
+    this.submitted = true;
+    this.restaurantOwnerService.createRestaurantOwner(this.newUser)
+      .subscribe(() => {
+          this.router.navigate(['/api/v1/restaurant-owners/dashboard/:id']);
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {
-            this.errorMessage = 'Cet email existe déjà !';
+            this.errorMessageEmail = 'Cet email existe déjà !';
           } else if (error.status === 400 && error.error === "Ce numéro de téléphone existe déjà !") {
-            this.errorMessage = 'Ce numéro de téléphone existe déjà !';
-          } else if (error.status === 400) {
-            this.errorMessage = 'Certains champs sont manquants ou incorrects !';
+            this.errorMessagePhone = 'Ce numéro de téléphone existe déjà !';
           } else {
             this.errorMessage = 'Erreur lors de l\'inscription, veuillez rééssayer ultérieurement.';
           }

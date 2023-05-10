@@ -27,7 +27,7 @@ export class PopupUpdateRestaurantComponent {
     this.restaurantService.updateRestaurant(updatedRestaurant)
       .subscribe(() => {
           this.successMessage = 'Vos informations ont bien été mises à jour !';
-          this.router.navigate(['/restaurant-page']);
+          this.router.navigate(['/api/v1/restaurants/dashboard/:id']);
         },
         error => {
           this.errorMessage = 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';

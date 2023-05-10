@@ -2,29 +2,38 @@
   <h1 class="title">Créer un compte</h1>
   <h2 class="sub-title">restaurateur</h2>
 
-  <form>
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Prénom" [(ngModel)]="newUser.first_name" name="firstName">
+      <input type="text" [(ngModel)]="newUser.first_name" class="form-control" placeholder="Prénom" name="firstName" required>
     </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="newUser.first_name" name="firstName">
-    </div>
-    <div class="form-group">
-      <input type="email" class="form-control" placeholder="Email" [(ngModel)]="newUser.email" name="email">
-    </div>
-    <div class="form-group">
-      <input type="tel" class="form-control" placeholder="Téléphone" [(ngModel)]="newUser.phone" name="phone">
-    </div>
-    <div class="form-group">
-      <input type="password" class="form-control" placeholder="Mot de passe" [(ngModel)]="newUser.password" name="password">
-    </div>
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">J'accepte la politique de confidentialité</label>
-    </div>
-    <button type="submit" class="btn" (click)="createAccountRestaurantOwner(newUser)">Go !</button>
-  </form>
-  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
+    <div class="form-group">
+      <input type="text" [(ngModel)]="newUser.last_name" class="form-control" placeholder="Nom" name="lastName" required>
+    </div>
+
+    <div class="form-group">
+      <input type="email" [(ngModel)]="newUser.email" class="form-control" placeholder="Email" name="email" required>
+      <div *ngIf="errorMessageEmail" class="error-message">{{ errorMessageEmail }}</div>
+    </div>
+
+    <div class="form-group">
+      <input type="tel" [(ngModel)]="newUser.phone" class="form-control" placeholder="Téléphone" name="phone" required>
+      <div *ngIf="errorMessagePhone" class="error-message">{{ errorMessagePhone }}</div>
+    </div>
+
+    <div class="form-group">
+      <input type="password" [(ngModel)]="newUser.password" class="form-control" placeholder="Mot de passe" name="password" required minlength="6">
+    </div>
+
+<!--    <div class="form-check">-->
+<!--      <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--      <label class="form-check-label" for="exampleCheck1">J'accepte la politique de confidentialité</label>-->
+<!--    </div>-->
+    <div class="form-group">
+      <button type="submit" class="btn" [disabled]="!form.form.valid" > Go ! </button>
+      <div *ngIf="!form.form.valid" class="error-message">Tous les champs sont requis !</div>
+    </div>
+  </form>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 </section>

@@ -1,10 +1,12 @@
 import express from "express";
-import { UsersController } from "../controllers/usersController";
+import {verifyAuth} from "../middleware/auth";
+import {UserController} from "../controllers/userController";
 
 const router = express.Router();
 
 export const usersRoutes = () => {
-    router.get('/logout', UsersController.logoutToAccount);
+    router.post('/login', UserController.loginToUserAccount);
+    router.get('/logout', UserController.logoutToAccount);
 
     return router;
 }

@@ -27,7 +27,7 @@ export class PopupUpdateRestaurantOwnerComponent {
     this.restaurantOwnerService.updateRestaurantOwner(updatedUser)
       .subscribe(() => {
           this.successMessage = 'Vos informations ont bien été mises à jour !';
-          this.router.navigate(['/customer-profil']);
+          this.router.navigate(['/api/v1/restaurant-owners/dashboard/:id']);
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {

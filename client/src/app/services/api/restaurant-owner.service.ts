@@ -7,30 +7,31 @@ import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
   {providedIn: 'root'}
 )
 export class RestaurantOwnerService {
-  private apiUrl = 'http://localhost:3000/api/v1/restaurant-owner';
+  private apiUrl = 'http://localhost:3000/api/v1/restaurant-owners';
 
   constructor(private http: HttpClient) { }
 
-  getRestaurantOwners(): Observable<RestaurantOwner[]> {
+  createRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
+    const url = `${this.apiUrl}/signup`;
+    return this.http.post<RestaurantOwner>(url, user);
+  }
+
+  getAllRestaurantOwners(): Observable<RestaurantOwner[]> {
     return this.http.get<RestaurantOwner[]>(this.apiUrl);
   }
 
   getRestaurantOwnerDashboard(userId: number): Observable<RestaurantOwner> {
-    const url = `${this.apiUrl}/${userId}`;
+    const url = `${this.apiUrl}/dashboard/${userId}`;
     return this.http.get<RestaurantOwner>(url);
   }
 
-  createRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
-    return this.http.post<RestaurantOwner>(this.apiUrl, user);
-  }
-
   updateRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
-    const url = `${this.apiUrl}/${user.userId}`;
+    const url = `${this.apiUrl}/update/${user.userId}`;
     return this.http.put<RestaurantOwner>(url, user);
   }
 
   deleteRestaurantOwner(userId: number): Observable<void> {
-    const url = `${this.apiUrl}/${userId}`;
+    const url = `${this.apiUrl}/delete/${userId}`;
     return this.http.delete<void>(url);
   }
 }

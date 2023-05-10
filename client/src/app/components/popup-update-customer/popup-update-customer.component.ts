@@ -26,9 +26,9 @@ export class PopupUpdateCustomerComponent {
 
   updateAccount(updatedUser: Customer){
     this.customerService.updateCustomer(updatedUser)
-      .subscribe(() => {
+      .subscribe((res) => {
           this.successMessage = 'Vos informations ont bien été mises à jour !';
-          this.router.navigate(['/customer-profil']);
+          this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {

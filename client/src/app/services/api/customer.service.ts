@@ -9,38 +9,38 @@ import {AuthService} from "../auth.service";
   {providedIn: 'root'}
 )
 export class CustomerService {
-  private apiUrl = 'http://localhost:3000/api/v1/customer';
+  private apiUrl = 'http://localhost:3000/api/v1/customers';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   createCustomer(user: Customer): Observable<Customer> {
-    this.authService.setCurrentUserId(user.userId);
-    return this.http.post<Customer>(this.apiUrl, user, {withCredentials: true});
-  }
-
-  login(user: Customer): Observable<Customer> {
-    const url = `${this.apiUrl}/login`;
-    this.authService.setCurrentUserId(user.userId);
-
+    const url = `${this.apiUrl}/signup`;
+    // this.authService.setCurrentUserId(user.userId);
     return this.http.post<Customer>(url, user, {withCredentials: true});
   }
 
-  getCustomers(): Observable<Customer[]> {
+  // login(user: Customer): Observable<Customer> {
+  //   const url = `${this.apiUrl}/login`;
+  //   // this.authService.setCurrentUserId(user.userId);
+  //   return this.http.post<Customer>(url, user, {withCredentials: true});
+  // }
+
+  getAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.apiUrl);
   }
 
   getCustomerDashboard(userId: number): Observable<Customer> {
-    const url = `${this.apiUrl}/${userId}`;
+    const url = `${this.apiUrl}/dashboard/${userId}`;
     return this.http.get<Customer>(url);
   }
 
   updateCustomer(user: Customer): Observable<Customer> {
-    const url = `${this.apiUrl}/${user.userId}`;
+    const url = `${this.apiUrl}/update/${user.userId}`;
     return this.http.put<Customer>(url, user);
   }
 
   deleteCustomer(userId: number): Observable<void> {
-    const url = `${this.apiUrl}/${userId}`;
+    const url = `${this.apiUrl}/delete/${userId}`;
     return this.http.delete<void>(url);
   }
 }

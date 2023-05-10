@@ -5,11 +5,11 @@ import {
 } from "../../components/popup-update-restaurant/popup-update-restaurant.component";
 
 @Component({
-  selector: 'app-restaurant-page',
-  templateUrl: './restaurant-page.component.html',
-  styleUrls: ['./restaurant-page.component.scss', '../../../styles.scss']
+  selector: 'app-restaurant-dashboard',
+  templateUrl: './restaurant-dashboard.component.html',
+  styleUrls: ['./restaurant-dashboard.component.scss', '../../../styles.scss']
 })
-export class RestaurantPageComponent {
+export class RestaurantDashboardComponent {
   constructor(private modalService: NgbModal) {}
 
   openPopupToUpdate() {

@@ -5,7 +5,7 @@ import {verifyAuth} from "../middleware/auth";
 const router = express.Router();
 
 export const restaurantOwnerRoutes = () => {
-    router.post('/', RestaurantOwnerController.createRestaurantOwnerAccount);
+    router.post('/signup', RestaurantOwnerController.createRestaurantOwnerAccount);
     router.post('/login', verifyAuth, RestaurantOwnerController.loginToRestaurantOwnerAccount);
     router.get('/', RestaurantOwnerController.getAllRestaurantOwners);
     router.get('/dashboard/:id', RestaurantOwnerController.getRestaurantOwnerDashboard);

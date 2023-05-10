@@ -4,7 +4,7 @@ import {AdminController} from "../controllers/adminController";
 const router = express.Router();
 
 export const adminRoutes = () => {
-    router.post('/', AdminController.createAdminAccount);
+    router.post('/signup', AdminController.createAdminAccount);
     router.post('/login', AdminController.loginToAdminAccount);
     router.get('/', AdminController.getAllAdmins);
     router.get('/dashboard/:id', AdminController.getAdminDashboard);

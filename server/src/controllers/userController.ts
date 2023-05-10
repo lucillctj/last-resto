@@ -1,6 +1,49 @@
 import {Request, Response} from "express";
+import {Customer} from "../models/customer";
+import {db} from "../app";
+import {QueryError} from "mysql2/index";
+import bcrypt from "bcryptjs";
+import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth";
 
-export class UsersController {
+export class UserController {
+
+    public static async loginToUserAccount(req: Request, res: Response): Promise<void> {
+        const body = req.body;
+        const bodyUser = {
+            email: body.email,
+            password: body.password
+        };
+        if (bodyUser.email !== '' && bodyUser.password !== '' && Object.keys(body).length === 2) {
+            db.query(`SELECT * FROM users WHERE email = ?`, [bodyUser.email], async (error: QueryError | null, results: any) => {
+                if (error) throw error;
+                else if (results.length === 0) {
+                    return res.status(401).send({message: 'Aucun utilisateur trouvé !', accessToken: null});
+                } else {
+                    const compareHashPassword = await bcrypt.compare(bodyUser.password, results[0].password);
+                    if (!compareHashPassword) {
+                        return res.status(401).json({message: "Mot de passe invalide"});
+                    }
+                    const accessToken = generateAccessToken(results[0].user_id);
+                    setTokenCookie(res, accessToken);
+                    const refreshToken = generateRefreshToken(results[0].user_id);
+
+                    console.log('-----> result[0].user_id ', results[0].user_id);
+
+
+                    return res.status(200).send({
+                        message: "Authentification réussie",
+                        userId: results[0].user_id,
+                        accessToken,
+                        refreshToken,
+                    });
+                }
+            });
+        }
+        else {
+            res.status(400).json({error: 'Certains champs sont manquants.'});
+        }
+    }
+
     public static async logoutToAccount(req: Request, res: Response): Promise<void> {
         try {
             res.clearCookie('token');

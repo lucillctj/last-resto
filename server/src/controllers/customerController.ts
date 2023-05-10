@@ -45,48 +45,48 @@ export class CustomerController {
         }
     }
 
-    public static async loginToCustomerAccount(req: Request, res: Response): Promise<void> {
-        const body = req.body;
-        const bodyCustomer: Customer = {
-            firstName: body.first_name,
-            lastName: body.last_name,
-            email: body.email,
-            phone: body.phone,
-            password: body.password,
-            address: body.address,
-            postCode: body.post_code,
-            city: body.city,
-            role: 'customer'
-        };
-        if (bodyCustomer.email !== '' && bodyCustomer.password !== '' && Object.keys(body).length === 2) {
-            db.query(`SELECT * FROM users WHERE role = 'customer' AND email = ?`, [bodyCustomer.email], async (error: QueryError | null, results: any) => {
-                if (error) throw error;
-                else if (results.length === 0) {
-                    return res.status(401).send({message: 'Aucun utilisateur trouvé !', accessToken: null});
-                } else {
-                    const compareHashPassword = await bcrypt.compare(bodyCustomer.password, results[0].password);
-                    if (!compareHashPassword) {
-                        return res.status(401).json({message: "Mot de passe invalide"});
-                    }
-                    const accessToken = generateAccessToken(results[0].userId);
-                    setTokenCookie(res, accessToken);
-                    const refreshToken = generateRefreshToken(results[0].userId);
-
-                    console.log('-----> result userId: ', results[0].userId);
-
-                    return res.status(200).send({
-                        message: "Authentification réussie",
-                        accessToken,
-                        refreshToken,
-                        userId: results[0].userId
-                    });
-                }
-            });
-        }
-        else {
-            res.status(400).json({error: 'Certains champs sont manquants.'});
-        }
-    }
+    // public static async loginToCustomerAccount(req: Request, res: Response): Promise<void> {
+    //     const body = req.body;
+    //     const bodyCustomer: Customer = {
+    //         firstName: body.first_name,
+    //         lastName: body.last_name,
+    //         email: body.email,
+    //         phone: body.phone,
+    //         password: body.password,
+    //         address: body.address,
+    //         postCode: body.post_code,
+    //         city: body.city,
+    //         role: 'customer'
+    //     };
+    //     if (bodyCustomer.email !== '' && bodyCustomer.password !== '' && Object.keys(body).length === 2) {
+    //         db.query(`SELECT * FROM users WHERE role = 'customer' AND email = ?`, [bodyCustomer.email], async (error: QueryError | null, results: any) => {
+    //             if (error) throw error;
+    //             else if (results.length === 0) {
+    //                 return res.status(401).send({message: 'Aucun utilisateur trouvé !', accessToken: null});
+    //             } else {
+    //                 const compareHashPassword = await bcrypt.compare(bodyCustomer.password, results[0].password);
+    //                 if (!compareHashPassword) {
+    //                     return res.status(401).json({message: "Mot de passe invalide"});
+    //                 }
+    //                 const accessToken = generateAccessToken(results[0].userId);
+    //                 setTokenCookie(res, accessToken);
+    //                 const refreshToken = generateRefreshToken(results[0].userId);
+    //
+    //                 console.log('-----> result userId: ', results[0].userId);
+    //
+    //                 return res.status(200).send({
+    //                     message: "Authentification réussie",
+    //                     accessToken,
+    //                     refreshToken,
+    //                     userId: results[0].userId
+    //                 });
+    //             }
+    //         });
+    //     }
+    //     else {
+    //         res.status(400).json({error: 'Certains champs sont manquants.'});
+    //     }
+    // }
 
     public static async getAllCustomers(req: Request, res: Response): Promise<void> {
         try {

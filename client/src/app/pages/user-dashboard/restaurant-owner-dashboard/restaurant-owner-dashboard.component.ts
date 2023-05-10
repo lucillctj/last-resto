@@ -6,11 +6,11 @@ import {PopupUpdateRestaurantOwnerComponent} from "../../../components/popup-upd
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-restaurant-owner-profil',
-  templateUrl: './restaurant-owner-profil.component.html',
-  styleUrls: ['./restaurant-owner-profil.component.scss', '../../../../styles.scss']
+  selector: 'app-restaurant-owner-dashboard',
+  templateUrl: './restaurant-owner-dashboard.component.html',
+  styleUrls: ['./restaurant-owner-dashboard.component.scss', '../../../../styles.scss']
 })
-export class RestaurantOwnerProfilComponent {
+export class RestaurantOwnerDashboardComponent {
   constructor(
     private router: Router,
     private customerService: CustomerService,
@@ -22,6 +22,6 @@ export class RestaurantOwnerProfilComponent {
     this.modalService.open(PopupUpdateRestaurantOwnerComponent);
   }
   showRestaurantPage() {
-    this.router.navigate(['/restaurant-page']);
+    this.router.navigate(['/restaurant-dashboard']);
   }
 }
