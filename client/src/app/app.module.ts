@@ -23,6 +23,7 @@ import {
 import { RestaurantDashboardComponent } from './pages/restaurant-dashboard/restaurant-dashboard.component';
 import { PopupUpdateRestaurantComponent } from './components/popup-update-restaurant/popup-update-restaurant.component';
 import { PopupDeleteUserComponent } from './components/popup-delete-user/popup-delete-user.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PopupDeleteUserComponent } from './components/popup-delete-user/popup-d
     LogInComponent,
     RestaurantDashboardComponent,
     PopupUpdateRestaurantComponent,
-    PopupDeleteUserComponent
+    PopupDeleteUserComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

@@ -95,3 +95,13 @@ p{
   font-size: 1.3rem;
   text-align: center;
 }
+
+.navbar-bottom{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 69.5%;
+
+}
