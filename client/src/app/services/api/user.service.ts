@@ -12,13 +12,18 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  login(user: User): Observable<User> {
+  login(user: User): Observable<any> {
     const url = `${this.apiUrl}/login`;
-    return this.http.post<User>(url, user, {withCredentials: true});
+    return this.http.post<any>(url, user, {withCredentials: true});
   }
 
   logout(): Observable<void> {
     const url = `${this.apiUrl}/logout`;
     return this.http.post<void>(url, null);
+  }
+
+  deleteUser(user: User): Observable<void> {
+    const url = `${this.apiUrl}/delete/${user.user_id}`;
+    return this.http.delete<void>(url);
   }
 }

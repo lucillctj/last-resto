@@ -13,10 +13,10 @@ export class CustomerService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  createCustomer(user: Customer): Observable<Customer> {
+  createCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/signup`;
     // this.authService.setCurrentUserId(user.userId);
-    return this.http.post<Customer>(url, user, {withCredentials: true});
+    return this.http.post<any>(url, user, {withCredentials: true});
   }
 
   // login(user: Customer): Observable<Customer> {
@@ -31,16 +31,16 @@ export class CustomerService {
 
   getCustomerDashboard(userId: number): Observable<any> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<Customer>(url);
+    return this.http.get<any>(url);
   }
 
-  updateCustomer(user: Customer): Observable<Customer> {
-    const url = `${this.apiUrl}/update/${user.userId}`;
-    return this.http.put<Customer>(url, user);
+  updateCustomer(user: Customer): Observable<any> {
+    const url = `${this.apiUrl}/update/${user.user_id}`;
+    return this.http.put<any>(url, user);
   }
 
-  deleteCustomer(userId: number): Observable<void> {
-    const url = `${this.apiUrl}/delete/${userId}`;
-    return this.http.delete<void>(url);
-  }
+  // deleteCustomer(userId: number): Observable<void> {
+  //   const url = `${this.apiUrl}/delete/${userId}`;
+  //   return this.http.delete<void>(url);
+  // }
 }

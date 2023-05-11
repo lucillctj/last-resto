@@ -9,7 +9,7 @@ export const adminRoutes = () => {
     router.get('/', AdminController.getAllAdmins);
     router.get('/dashboard/:id', AdminController.getAdminDashboard);
     router.put('/update/:id', AdminController.updateAdmin);
-    router.delete('/delete/:id', AdminController.deleteAdmin);
+    // router.delete('/delete/:id', AdminController.deleteAdmin);
 
     return router;
 }

@@ -22,6 +22,7 @@ import {
 } from "./components/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
 import { RestaurantDashboardComponent } from './pages/restaurant-dashboard/restaurant-dashboard.component';
 import { PopupUpdateRestaurantComponent } from './components/popup-update-restaurant/popup-update-restaurant.component';
+import { PopupDeleteUserComponent } from './components/popup-delete-user/popup-delete-user.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PopupUpdateRestaurantComponent } from './components/popup-update-restau
     PopupUpdateRestaurantOwnerComponent,
     LogInComponent,
     RestaurantDashboardComponent,
-    PopupUpdateRestaurantComponent
+    PopupUpdateRestaurantComponent,
+    PopupDeleteUserComponent
   ],
   imports: [
     BrowserModule,

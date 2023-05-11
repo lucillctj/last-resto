@@ -4,6 +4,7 @@ import {db} from "../app";
 import {QueryError} from "mysql2/index";
 import bcrypt from "bcryptjs";
 import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth";
+import {ResultSetHeader} from "mysql2";
 
 export class UserController {
 
@@ -30,6 +31,7 @@ export class UserController {
                     return res.status(200).send({
                         message: "Authentification réussie",
                         userId: results[0].user_id,
+                        userRole: results[0].role,
                         accessToken,
                         refreshToken,
                     });
@@ -45,6 +47,24 @@ export class UserController {
         try {
             res.clearCookie('token');
             res.status(200).json({message: "Utilisateur déconnecté"});
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+
+    public static async deleteUser(req: Request, res: Response): Promise<void> {
+        const requestId = parseInt(req.params.id);
+        try {
+            db.execute(
+                `DELETE FROM users WHERE user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
+                    if (error) throw error;
+
+                    else if (results.affectedRows === 0) {
+                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                    } else {
+                        res.status(200).send('L\'utilisateur a été supprimé !');
+                    }
+                })
         } catch (error) {
             res.status(500).json({message: "Internal server error"});
         }

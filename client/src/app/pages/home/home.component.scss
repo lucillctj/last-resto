@@ -1,5 +1,21 @@
 @import "../../../styles.scss";
 
+.btn-login-link {
+  position: absolute;
+  height: 2em;
+  left: 80%;
+  top: 3%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #000000;
+  font-size: 0.8em;
+}
+
+.btn-login-link:hover{
+  color: $orange;
+}
+
 .logo {
   width: 45%;
   margin-top: 10%;

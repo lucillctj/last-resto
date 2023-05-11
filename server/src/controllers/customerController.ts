@@ -136,10 +136,13 @@ export class CustomerController {
             city: body.city,
             role: 'customer'
         };
+
+        const hashPassword = await bcrypt.hash(bodyCustomer.password, 10);
+
         try {
             if (bodyCustomer.firstName !== '' && bodyCustomer.lastName !== '' && bodyCustomer.email !== '' && bodyCustomer.phone !== '' && bodyCustomer.password !== '' && bodyCustomer.address !== '' && bodyCustomer.postCode !== '' && bodyCustomer.city !== '' && Object.keys(body).length === 8) {
                 const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, address = ?, post_code = ?, city = ? WHERE role = 'customer' AND user_id = ${requestId}`;
-                const params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, bodyCustomer.password, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
+                const params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, hashPassword, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
@@ -158,23 +161,23 @@ export class CustomerController {
     }
 
 
-    public static async deleteCustomer(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
-        try {
-            db.execute(
-                `DELETE FROM users WHERE role = 'customer' AND user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
-                    if (error) throw error;
-
-                    else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
-                    } else {
-                        res.status(200).send('L\'utilisateur a été supprimé !');
-                    }
-                })
-        } catch (error) {
-            res.status(500).json({message: "Internal server error"});
-        }
-    }
+    // public static async deleteCustomer(req: Request, res: Response): Promise<void> {
+    //     const requestId = parseInt(req.params.id);
+    //     try {
+    //         db.execute(
+    //             `DELETE FROM users WHERE role = 'customer' AND user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
+    //                 if (error) throw error;
+    //
+    //                 else if (results.affectedRows === 0) {
+    //                     res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+    //                 } else {
+    //                     res.status(200).send('L\'utilisateur a été supprimé !');
+    //                 }
+    //             })
+    //     } catch (error) {
+    //         res.status(500).json({message: "Internal server error"});
+    //     }
+    // }
 }
 
 //pour delete cookie (logout...)

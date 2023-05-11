@@ -10,7 +10,7 @@ export const restaurantOwnerRoutes = () => {
     router.get('/', RestaurantOwnerController.getAllRestaurantOwners);
     router.get('/dashboard/:id', RestaurantOwnerController.getRestaurantOwnerDashboard);
     router.put('/update/:id', RestaurantOwnerController.updateRestaurantOwner);
-    router.delete('/delete/:id', RestaurantOwnerController.deleteRestaurantOwner);
+    // router.delete('/delete/:id', RestaurantOwnerController.deleteRestaurantOwner);
 
     return router;
 }

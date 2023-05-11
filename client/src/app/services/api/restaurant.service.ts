@@ -11,23 +11,23 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) { }
 
-  createRestaurant(restaurant: Restaurant): Observable<Restaurant> {
+  createRestaurant(restaurant: Restaurant): Observable<any> {
     const url = `${this.apiUrl}/create`;
-    return this.http.post<Restaurant>(url, restaurant);
+    return this.http.post<any>(url, restaurant);
   }
 
   getRestaurants(): Observable<Restaurant[]> {
     return this.http.get<Restaurant[]>(this.apiUrl);
   }
 
-  getRestaurantDashboard(restaurantId: number): Observable<Restaurant> {
+  getRestaurantDashboard(restaurantId: number): Observable<any> {
     const url = `${this.apiUrl}/dashboard/${restaurantId}`;
-    return this.http.get<Restaurant>(url);
+    return this.http.get<any>(url);
   }
 
-  updateRestaurant(restaurant: Restaurant): Observable<Restaurant> {
+  updateRestaurant(restaurant: Restaurant): Observable<any> {
     const url = `${this.apiUrl}/update/${restaurant.restaurantId}`;
-    return this.http.put<Restaurant>(url, restaurant);
+    return this.http.put<any>(url, restaurant);
   }
 
   deleteRestaurant(restaurantId: number): Observable<void> {

@@ -11,27 +11,27 @@ export class RestaurantOwnerService {
 
   constructor(private http: HttpClient) { }
 
-  createRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
+  createRestaurantOwner(user: RestaurantOwner): Observable<any> {
     const url = `${this.apiUrl}/signup`;
-    return this.http.post<RestaurantOwner>(url, user);
+    return this.http.post<any>(url, user);
   }
 
   getAllRestaurantOwners(): Observable<RestaurantOwner[]> {
     return this.http.get<RestaurantOwner[]>(this.apiUrl);
   }
 
-  getRestaurantOwnerDashboard(userId: number): Observable<RestaurantOwner> {
+  getRestaurantOwnerDashboard(userId: number): Observable<any> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<RestaurantOwner>(url);
+    return this.http.get<any>(url);
   }
 
-  updateRestaurantOwner(user: RestaurantOwner): Observable<RestaurantOwner> {
-    const url = `${this.apiUrl}/update/${user.userId}`;
-    return this.http.put<RestaurantOwner>(url, user);
+  updateRestaurantOwner(user: RestaurantOwner): Observable<any> {
+    const url = `${this.apiUrl}/update/${user.user_id}`;
+    return this.http.put<any>(url, user);
   }
 
-  deleteRestaurantOwner(userId: number): Observable<void> {
-    const url = `${this.apiUrl}/delete/${userId}`;
-    return this.http.delete<void>(url);
-  }
+  // deleteRestaurantOwner(userId: number): Observable<void> {
+  //   const url = `${this.apiUrl}/delete/${userId}`;
+  //   return this.http.delete<void>(url);
+  // }
 }

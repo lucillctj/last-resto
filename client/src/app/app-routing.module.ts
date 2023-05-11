@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'api/v1', component: HomeComponent },
   { path: 'api/v1/customers/signup', component: SignUpCustomerComponent },
   { path: 'api/v1/restaurant-owners/signup', component: SignUpRestaurantOwnerComponent },
-  { path: 'api/v1/customers/login', component: LogInComponent },
+  { path: 'api/v1/users/login', component: LogInComponent },
   { path: 'api/v1/customers/dashboard/:id', component: CustomerDashboardComponent },
   { path: 'api/v1/restaurant-owners/dashboard/:id', component: RestaurantOwnerDashboardComponent },
   { path: 'api/v1/restaurants/dashboard/:id', component: RestaurantDashboardComponent }
