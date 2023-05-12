@@ -15,7 +15,6 @@ export class CustomerService {
 
   createCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/signup`;
-    // this.authService.setCurrentUserId(user.userId);
     return this.http.post<any>(url, user, {withCredentials: true});
   }
 

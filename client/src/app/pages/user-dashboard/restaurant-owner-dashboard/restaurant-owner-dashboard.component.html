@@ -9,17 +9,16 @@
   <link rel="stylesheet" type="text/scss" href="../../../../styles.scss">
 </head>
 
-<body>
+<body *ngIf="currentUser">
 <h1 class="page-title">Mon profil restaurateur</h1>
 
 <div class="card card-profil">
 
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">
-      <p class="name">Eliot Magnin</p>
-      <p class="address">4 rue des champs 59203 Loita</p>
-      <p class="email">eliotmagnin@gmail.com</p>
-      <p class="phone">0601020304</p>
+      <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
+      <p class="email">{{ currentUser.email }}</p>
+      <p class="phone">{{ currentUser.phone }}</p>
       <div class="bloc-buttons">
         <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
         <button class="btn-account btn-delete" type="button">Supprimer mon compte</button>
@@ -27,16 +26,17 @@
     </div>
 
       <div class="col-lg-6 col-md-3 col-sm-6">
-        <section class="restaurants-list-section">
+        <section class="restaurants-list-section" *ngIf="restaurants">
         <h3>Mes restaurants</h3>
         <div class="card card-restaurant" type="button" (click)="showRestaurantPage()">
           <div class="icons">
             <div class="restaurant-name">
-              The Old Spaghetti
-            </div>
+              {{             restaurants[0].name}}            </div>
           </div>
         </div>
     </section>
+        <button class="btn-account btn-create-restaurant" type="button" (click)="openPopupToCreateRestaurant()">+ créer un restaurant</button>
+
       </div>
 
   </div>

@@ -1,13 +1,13 @@
 export interface Restaurant {
-  restaurantId?: number;
+  restaurant_id?: number;
   name: string;
   description: string;
   address: string;
-  postCode: string;
+  post_code: string;
   city: string;
   phone: string;
   website: string;
-  isReserved: boolean;
+  is_reserved: boolean;
   user_id: number;
 
 }

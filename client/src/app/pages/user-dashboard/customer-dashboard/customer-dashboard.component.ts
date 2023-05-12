@@ -14,13 +14,14 @@ import {AuthService} from "../../../services/auth.service";
   styleUrls: ['./customer-dashboard.component.scss', '../../../../styles.scss']
 })
 export class CustomerDashboardComponent implements OnInit {
-  currentUser: Customer
+  currentUser: Customer;
 
-  constructor(private route: ActivatedRoute,
-              private userService: UserService,
-              private customerService: CustomerService,
-              private authService: AuthService,
-              private modalService: NgbModal
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private customerService: CustomerService,
+    private authService: AuthService,
+    private modalService: NgbModal
   ) {
     this.currentUser = {} as Customer;
   }
@@ -29,12 +30,12 @@ export class CustomerDashboardComponent implements OnInit {
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
     if (currentUserId) {
       this.authService.setCurrentUserId(currentUserId);
-      this.customerService.getCustomerDashboard(currentUserId).subscribe(
-        (data) => {
+      this.customerService.getCustomerDashboard(currentUserId)
+        .subscribe((data) => {
           this.currentUser = data.results[0];
         },
         (error) => {
-          console.error('Une erreur s\'est produite lors de la récupération des données du tableau de bord du client :', error);
+          console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
         })
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');

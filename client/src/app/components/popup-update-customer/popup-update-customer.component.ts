@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {Customer} from "../../interfaces/customer-interface";
 import {CustomerService} from "../../services/api/customer.service";
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './popup-update-customer.component.html',
   styleUrls: ['./popup-update-customer.component.scss', '../../../styles.scss']
 })
-export class PopupUpdateCustomerComponent implements OnInit{
+export class PopupUpdateCustomerComponent{
   @Input() currentUser!: Customer;
 
   submitted = false;
@@ -29,14 +29,6 @@ export class PopupUpdateCustomerComponent implements OnInit{
     this.errorMessageEmail = null;
     this.errorMessagePhone = null;
     this.errorMessage = null;
-  }
-
-  // initializeUpdatedUser() {
-  //   this.updatedUser = { ...this.currentUser };
-  // }
-  ngOnInit(){
-    // this.initializeUpdatedUser();
-
   }
 
   onSubmit() {

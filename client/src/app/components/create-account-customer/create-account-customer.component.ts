@@ -18,9 +18,7 @@ export class CreateAccountCustomerComponent {
 
   constructor(
     private customerService: CustomerService,
-    private router: Router,
-
-
+    private router: Router
   ) {
     this.newUser = {} as Customer;
     this.errorMessageEmail = null;

@@ -15,7 +15,7 @@
   </div>
   <div class="form-group">
     <label>Code postal</label>
-    <input type="text" class="form-control" placeholder="Code postal" [(ngModel)]="updatedRestaurant.postCode" name="email">
+    <input type="text" class="form-control" placeholder="Code postal" [(ngModel)]="updatedRestaurant.post_code" name="email">
   </div>
   <div class="form-group">
     <label>Ville</label>
@@ -24,6 +24,10 @@
   <label>Téléphone</label>
   <div class="form-group">
     <input type="tel" class="form-control" placeholder="Téléphone" [(ngModel)]="updatedRestaurant.phone" name="phone">
+  </div>
+  <label>Site internet</label>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Site internet" [(ngModel)]="updatedRestaurant.website" name="phone">
   </div>
   <button type="submit" class="btn" (click)="updateRestaurant(updatedRestaurant)">Mettre à jour !</button>
 </form>

@@ -16,8 +16,9 @@ export class RestaurantService {
     return this.http.post<any>(url, restaurant);
   }
 
-  getRestaurants(): Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>(this.apiUrl);
+  getRestaurantsByUserId(userId: number): Observable<Restaurant[]> {
+    const url = `${this.apiUrl}/user/${userId}`;
+    return this.http.get<Restaurant[]>(url);
   }
 
   getRestaurantDashboard(restaurantId: number): Observable<any> {
@@ -26,7 +27,7 @@ export class RestaurantService {
   }
 
   updateRestaurant(restaurant: Restaurant): Observable<any> {
-    const url = `${this.apiUrl}/update/${restaurant.restaurantId}`;
+    const url = `${this.apiUrl}/update/${restaurant.restaurant_id}`;
     return this.http.put<any>(url, restaurant);
   }
 

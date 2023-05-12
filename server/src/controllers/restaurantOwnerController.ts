@@ -30,6 +30,7 @@ export class RestaurantOwnerController {
                         setTokenCookie(res, accessToken);
                         res.status(201).send({
                             message: `Utilisateur avec le rôle 'restaurant owner' a été créé !`,
+                            userId: results.insertId,
                             accessToken
                         });
                     }

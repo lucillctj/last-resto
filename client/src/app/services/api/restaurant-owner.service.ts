@@ -13,7 +13,7 @@ export class RestaurantOwnerService {
 
   createRestaurantOwner(user: RestaurantOwner): Observable<any> {
     const url = `${this.apiUrl}/signup`;
-    return this.http.post<any>(url, user);
+    return this.http.post<any>(url, user, {withCredentials: true});
   }
 
   getAllRestaurantOwners(): Observable<RestaurantOwner[]> {

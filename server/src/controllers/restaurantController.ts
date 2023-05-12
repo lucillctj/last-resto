@@ -16,6 +16,19 @@ export class RestaurantController {
         }
     }
 
+    public static async getAllRestaurantsByUserId(req: Request, res: Response): Promise<void> {
+        const requestId = parseInt(req.params.id);
+        try {
+            db.query(
+                `SELECT * FROM restaurants WHERE user_id =${requestId}`,
+                (error: Error | null, results: ResultSetHeader) => {
+                    return res.status(200).send(results);
+                })
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+
     public static async getRestaurantDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
@@ -37,7 +50,6 @@ export class RestaurantController {
     public static async createRestaurant(req: Request, res: Response): Promise<void> {
         const body = req.body;
         const restaurant: Restaurant = {
-            restaurantId: body.restaurant_id,
             name: body.name,
             description: body.description,
             address: body.address,
@@ -49,7 +61,7 @@ export class RestaurantController {
             userId: body.user_id
         };
         try {
-            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.address !== '' && restaurant.userId >=1 && Object.keys(body).length === 8 || 9) {
+            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.userId >=1 && Object.keys(body).length === 7 || 8) {
                 const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_reserved, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
                 const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, false, restaurant.userId];
                 db.execute(sql, params, async (error: QueryError | null) => {

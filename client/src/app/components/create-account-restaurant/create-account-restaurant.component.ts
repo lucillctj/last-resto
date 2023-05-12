@@ -27,6 +27,7 @@ export class CreateAccountRestaurantComponent {
 
   onSubmit() {
     this.submitted = true;
+
     this.restaurantOwnerService.createRestaurantOwner(this.newUser)
       .subscribe((res) => {
           this.router.navigate([`/api/v1/restaurant-owners/dashboard/${res.userId}`]);
