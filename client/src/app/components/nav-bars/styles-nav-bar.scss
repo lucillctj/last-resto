@@ -1,5 +1,4 @@
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-@import "../../../styles.scss";
+@import "../../../styles";
 
 .navbar {
   display: flex;
@@ -7,9 +6,8 @@
   align-items: center;
   position: fixed;
   bottom: 0;
-  width: 40%;
   border-radius: 1.2em 1.2em 0 0;
-  background-color: $blue;
+  background-color: $orange;
   z-index: 999;
   text-align: center;
 }
@@ -26,14 +24,6 @@
   margin: 0.2em 4em;
 }
 
-.btn-icon:hover{
-  background-color: $orange;
-}
-
-.icon-profil{
-  font-size: 2em;
-}
-
-.icon-search{
+.icon-profil {
   font-size: 1.6em;
 }

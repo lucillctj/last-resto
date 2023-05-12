@@ -1,7 +1,7 @@
 @import "../../../../styles";
 
 body{
-  background-color: $orange;
+  background-color: $blue;
   margin-top: 0;
 }
 
@@ -21,7 +21,7 @@ body{
 }
 
 .name{
-  color: $orange;
+  color: $blue;
   font-size: 1.2em;
   font-weight: 500;
 }
@@ -42,11 +42,11 @@ body{
 }
 .btn-update{
   border: none;
-  background-color: $salmon;
+  background-color: $blue;
   color: white;
 }
 .btn-update:hover{
-  background-color: $salmon-hover;
+  background-color: $blue-hover;
 }
 .btn-delete{
   border: 0.4em $grey;

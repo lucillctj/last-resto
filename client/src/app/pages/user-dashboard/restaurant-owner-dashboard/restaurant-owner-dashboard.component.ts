@@ -22,6 +22,6 @@ export class RestaurantOwnerDashboardComponent {
     this.modalService.open(PopupUpdateRestaurantOwnerComponent);
   }
   showRestaurantPage() {
-    this.router.navigate(['/restaurant-dashboard']);
+    this.router.navigate(['/restaurants/dashboard/']);
   }
 }

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss', '../../../styles.scss']
+  selector: 'app-nav-bar-customer',
+  templateUrl: './nav-bar-customer.component.html',
+  styleUrls: ['./nav-bar-customer.component.scss', '../../../../styles.scss']
 })
-export class NavBarComponent {
+export class NavBarCustomerComponent {
   isSearchActive: boolean;
   isDashboardActive: boolean;
 

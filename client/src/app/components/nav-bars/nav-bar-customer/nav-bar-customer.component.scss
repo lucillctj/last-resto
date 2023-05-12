@@ -1,0 +1,18 @@
+@import "../../../../styles";
+
+.navbar {
+  width: 40%;
+}
+
+.btn-icon {
+  color: $blue;
+}
+
+.btn-icon:hover{
+  background-color: $blue;
+  color: white;
+}
+
+.icon-search{
+  font-size: 1.6em;
+}
