@@ -37,7 +37,7 @@ export class RestaurantController {
                 (error: Error | null, results: any) => {
                     if (error) throw error;
                     else if (results.length === 0) {
-                        res.status(404).send("Id doesn't exist or doesn't have the right format");
+                        res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
                         res.status(200).send(results);
                     }
@@ -56,21 +56,23 @@ export class RestaurantController {
             postCode: body.post_code,
             city: body.city,
             phone: body.phone,
-            website: body.website,
+            website: body.website || null,
             isReserved: body.is_reserved,
             userId: body.user_id
         };
         try {
-            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.userId >=1 && Object.keys(body).length === 7 || 8) {
+            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.userId! >=1 && (Object.keys(body).length === 7 || 8)
+            ) {
                 const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_reserved, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
                 const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, false, restaurant.userId];
-                db.execute(sql, params, async (error: QueryError | null) => {
+                db.execute(sql, params, async (error: QueryError | null, restaurantResults: any) => {
                     if (error) throw error;
                     else {
-                        res.status(201).send(`Restaurant ${restaurant.name} was created!`);
+                        // const sqlUpdate = `UPDATE users SET restaurant_id = ? WHERE role = 'restaurant owner' AND user_id = ?`;
+                        // await db.execute(sqlUpdate, [restaurantResults.insertId, restaurant.userId], async () =>
+                            res.status(201).send({message: `Restaurant ${restaurant.name} was created!`});
                     }
                 })
-
             } else {
                 res.status(400).json({error: 'Missing or incorrect values'});
             }
@@ -97,15 +99,15 @@ export class RestaurantController {
             userId: body.user_id
         };
         try {
-            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.address !== '' && restaurant.userId >=1 && Object.keys(body).length === 8 || 9) {
+            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.address !== '' && Object.keys(body).length === 8 || 9) {
                 const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, is_reserved = ?, user_id = ? WHERE restaurant_id = ${requestId}`;
                 const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, restaurant.isReserved, restaurant.userId];
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send("Restaurant id doesn't exist or doesn't have the right format");
+                        res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(201).send(`Restaurant ${restaurant.name} was updated!`);
+                        res.status(201).send({message: `Restaurant ${restaurant.name} was updated!`});
                     }
                 })
 
@@ -126,9 +128,9 @@ export class RestaurantController {
                 `DELETE FROM restaurants WHERE restaurant_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send("Restaurant id doesn't exist or doesn't have the right format");
+                        res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send(`Restaurant ${requestId} was deleted!`);
+                        res.status(200).send({message:`Restaurant ${requestId} was deleted!`});
                     }
                 })
         } catch (error) {

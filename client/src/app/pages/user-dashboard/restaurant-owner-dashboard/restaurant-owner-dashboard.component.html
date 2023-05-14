@@ -25,19 +25,18 @@
       </div>
     </div>
 
-      <div class="col-lg-6 col-md-3 col-sm-6">
-        <section class="restaurants-list-section" *ngIf="restaurants">
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <section class="restaurants-list-section" *ngIf="currentRestaurants">
         <h3>Mes restaurants</h3>
-        <div class="card card-restaurant" type="button" (click)="showRestaurantPage()">
+        <div *ngFor="let restaurant of currentRestaurants" class="card card-restaurant" type="button" (click)="showRestaurantPage(restaurant.restaurant_id)">
           <div class="icons">
-            <div class="restaurant-name">
-              {{             restaurants[0].name}}            </div>
+            <div class="restaurant-name">{{ restaurant.name}}</div>
           </div>
         </div>
-    </section>
-        <button class="btn-account btn-create-restaurant" type="button" (click)="openPopupToCreateRestaurant()">+ créer un restaurant</button>
+      </section>
+      <button class="btn-account btn-create-restaurant" type="button" (click)="openPopupToCreateRestaurant()">+ créer un restaurant</button>
 
-      </div>
+    </div>
 
   </div>
 </div>

@@ -6,9 +6,9 @@ export class Restaurant {
     postCode: string;
     city: string;
     phone: string;
-    website: string;
-    isReserved: boolean;
-    userId: number;
+    website?: string;
+    isReserved?: boolean;
+    userId?: number;
 
     constructor(restaurantId: number, name: string, description: string, address: string, postCode: string, city: string, phone: string, website: string, isReserved: boolean, userId: number) {
         this.restaurantId = restaurantId;

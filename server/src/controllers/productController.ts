@@ -24,7 +24,7 @@ export class ProductController {
                 (error: Error | null, results: any) => {
                     if (error) throw error;
                     else if (results.length === 0) {
-                        res.status(404).send("Id doesn't exist or doesn't have the right format");
+                        res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
                         res.status(200).send(results);
                     }
@@ -51,7 +51,7 @@ export class ProductController {
                 db.execute(sql, params, async (error: QueryError | null) => {
                     if (error) throw error;
                     else {
-                        res.status(201).send(`Product ${product.name} was created!`);
+                        res.status(201).send({message: `Product ${product.name} was created!`});
                     }
                 })
             } else {
@@ -81,9 +81,9 @@ export class ProductController {
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send("Product id doesn't exist or doesn't have the right format");
+                        res.status(404).send({message: "Product id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(201).send(`Product ${product.name} was updated!`);
+                        res.status(201).send({message: `Product ${product.name} was updated!`});
                     }
                 })
             } else {
@@ -104,9 +104,9 @@ export class ProductController {
                     if (error) throw error;
 
                     else if (results.affectedRows === 0) {
-                        res.status(404).send("Product doesn't exist or doesn't have the right format");
+                        res.status(404).send({message: "Product doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send('Product deleted!');
+                        res.status(200).send({message: 'Product deleted!'});
                     }
                 })
         } catch (error) {

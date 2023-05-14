@@ -9,7 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-popup-delete-user',
   templateUrl: './popup-delete-user.component.html',
-  styleUrls: ['./popup-delete-user.component.scss']
+  styleUrls: ['./popup-delete-user.component.scss', '../../../styles.scss']
 })
 export class PopupDeleteUserComponent {
   @Input() currentUser!: User;
@@ -36,10 +36,9 @@ export class PopupDeleteUserComponent {
       setTimeout(() => {
         this.router.navigate(['/api/v1']);
         this.modalService.dismissAll()
-      }, 3000);
+      }, 2000000);
     } catch (error) {
-      console.log('---> 2');
-      this.errorMessage = 'Erreur lors de la mise à jour, veuillez réessayer ultérieurement.';
+      this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.';
     }
   }
 

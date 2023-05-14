@@ -26,6 +26,7 @@ import { PopupDeleteUserComponent } from './components/popup-delete-user/popup-d
 import { NavBarCustomerComponent } from './components/nav-bars/nav-bar-customer/nav-bar-customer.component';
 import { NavBarRestaurantOwnerComponent } from './components/nav-bars/nav-bar-restaurant-owner/nav-bar-restaurant-owner.component';
 import { PopupCreateRestaurantComponent } from './components/popup-create-restaurant/popup-create-restaurant.component';
+import { PopupDeleteRestaurantComponent } from './components/popup-delete-restaurant/popup-delete-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PopupCreateRestaurantComponent } from './components/popup-create-restau
     PopupDeleteUserComponent,
     NavBarCustomerComponent,
     NavBarRestaurantOwnerComponent,
-    PopupCreateRestaurantComponent
+    PopupCreateRestaurantComponent,
+    PopupDeleteRestaurantComponent
   ],
   imports: [
     BrowserModule,

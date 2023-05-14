@@ -9,20 +9,20 @@
   <link rel="stylesheet" type="text/scss" href="../../../styles.scss">
 </head>
 
-<body>
-<h1 class="page-title">Mon restaurant : The Old Spaghetti</h1>
+<body *ngIf="currentRestaurant">
+<h1 class="page-title">Mon restaurant : {{currentRestaurant.name}}</h1>
 
 <div class="card card-restaurant">
 
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">
-      <p class="name">The Old Spaghetti</p>
-      <p class="description">Cuisine tradictionnelle</p>
-      <p class="address">34 chemin du liège 34370 Crat</p>
-      <p class="phone">0438350304</p>
+      <p class="name">{{currentRestaurant.name}}</p>
+      <p class="description">{{currentRestaurant.description}}</p>
+      <p class="address">{{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
+      <p class="phone">{{currentRestaurant.phone}}</p>
       <div class="bloc-buttons">
         <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>
-        <button class="btn-account btn-delete" type="button">Supprimer ce restaurant</button>
+        <button class="btn-account btn-delete" type="button" (click)="openPopupToDelete()">Supprimer ce restaurant</button>
       </div>
     </div>
 

@@ -99,7 +99,7 @@ export class AdminController {
 
                     if (error) throw error;
                     else if (results.length === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
                         res.status(200).send(results);
                     }
@@ -128,10 +128,10 @@ export class AdminController {
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     }
                     else {
-                        res.status(201).send(`Utilisateur avec le rôle 'admin' a été mis à jour !`);
+                        res.status(201).send({message: `Utilisateur avec le rôle 'admin' a été mis à jour !`});
                     }
                 })
             }else {
@@ -151,9 +151,9 @@ export class AdminController {
                     if (error) throw error;
 
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
-                        res.status(200).send('L\'utilisateur a été supprimé !');
+                        res.status(200).send({message: 'L\'utilisateur a été supprimé !'});
                     }
                 })
         } catch (error) {
