@@ -9,20 +9,20 @@ export class RestaurantController {
             db.query(
                 `SELECT * FROM restaurants`,
                 (error: Error | null, results: ResultSetHeader) => {
-                    return res.status(200).send(results);
+                    return res.status(200).send({results});
                 })
         } catch (error) {
             res.status(500).json({message: "Internal server error"});
         }
     }
 
-    public static async getAllRestaurantsByUserId(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
+    public static async getRestaurantByUserId(req: Request, res: Response): Promise<void> {
+        const userRequestId = parseInt(req.params.id);
         try {
             db.query(
-                `SELECT * FROM restaurants WHERE user_id =${requestId}`,
+                `SELECT * FROM restaurants WHERE user_id =${userRequestId}`,
                 (error: Error | null, results: ResultSetHeader) => {
-                    return res.status(200).send(results);
+                    return res.status(200).send({results});
                 })
         } catch (error) {
             res.status(500).json({message: "Internal server error"});

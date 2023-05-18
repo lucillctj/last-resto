@@ -20,9 +20,22 @@ export class NavBarRestaurantOwnerComponent {
     this.isDashboardActive = false;
   }
 
+  // redirectToReservationsDashboard() {
+  //   const currentRestaurantId = this.authService.getCurrentRestaurantId();
+  //
+  //   const redirectUrl = `/api/v1/restaurants/${currentRestaurantId}`;
+  //   if (this.router.url === redirectUrl) {
+  //     this.isSearchActive = true;
+  //   } else {
+  //     this.isSearchActive = false;
+  //     this.router.navigate([redirectUrl]);
+  //   }
+  // }
 
-  redirectToRestaurantSearch() {
-    const redirectUrl = `/api/v1/customers/restaurants-search`;
+  redirectToRestaurantDashboard() {
+    const currentRestaurantId = this.authService.getCurrentRestaurantId();
+console.log(currentRestaurantId)
+    const redirectUrl = `/api/v1/restaurants/dashboard/${currentRestaurantId}`;
     if (this.router.url === redirectUrl) {
       this.isSearchActive = true;
     } else {
@@ -31,7 +44,7 @@ export class NavBarRestaurantOwnerComponent {
     }
   }
 
-  redirectToDashboard() {
+  redirectToUserDashboard() {
     const currentUserId = this.authService.getCurrentUserId();
     const redirectUrl = `/api/v1/restaurant-owners/dashboard/${currentUserId}`;
     if (this.router.url === redirectUrl) {

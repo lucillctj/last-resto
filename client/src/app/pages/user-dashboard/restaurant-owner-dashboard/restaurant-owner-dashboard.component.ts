@@ -20,7 +20,7 @@ import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
 })
 export class RestaurantOwnerDashboardComponent implements OnInit {
   currentUser: RestaurantOwner;
-  currentRestaurants: Restaurant[];
+  currentRestaurant: Restaurant;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,29 +32,28 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
     private modalService: NgbModal
   ) {
     this.currentUser = {} as RestaurantOwner;
-    this.currentRestaurants = []
+    this.currentRestaurant = {} as Restaurant;
   }
 
   ngOnInit(){
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
     if (currentUserId) {
       this.authService.setCurrentUserId(currentUserId);
-
       this.restaurantOwnerService.getRestaurantOwnerDashboard(currentUserId)
-        .subscribe(
-          (data) => {
-            this.currentUser = data[0];
+        .subscribe((data) => {
+            this.currentUser = data.results[0];
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
           })
-      this.restaurantService.getRestaurantsByUserId(currentUserId)
-        .subscribe(
-          (data: Restaurant[]) => {
-            this.currentRestaurants = data;
+      this.restaurantService.getRestaurantByUserId(currentUserId)
+        .subscribe((data) => {
+            this.currentRestaurant = data.results[0];
+            this.authService.setCurrentRestaurantId(this.currentRestaurant.restaurant_id);
+
           },
           (error) => {
-            console.error('Une erreur s\'est produite lors de la récupération des données des restaurants :', error);
+            console.error('Une erreur s\'est produite lors de la récupération des données du restaurant :', error);
           })
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');

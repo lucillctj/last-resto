@@ -104,7 +104,7 @@ export class RestaurantOwnerController {
                     else if (results.length === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send(results);
+                        res.status(200).send({results});
                     }
                 })
         } catch (error) {

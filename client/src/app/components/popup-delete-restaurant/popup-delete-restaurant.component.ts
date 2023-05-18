@@ -29,7 +29,6 @@ export class PopupDeleteRestaurantComponent {
   }
 
   async confirmToDelete() {
-    console.log(this.currentRestaurant)
     this.restaurantService.deleteRestaurant(this.currentRestaurant)
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été supprimé !';

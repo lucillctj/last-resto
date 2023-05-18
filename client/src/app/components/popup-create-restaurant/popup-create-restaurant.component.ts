@@ -43,7 +43,7 @@ export class PopupCreateRestaurantComponent {
             this.router.navigate([`/api/v1/restaurant-owners/dashboard/${currentUserId}`]);
             location.reload();
             this.modalService.dismissAll()
-          }, 30000)
+          }, 2000)
         },
         error => {
           console.log('Erreur lors de la création du restaurant :', error);

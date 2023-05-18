@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  public currentUserId: number | undefined;
+  currentUserId: number | undefined;
+  currentRestaurantId: number | undefined;
+
 
   constructor() { }
 
@@ -13,6 +15,14 @@ export class AuthService {
   }
   getCurrentUserId() {
     return this.currentUserId;
+  }
+
+  setCurrentRestaurantId(restaurantId: number | undefined) {
+    this.currentRestaurantId = restaurantId;
+  }
+
+  getCurrentRestaurantId() {
+    return this.currentRestaurantId;
   }
 
   // isLoggedIn(): boolean {
