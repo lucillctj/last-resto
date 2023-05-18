@@ -48,9 +48,11 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
           })
       this.restaurantService.getRestaurantByUserId(currentUserId)
         .subscribe((data) => {
-            this.currentRestaurant = data.results[0];
-            this.authService.setCurrentRestaurantId(this.currentRestaurant.restaurant_id);
-
+          console.log(data.results.length)
+            if(data.results.length >= 1) {
+              this.currentRestaurant = data.results[0];
+              this.authService.setCurrentRestaurantId(this.currentRestaurant.restaurant_id);
+            }
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données du restaurant :', error);

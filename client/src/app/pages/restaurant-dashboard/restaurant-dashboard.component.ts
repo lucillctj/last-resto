@@ -43,7 +43,7 @@ export class RestaurantDashboardComponent implements OnInit {
             console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
           })
     } else {
-      console.error('L\'ID du restauurant n\'est pas un nombre valide.');
+      console.error('L\'ID du restaurant n\'est pas un nombre valide.');
     }
   }
 
