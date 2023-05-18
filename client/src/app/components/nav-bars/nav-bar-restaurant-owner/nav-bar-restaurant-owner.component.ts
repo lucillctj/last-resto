@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
+import {PopupDeleteRestaurantComponent} from "../../popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component";
+import {PopupInformationComponent} from "../../popups/restaurant/popup-information/popup-information.component";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -14,7 +17,8 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: NgbModal,
   ) {
     this.isRestaurantDashboardActive = false;
     this.isUserDashboardActive = false;
@@ -47,8 +51,11 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
 
     if (this.router.url === urlRestaurantDashboard) {
       return
-    } else {
+    } else if(currentRestaurantId) {
       this.router.navigate([urlRestaurantDashboard]);
+    }
+    else{
+        this.modalService.open(PopupInformationComponent);
     }
   }
 

@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {AuthService} from "../../services/auth.service";
-import {Restaurant} from "../../interfaces/restaurant-interface";
-import {RestaurantService} from "../../services/api/restaurant.service";
+import {AuthService} from "../../../../services/auth.service";
+import {Restaurant} from "../../../../interfaces/restaurant-interface";
+import {RestaurantService} from "../../../../services/api/restaurant.service";
 
 @Component({
   selector: 'app-popup-delete-restaurant',
   templateUrl: './popup-delete-restaurant.component.html',
-  styleUrls: ['./popup-delete-restaurant.component.scss', '../../../styles.scss']
+  styleUrls: ['./popup-delete-restaurant.component.scss', '../../../../../styles.scss']
 })
 export class PopupDeleteRestaurantComponent {
   @Input() currentRestaurant!: Restaurant;

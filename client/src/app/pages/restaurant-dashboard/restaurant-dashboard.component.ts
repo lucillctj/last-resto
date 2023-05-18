@@ -3,12 +3,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import {
   PopupUpdateRestaurantComponent
-} from "../../components/popup-update-restaurant/popup-update-restaurant.component";
+} from "../../components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component";
 import {Restaurant} from "../../interfaces/restaurant-interface";
 import {RestaurantService} from "../../services/api/restaurant.service";
 import {
   PopupDeleteRestaurantComponent
-} from "../../components/popup-delete-restaurant/popup-delete-restaurant.component";
+} from "../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component";
 import {AuthService} from "../../services/auth.service";
 
 @Component({

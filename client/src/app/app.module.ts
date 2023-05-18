@@ -15,18 +15,19 @@ import {RestaurantOwnerService} from "./services/api/restaurant-owner.service";
 import { CustomerDashboardComponent } from './pages/user-dashboard/customer-dashboard/customer-dashboard.component';
 import { RestaurantOwnerDashboardComponent } from './pages/user-dashboard/restaurant-owner-dashboard/restaurant-owner-dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PopupUpdateCustomerComponent } from './components/popup-update-customer/popup-update-customer.component';
+import { PopupUpdateCustomerComponent } from './components/popups/customer/popup-update-customer/popup-update-customer.component';
 import { LogInComponent } from './pages/log-in/log-in.component';
 import {
   PopupUpdateRestaurantOwnerComponent
-} from "./components/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
+} from "./components/popups/restaurant-owner/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
 import { RestaurantDashboardComponent } from './pages/restaurant-dashboard/restaurant-dashboard.component';
-import { PopupUpdateRestaurantComponent } from './components/popup-update-restaurant/popup-update-restaurant.component';
-import { PopupDeleteUserComponent } from './components/popup-delete-user/popup-delete-user.component';
+import { PopupUpdateRestaurantComponent } from './components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component';
+import { PopupDeleteUserComponent } from './components/popups/user/popup-delete-user/popup-delete-user.component';
 import { NavBarCustomerComponent } from './components/nav-bars/nav-bar-customer/nav-bar-customer.component';
 import { NavBarRestaurantOwnerComponent } from './components/nav-bars/nav-bar-restaurant-owner/nav-bar-restaurant-owner.component';
-import { PopupCreateRestaurantComponent } from './components/popup-create-restaurant/popup-create-restaurant.component';
-import { PopupDeleteRestaurantComponent } from './components/popup-delete-restaurant/popup-delete-restaurant.component';
+import { PopupCreateRestaurantComponent } from './components/popups/restaurant/popup-create-restaurant/popup-create-restaurant.component';
+import { PopupDeleteRestaurantComponent } from './components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component';
+import { PopupInformationComponent } from './components/popups/restaurant/popup-information/popup-information.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { PopupDeleteRestaurantComponent } from './components/popup-delete-restau
     NavBarCustomerComponent,
     NavBarRestaurantOwnerComponent,
     PopupCreateRestaurantComponent,
-    PopupDeleteRestaurantComponent
+    PopupDeleteRestaurantComponent,
+    PopupInformationComponent
   ],
   imports: [
     BrowserModule,

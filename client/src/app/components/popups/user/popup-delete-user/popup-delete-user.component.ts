@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
-import {UserService} from "../../services/api/user.service";
+import {UserService} from "../../../../services/api/user.service";
 import { Router } from '@angular/router';
-import {User} from "../../interfaces/user-interface";
-import {AuthService} from "../../services/auth.service";
+import {User} from "../../../../interfaces/user-interface";
+import {AuthService} from "../../../../services/auth.service";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
   selector: 'app-popup-delete-user',
   templateUrl: './popup-delete-user.component.html',
-  styleUrls: ['./popup-delete-user.component.scss', '../../../styles.scss']
+  styleUrls: ['./popup-delete-user.component.scss', '../../../../../styles.scss']
 })
 export class PopupDeleteUserComponent {
   @Input() currentUser!: User;

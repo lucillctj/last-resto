@@ -1,16 +1,16 @@
 import { Component, Input } from '@angular/core';
-import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
-import {RestaurantService} from "../../services/api/restaurant.service";
+import {RestaurantOwner} from "../../../../interfaces/restaurantOwner-interface";
+import {RestaurantService} from "../../../../services/api/restaurant.service";
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {Restaurant} from "../../interfaces/restaurant-interface";
-import {AuthService} from "../../services/auth.service";
+import {Restaurant} from "../../../../interfaces/restaurant-interface";
+import {AuthService} from "../../../../services/auth.service";
 
 
 @Component({
   selector: 'app-popup-create-restaurant',
   templateUrl: './popup-create-restaurant.component.html',
-  styleUrls: ['./popup-create-restaurant.component.scss', '../../../styles.scss']
+  styleUrls: ['./popup-create-restaurant.component.scss', '../../../../../styles.scss']
 })
 export class PopupCreateRestaurantComponent {
   @Input() currentUser!: RestaurantOwner;

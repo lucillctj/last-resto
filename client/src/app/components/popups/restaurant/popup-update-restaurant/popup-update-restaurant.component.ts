@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
-import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
-import {Restaurant} from "../../interfaces/restaurant-interface";
+import {RestaurantOwner} from "../../../../interfaces/restaurantOwner-interface";
+import {RestaurantOwnerService} from "../../../../services/api/restaurant-owner.service";
+import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import { Router } from '@angular/router';
-import {RestaurantService} from "../../services/api/restaurant.service";
+import {RestaurantService} from "../../../../services/api/restaurant.service";
 
 @Component({
   selector: 'app-popup-update-restaurant',

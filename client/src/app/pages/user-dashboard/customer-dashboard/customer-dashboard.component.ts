@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
-import {PopupUpdateCustomerComponent} from "../../../components/popup-update-customer/popup-update-customer.component";
+import {PopupUpdateCustomerComponent} from "../../../components/popups/customer/popup-update-customer/popup-update-customer.component";
 import {Customer} from "../../../interfaces/customer-interface";
 import {CustomerService} from "../../../services/api/customer.service";
 import {UserService} from "../../../services/api/user.service";
-import {PopupDeleteUserComponent} from "../../../components/popup-delete-user/popup-delete-user.component";
+import {PopupDeleteUserComponent} from "../../../components/popups/user/popup-delete-user/popup-delete-user.component";
 import {AuthService} from "../../../services/auth.service";
 
 @Component({

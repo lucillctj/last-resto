@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import {Customer} from "../../interfaces/customer-interface";
-import {CustomerService} from "../../services/api/customer.service";
+import {Customer} from "../../../../interfaces/customer-interface";
+import {CustomerService} from "../../../../services/api/customer.service";
 import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-popup-update-customer',
   templateUrl: './popup-update-customer.component.html',
-  styleUrls: ['./popup-update-customer.component.scss', '../../../styles.scss']
+  styleUrls: ['./popup-update-customer.component.scss', '../../../../../styles.scss']
 })
 export class PopupUpdateCustomerComponent{
   @Input() currentUser!: Customer;
