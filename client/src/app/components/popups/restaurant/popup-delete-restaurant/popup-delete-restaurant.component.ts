@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from "../../../../services/auth.service";
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {RestaurantService} from "../../../../services/api/restaurant.service";

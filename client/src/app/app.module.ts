@@ -28,6 +28,8 @@ import { NavBarRestaurantOwnerComponent } from './components/nav-bars/nav-bar-re
 import { PopupCreateRestaurantComponent } from './components/popups/restaurant/popup-create-restaurant/popup-create-restaurant.component';
 import { PopupDeleteRestaurantComponent } from './components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component';
 import { PopupInformationComponent } from './components/popups/restaurant/popup-information/popup-information.component';
+import { RestaurantsListComponent } from './pages/restaurants-list/restaurants-list.component';
+import { PopupDetailRestaurantComponent } from './components/popups/restaurant/popup-detail-restaurant/popup-detail-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { PopupInformationComponent } from './components/popups/restaurant/popup-
     NavBarRestaurantOwnerComponent,
     PopupCreateRestaurantComponent,
     PopupDeleteRestaurantComponent,
-    PopupInformationComponent
+    PopupInformationComponent,
+    RestaurantsListComponent,
+    PopupDetailRestaurantComponent
   ],
   imports: [
     BrowserModule,

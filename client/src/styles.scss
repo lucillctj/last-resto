@@ -13,7 +13,7 @@ $green: #317765;
 $green-hover: #184F40;
 $green-light: #62b09e;
 $blue: #4972E5;
-$blue-hover: #4972E5;
+$blue-hover: #0d36a6;
 $grey: #494949;
 $grey-bright: #e1e1e1;
 $red: #dc2d2d;
@@ -97,14 +97,4 @@ p{
   font-weight: 500;
   font-size: 1.3rem;
   text-align: center;
-}
-
-.navbar-bottom{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  right: 69.5%;
-
 }

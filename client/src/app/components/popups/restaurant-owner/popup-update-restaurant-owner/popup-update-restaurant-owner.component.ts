@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import {RestaurantOwner} from "../../../../interfaces/restaurantOwner-interface";
 import {RestaurantOwnerService} from "../../../../services/api/restaurant-owner.service";
+import {Restaurant} from "../../../../interfaces/restaurant-interface";
 
 
 @Component({
@@ -10,6 +11,7 @@ import {RestaurantOwnerService} from "../../../../services/api/restaurant-owner.
   styleUrls: ['./popup-update-restaurant-owner.component.scss', '../../../../../styles.scss']
 })
 export class PopupUpdateRestaurantOwnerComponent {
+  @Input() currentRestaurant!: Restaurant;
 
   updatedUser: RestaurantOwner;
   successMessage: string | null;
@@ -27,7 +29,7 @@ export class PopupUpdateRestaurantOwnerComponent {
     this.restaurantOwnerService.updateRestaurantOwner(updatedUser)
       .subscribe(() => {
           this.successMessage = 'Vos informations ont bien été mises à jour !';
-          this.router.navigate(['/api/v1/restaurant-owners/dashboard/:id']);
+          this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentRestaurant.user_id}`]);
         },
         error => {
           if (error.status === 400 && error.error === "Cet email existe déjà !") {

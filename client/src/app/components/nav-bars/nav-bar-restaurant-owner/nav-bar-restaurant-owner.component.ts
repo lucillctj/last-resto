@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
-import {PopupDeleteRestaurantComponent} from "../../popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component";
 import {PopupInformationComponent} from "../../popups/restaurant/popup-information/popup-information.component";
 
 @Component({

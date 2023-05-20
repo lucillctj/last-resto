@@ -10,6 +10,7 @@ import {
   RestaurantOwnerDashboardComponent
 } from "./pages/user-dashboard/restaurant-owner-dashboard/restaurant-owner-dashboard.component";
 import {RestaurantDashboardComponent} from "./pages/restaurant-dashboard/restaurant-dashboard.component";
+import {RestaurantsListComponent} from "./pages/restaurants-list/restaurants-list.component";
 
 const routes: Routes = [
   { path: 'api/v1', component: HomeComponent },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'api/v1/users/login', component: LogInComponent },
   { path: 'api/v1/customers/dashboard/:id', component: CustomerDashboardComponent },
   { path: 'api/v1/restaurant-owners/dashboard/:id', component: RestaurantOwnerDashboardComponent },
-  { path: 'api/v1/restaurants/dashboard/:id', component: RestaurantDashboardComponent }
+  { path: 'api/v1/restaurants/dashboard/:id', component: RestaurantDashboardComponent },
+  { path: 'api/v1/restaurants', component: RestaurantsListComponent },
 
 ];
 

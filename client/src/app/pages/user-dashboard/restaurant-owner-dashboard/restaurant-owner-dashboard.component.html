@@ -28,7 +28,7 @@
     <div class="col-lg-6 col-md-3 col-sm-6">
       <h3>Mon restaurant</h3>
       <section *ngIf="currentRestaurant.restaurant_id" class="restaurants-list-section">
-        <div class="card card-restaurant" type="button" (click)="showRestaurantPage(currentRestaurant.restaurant_id)">
+        <div class="card card-restaurant" (click)="showRestaurantPage(currentRestaurant.restaurant_id)">
           <div class="icons">
             <div class="restaurant-name">{{ currentRestaurant.name}}</div>
           </div>
@@ -40,7 +40,7 @@
 
   </div>
 </div>
-<div class="navbar-bottom">
+<div class="navbar">
   <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
 </div>
 

@@ -26,6 +26,11 @@ export class RestaurantService {
     return this.http.get<any>(url);
   }
 
+  getAllRestaurants(): Observable<any> {
+    const url = `${this.apiUrl}`;
+    return this.http.get<any>(url);
+  }
+
   updateRestaurant(restaurant: Restaurant): Observable<any> {
     const url = `${this.apiUrl}/update/${restaurant.restaurant_id}`;
     return this.http.put<any>(url, restaurant);
