@@ -2,7 +2,13 @@
 @import "../styles-nav-bar";
 
 .btn-icon {
+  background-color: white;
   color: $blue;
+}
+
+.btn-icon.active {
+  background-color: $blue;
+  color: white;
 }
 
 .btn-icon:hover{

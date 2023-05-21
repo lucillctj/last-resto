@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
 import {User} from "../../../interfaces/user-interface";
@@ -8,7 +8,7 @@ import {User} from "../../../interfaces/user-interface";
   templateUrl: './nav-bar-customer.component.html',
   styleUrls: ['./nav-bar-customer.component.scss', '../../../../styles.scss']
 })
-export class NavBarCustomerComponent {
+export class NavBarCustomerComponent implements OnInit{
   isSearchActive: boolean;
   isDashboardActive: boolean;
 
@@ -21,9 +21,17 @@ export class NavBarCustomerComponent {
     this.isDashboardActive = false;
   }
 
+  ngOnInit(){
+    if (this.router.url.includes('/api/v1/restaurants')) {
+      this.isSearchActive = true;
+    }
+    else if (this.router.url.includes('/api/v1/customers/dashboard')) {
+      this.isDashboardActive = true;
+    }
+  }
 
   redirectToRestaurantSearch() {
-    const redirectUrl = `/api/v1/customers/restaurants-search`;
+    const redirectUrl = `/api/v1/restaurants`;
     if (this.router.url === redirectUrl) {
       this.isSearchActive = true;
     } else {

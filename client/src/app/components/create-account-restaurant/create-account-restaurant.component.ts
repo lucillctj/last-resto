@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
 import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
 import { Router } from '@angular/router';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-create-account-restaurant',
@@ -17,7 +18,8 @@ export class CreateAccountRestaurantComponent {
 
   constructor(
     private restaurantOwnerService: RestaurantOwnerService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.newUser = {} as RestaurantOwner;
     this.errorMessageEmail = null;
@@ -30,6 +32,7 @@ export class CreateAccountRestaurantComponent {
 
     this.restaurantOwnerService.createRestaurantOwner(this.newUser)
       .subscribe((res) => {
+          this.authService.setCurrentUser(this.newUser);
           this.router.navigate([`/api/v1/restaurant-owners/dashboard/${res.userId}`]);
         },
         error => {

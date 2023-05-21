@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import {CustomerService} from "../../services/api/customer.service";
 import {Customer} from "../../interfaces/customer-interface";
 import { Router } from '@angular/router';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-create-account-customer',
@@ -18,7 +19,8 @@ export class CreateAccountCustomerComponent {
 
   constructor(
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.newUser = {} as Customer;
     this.errorMessageEmail = null;
@@ -44,6 +46,7 @@ export class CreateAccountCustomerComponent {
 
     this.customerService.createCustomer(this.newUser)
       .subscribe((res) => {
+          this.authService.setCurrentUser(this.newUser);
           this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
         },
         error => {
