@@ -16,6 +16,32 @@ export class ProductController {
         }
     }
 
+    public static async getProductsByRestaurantId(req: Request, res: Response): Promise<void> {
+        const restaurantRequestId = parseInt(req.params.id);
+        try {
+            db.query(
+                `SELECT * FROM products WHERE restaurant_id = ${restaurantRequestId}`,
+                (error: Error | null, results: Product[]) => {
+                    return res.status(200).send(results);
+                })
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+
+    public static async getProductsByUserId(req: Request, res: Response): Promise<void> {
+        const userRequestId = parseInt(req.params.id);
+        try {
+            db.query(
+                `SELECT * FROM products WHERE user_id = ${userRequestId}`,
+                (error: Error | null, results: Product[]) => {
+                    return res.status(200).send({results});
+                })
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+
     public static async getProductDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
@@ -26,7 +52,7 @@ export class ProductController {
                     else if (results.length === 0) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send(results);
+                        res.status(200).send({results});
                     }
                 })
         } catch (error) {
@@ -37,16 +63,14 @@ export class ProductController {
     public static async createProduct(req: Request, res: Response): Promise<void> {
         const body = req.body;
         const product: Product = {
-            productId: body.product_id,
             name: body.name,
             description: body.description,
             price: body.price,
-            userId: body.user_id,
             restaurantId: body.restaurant_id
         };
         try {
             if (product.name !== '' && product.description !== '' && product.price >1 && product.restaurantId >=1 && Object.keys(body).length === 4) {
-                const sql = `INSERT INTO products (name, description, price, restaurantId) VALUES (?, ?, ?, ?)`;
+                const sql = `INSERT INTO products (name, description, price, restaurant_id) VALUES (?, ?, ?, ?)`;
                 const params = [product.name, product.description, product.price, product.restaurantId];
                 db.execute(sql, params, async (error: QueryError | null) => {
                     if (error) throw error;

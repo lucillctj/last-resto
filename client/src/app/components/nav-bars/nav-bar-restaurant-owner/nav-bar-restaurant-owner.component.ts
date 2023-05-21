@@ -3,6 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
 import {PopupInformationComponent} from "../../popups/restaurant/popup-information/popup-information.component";
+import {Restaurant} from "../../../interfaces/restaurant-interface";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -32,25 +33,13 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
     }
   }
 
-  // redirectToReservationsDashboard() {
-  //   const currentRestaurantId = this.authService.getCurrentRestaurantId();
-  //
-  //   const redirectUrl = `/api/v1/restaurants/${currentRestaurantId}`;
-  //   if (this.router.url === redirectUrl) {
-  //     this.isSearchActive = true;
-  //   } else {
-  //     this.isSearchActive = false;
-  //     this.router.navigate([redirectUrl]);
-  //   }
-  // }
-
   redirectToRestaurantDashboard() {
-    const currentRestaurantId = this.authService.getCurrentRestaurantId();
-    const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${currentRestaurantId}`;
+    const currentRestaurant: Restaurant = this.authService.getCurrentRestaurant();
+    const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${currentRestaurant.restaurant_id}`;
 
     if (this.router.url === urlRestaurantDashboard) {
       return
-    } else if(currentRestaurantId) {
+    } else if(currentRestaurant.restaurant_id) {
       this.router.navigate([urlRestaurantDashboard]);
     }
     else{
@@ -59,8 +48,8 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   }
 
   redirectToUserDashboard() {
-    const currentUserId = this.authService.getCurrentUserId();
-    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${currentUserId}`;
+    const currentUser = this.authService.getCurrentUser();
+    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${currentUser.user_id}`;
 
     if (this.router.url === urlUserDashboard) {
       return

@@ -28,7 +28,7 @@
 
     <div class="col-lg-6 col-md-3 col-sm-6">
       <section class="details-restaurant-section">
-        <div class="card card-availability">
+        <div class="card card-detail">
           <div class="form-check form-switch">
             <div class="row">
               <div class="col-lg-9">
@@ -40,10 +40,24 @@
             </div>
           </div>
         </div>
+        <div class="products-section">
+          <div class="card card-detail">
+            <div class="products-title">Les formules</div>
+            <div class="card card-product" *ngFor="let product of currentProducts">
+              <p class="product-name">{{product.name}}</p>
+              <p class="product-description">{{product.description}}</p>
+              <p class="product-price">{{product.price}} €</p>
+
+            </div>
+            <button *ngIf="currentProducts.length === 0" class="btn-account btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>
 
 
 
+
+          </div>
+        </div>
       </section>
+
     </div>
 
   </div>

@@ -18,12 +18,6 @@ export class CustomerService {
     return this.http.post<any>(url, user, {withCredentials: true});
   }
 
-  // login(user: Customer): Observable<Customer> {
-  //   const url = `${this.apiUrl}/login`;
-  //   // this.authService.setCurrentUserId(user.userId);
-  //   return this.http.post<Customer>(url, user, {withCredentials: true});
-  // }
-
   getAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.apiUrl);
   }

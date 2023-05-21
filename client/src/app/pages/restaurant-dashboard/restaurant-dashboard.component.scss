@@ -13,10 +13,10 @@ body{
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-  padding: 2em 4em;
+  padding: 2em;
   border-radius: 0.3em;
   border: none;
-  width: 140vh;
+  width: 215vh;
   height: auto;
 }
 
@@ -60,18 +60,17 @@ body{
 .details-restaurant-section{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   height: 100%;
 }
 
-.card-availability {
+.card-detail{
   position: relative;
   top: 1.2em;
   background-color: $grey-bright;
   padding: 0.4em 1em;
   border-radius: 0.3em;
   border: none;
-  width: 80%;
   color: white;
 }
 .text-availability{
@@ -98,4 +97,40 @@ body{
 .form-check-input:checked{
   background-color: green;
   border: none;
+}
+
+.card-product{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 0.5em;
+  margin-bottom: 0.6em;
+}
+
+.product-name{
+  color: $green;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.product-description{
+  color: $green;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.product-price{
+  color: $green;
+  margin-bottom: 0;
+}
+
+.btn-create-product{
+  border: none;
+  color: white;
+  font-weight: 400;
+  background-color: $green-light;
+}
+.btn-create-product:hover{
+  background-color: $green;
+  color: white;
 }

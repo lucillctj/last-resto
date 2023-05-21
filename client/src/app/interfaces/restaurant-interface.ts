@@ -8,6 +8,6 @@ export interface Restaurant {
   phone: string;
   website: string;
   is_reserved: boolean;
-  user_id: number;
+  user_id: number | undefined;
 
 }

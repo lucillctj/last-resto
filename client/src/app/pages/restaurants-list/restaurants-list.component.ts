@@ -41,17 +41,8 @@ export class RestaurantsListComponent implements OnInit{
 
 
   openPopupDetailRestaurant(currentRestaurant: Restaurant){
-    console.log('111', currentRestaurant)
+    console.log('current resto: ', currentRestaurant)
     const modalRef = this.modalService.open(PopupDetailRestaurantComponent);
     modalRef.componentInstance.currentRestaurant = currentRestaurant;
-    //     console.log(currentRestaurant.restaurant_id)
-// this.currentRestaurant = currentRestaurant;
-//     if(typeof(this.currentRestaurant.restaurant_id) === 'number'){
-//       this.router.navigate([`api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`]);
-//     }
-//     else{
-//       console.error('l\'ID n\'est pas valide !');
-//     }
-
   }
 }

@@ -1,8 +1,8 @@
 export interface Product {
-  productId?: number;
+  product_id?: number;
   name: string;
   description: string;
   price: number;
   user_id?: number;
-  restaurantId: number;
+  restaurant_id: number | undefined;
 }

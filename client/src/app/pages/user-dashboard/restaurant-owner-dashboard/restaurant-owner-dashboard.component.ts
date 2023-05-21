@@ -12,6 +12,9 @@ import {
 } from "../../../components/popups/restaurant/popup-create-restaurant/popup-create-restaurant.component";
 import {RestaurantOwnerService} from "../../../services/api/restaurant-owner.service";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
+import {
+  PopupDeleteRestaurantComponent
+} from "../../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component";
 
 @Component({
   selector: 'app-restaurant-owner-dashboard',
@@ -38,25 +41,26 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   ngOnInit(){
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
     if (currentUserId) {
-      this.authService.setCurrentUserId(currentUserId);
       this.restaurantOwnerService.getRestaurantOwnerDashboard(currentUserId)
         .subscribe((data) => {
             this.currentUser = data.results[0];
+            this.authService.setCurrentUser(this.currentUser);
+
+            this.restaurantService.getRestaurantByUserId(currentUserId)
+              .subscribe((data) => {
+                  if(data.length >= 1) {
+                    this.currentRestaurant = data[0];
+                    this.authService.setCurrentRestaurant(data[0]);
+                  }
+                },
+                (error) => {
+                  console.error('Une erreur s\'est produite lors de la récupération des données du restaurant :', error);
+                })
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
           })
-      this.restaurantService.getRestaurantByUserId(currentUserId)
-        .subscribe((data) => {
-          console.log(data.results.length)
-            if(data.results.length >= 1) {
-              this.currentRestaurant = data.results[0];
-              this.authService.setCurrentRestaurantId(this.currentRestaurant.restaurant_id);
-            }
-          },
-          (error) => {
-            console.error('Une erreur s\'est produite lors de la récupération des données du restaurant :', error);
-          })
+
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');
     }
@@ -66,11 +70,14 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   openPopupToUpdate() {
     this.modalService.open(PopupUpdateRestaurantOwnerComponent);
   }
+
   showRestaurantPage(restaurantId: number | undefined) {
     this.router.navigate([`api/v1/restaurants/dashboard/${restaurantId}`]);
   }
 
   openPopupToCreateRestaurant(){
-    this.modalService.open(PopupCreateRestaurantComponent);
+    const modalRef = this.modalService.open(PopupCreateRestaurantComponent);
+    modalRef.componentInstance.currentUser = this.currentUser;
+
   }
 }

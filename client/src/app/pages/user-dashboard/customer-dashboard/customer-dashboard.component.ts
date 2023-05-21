@@ -29,11 +29,11 @@ export class CustomerDashboardComponent implements OnInit {
   ngOnInit() {
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
     if (currentUserId) {
-      this.authService.setCurrentUserId(currentUserId);
       this.customerService.getCustomerDashboard(currentUserId)
         .subscribe((data) => {
           this.currentUser = data.results[0];
-        },
+            this.authService.setCurrentUser(this.currentUser);
+          },
         (error) => {
           console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
         })

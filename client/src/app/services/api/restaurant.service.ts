@@ -16,14 +16,14 @@ export class RestaurantService {
     return this.http.post<any>(url, restaurant);
   }
 
-  getRestaurantByUserId(userId: number): Observable<any> {
+  getRestaurantByUserId(userId: number): Observable<Restaurant[]> {
     const url = `${this.apiUrl}/user/${userId}`;
-    return this.http.get<any>(url);
+    return this.http.get<Restaurant[]>(url);
   }
 
-  getRestaurantDashboard(restaurantId: number): Observable<any> {
+  getRestaurantDashboard(restaurantId: number): Observable<Restaurant[]> {
     const url = `${this.apiUrl}/dashboard/${restaurantId}`;
-    return this.http.get<any>(url);
+    return this.http.get<Restaurant[]>(url);
   }
 
   getAllRestaurants(): Observable<any> {

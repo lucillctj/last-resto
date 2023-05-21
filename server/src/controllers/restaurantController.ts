@@ -21,8 +21,8 @@ export class RestaurantController {
         try {
             db.query(
                 `SELECT * FROM restaurants WHERE user_id =${userRequestId}`,
-                (error: Error | null, results: ResultSetHeader) => {
-                    return res.status(200).send({results});
+                (error: Error | null, results: Restaurant[]) => {
+                    return res.status(200).send(results);
                 })
         } catch (error) {
             res.status(500).json({message: "Internal server error"});
@@ -34,7 +34,7 @@ export class RestaurantController {
         try {
             db.query(
                 `SELECT * FROM restaurants WHERE restaurant_id = ${requestId}`,
-                (error: Error | null, results: any) => {
+                (error: Error | null, results: Restaurant[]) => {
                     if (error) throw error;
                     else if (results.length === 0) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
@@ -65,12 +65,12 @@ export class RestaurantController {
             ) {
                 const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_reserved, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
                 const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, false, restaurant.userId];
-                db.execute(sql, params, async (error: QueryError | null, restaurantResults: any) => {
+                db.execute(sql, params, async (error: QueryError | null) => {
                     if (error) throw error;
                     else {
                         // const sqlUpdate = `UPDATE users SET restaurant_id = ? WHERE role = 'restaurant owner' AND user_id = ?`;
                         // await db.execute(sqlUpdate, [restaurantResults.insertId, restaurant.userId], async () =>
-                            res.status(201).send({message: `Restaurant ${restaurant.name} was created!`});
+                        res.status(201).send({message: `Restaurant ${restaurant.name} was created!`});
                     }
                 })
             } else {

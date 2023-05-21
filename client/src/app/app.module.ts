@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {NgxWebstorageModule} from 'ngx-webstorage';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -30,6 +31,7 @@ import { PopupDeleteRestaurantComponent } from './components/popups/restaurant/p
 import { PopupInformationComponent } from './components/popups/restaurant/popup-information/popup-information.component';
 import { RestaurantsListComponent } from './pages/restaurants-list/restaurants-list.component';
 import { PopupDetailRestaurantComponent } from './components/popups/restaurant/popup-detail-restaurant/popup-detail-restaurant.component';
+import { PopupCreateProductComponent } from './components/popups/product/popup-create-product/popup-create-product.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { PopupDetailRestaurantComponent } from './components/popups/restaurant/p
     PopupDeleteRestaurantComponent,
     PopupInformationComponent,
     RestaurantsListComponent,
-    PopupDetailRestaurantComponent
+    PopupDetailRestaurantComponent,
+    PopupCreateProductComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,9 @@ import { PopupDetailRestaurantComponent } from './components/popups/restaurant/p
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgxWebstorageModule.forRoot(),
+
   ],
   providers: [CustomerService, RestaurantOwnerService],
   bootstrap: [AppComponent]

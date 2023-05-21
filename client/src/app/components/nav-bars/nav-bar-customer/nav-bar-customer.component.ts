@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
+import {User} from "../../../interfaces/user-interface";
 
 @Component({
   selector: 'app-nav-bar-customer',
@@ -32,8 +33,8 @@ export class NavBarCustomerComponent {
   }
 
   redirectToDashboard() {
-    const currentUserId = this.authService.getCurrentUserId();
-    const redirectUrl = `/api/v1/customers/dashboard/${currentUserId}`;
+    const currentUser: User = this.authService.getCurrentUser();
+    const redirectUrl = `/api/v1/customers/dashboard/${currentUser.user_id}`;
     if (this.router.url === redirectUrl) {
       this.isDashboardActive = true;
 
