@@ -1,0 +1,23 @@
+@import "../../../../../styles";
+@import "../../../styles-form-popup";
+
+.title{
+  color: $salmon;
+}
+
+.form-control{
+  background-color: rgba(227, 120, 92, 0.4);
+}
+
+.form-control::placeholder{
+  padding-left: 0.6em;
+  color: white;
+}
+
+.btn {
+  background: $salmon;
+}
+
+.btn:hover {
+  background: $salmon-hover;
+}

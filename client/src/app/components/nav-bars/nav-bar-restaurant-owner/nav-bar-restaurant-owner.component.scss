@@ -1,0 +1,17 @@
+@import "../../../../styles";
+@import "../styles-nav-bar";
+
+.btn-icon {
+  background-color: white;
+  color: $green;
+}
+
+.btn-icon.active {
+  background-color: $green;
+  color: white;
+}
+
+.btn-icon:hover{
+  background-color: $green;
+  color: white;
+}

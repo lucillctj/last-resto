@@ -1,0 +1,26 @@
+@import "../../../../../styles";
+@import "../../../styles-form-popup";
+
+.title{
+  color: $green;
+}
+
+.sub-title{
+  color: $green;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2em;
+}
+
+.form-control{
+  background-color: rgba(49, 119, 101, 0.4);
+}
+
+.btn {
+  background: $green;
+  color: white;
+}
+
+.btn:hover {
+  background: $green-hover;
+}

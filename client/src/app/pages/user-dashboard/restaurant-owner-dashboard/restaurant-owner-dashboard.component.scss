@@ -1,0 +1,115 @@
+@import "../../../../styles.scss";
+
+body{
+  background-color: $green;
+  margin-top: 0;
+}
+
+.page-title{
+  top: 1.5em;
+}
+.card-profil{
+  top: 5em;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  padding: 2em 4em;
+  border-radius: 0.3em;
+  border: none;
+  width: 140vh;
+  height: auto;
+}
+
+.name{
+  color: $green;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.bloc-buttons{
+  margin-top: 1em;
+  position: relative;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.btn-account{
+  margin: 0 auto 0.7em;
+  border-radius: 3em;
+  width: 60%;
+  height: 2.3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9em;
+  font-weight: 300;
+}
+.btn-update{
+  border: none;
+  background-color: $green;
+  color: white;
+}
+.btn-update:hover{
+  background-color: $green-hover;
+}
+.btn-delete{
+  border: none;
+  color: $grey;
+}
+.btn-delete:hover{
+  background-color: #dc2d2d;
+  color: white;
+}
+.btn-create-restaurant{
+  border: none;
+  color: white;
+  font-weight: 400;
+  background-color: $green-light;
+}
+.btn-create-restaurant:hover{
+  background-color: $green;
+  color: white;
+}
+
+
+h3{
+  color: $green;
+  display: flex;
+  justify-content: center;
+}
+
+.restaurants-list-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50%;
+
+}
+
+.card-restaurant {
+  position: relative;
+  top: 1.2em;
+  background-color: $grey-bright;
+  padding: 0.4em 1em;
+  border-radius: 0.3em;
+  border: none;
+  width: 80%;
+  color: white;
+}
+.restaurant-name{
+  font-size: 0.9em;
+  font-weight: 600;
+  color: $green;
+  display: flex;
+  align-items: center
+}
+
+.icons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+padding-right: 0.7em;
+}

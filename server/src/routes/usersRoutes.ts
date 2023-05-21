@@ -1,17 +1,14 @@
 import express from "express";
-import { UsersController } from "../controllers/usersController";
-import {verifyAuthToken} from "../middleware/auth";
+import {verifyAuth} from "../middleware/auth";
+import {UserController} from "../controllers/userController";
+import {CustomerController} from "../controllers/customerController";
 
 const router = express.Router();
 
 export const usersRoutes = () => {
-    router.get('/get-users', UsersController.createUserAccount);
-    router.get('/get-users', verifyAuthToken, UsersController.loginToUserAccount);
-    router.get('/get-users', verifyAuthToken, UsersController.getAllUsers);
-    router.get('/get-user/:id', UsersController.getUserById);
-    // router.post('/create-user', UsersController.createUser);
-    router.put('/user/:id', UsersController.updateUser);
-    router.delete('/user/:id', UsersController.deleteUser);
+    router.post('/login', UserController.loginToUserAccount);
+    router.get('/logout', UserController.logoutToAccount);
+    router.delete('/delete/:id', UserController.deleteUser);
 
     return router;
 }

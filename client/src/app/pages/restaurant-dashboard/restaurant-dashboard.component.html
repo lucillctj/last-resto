@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant page</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" type="text/scss" href="../../../styles.scss">
+</head>
+
+<body *ngIf="currentRestaurant">
+<h1 class="page-title">Mon restaurant : {{currentRestaurant.name}}</h1>
+
+<div class="card card-restaurant">
+
+  <div class="row">
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <p class="name">{{currentRestaurant.name}}</p>
+      <p class="description">{{currentRestaurant.description}}</p>
+      <p class="address">{{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
+      <p class="phone">{{currentRestaurant.phone}}</p>
+      <div class="bloc-buttons">
+        <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>
+        <button class="btn-account btn-delete" type="button" (click)="openPopupToDelete()">Supprimer ce restaurant</button>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <section class="details-restaurant-section">
+        <div class="card card-detail">
+          <div class="form-check form-switch">
+            <div class="row">
+              <div class="col-lg-9">
+                <label class="form-check-label text-availability" for="flexSwitchCheckDefault">Disponibilité</label>
+              </div>
+              <div class="col-lg-3">
+                <input class="form-check-input switch" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="products-section">
+          <div class="card card-detail">
+            <div class="products-title">Les formules</div>
+            <div class="card card-product" *ngFor="let product of currentProducts">
+              <p class="product-name">{{product.name}}</p>
+              <p class="product-description">{{product.description}}</p>
+              <p class="product-price">{{product.price}} €</p>
+
+            </div>
+            <button *ngIf="currentProducts.length === 0" class="btn-account btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>
+
+
+
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="navbar">
+  <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
+</div>
+
+</body>
+</html>

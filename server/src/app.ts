@@ -1,20 +1,34 @@
 import express, { Express } from 'express';
+import cookieParser from 'cookie-parser';
 import mysql, {QueryError} from 'mysql2';
+import cors from 'cors';
 import dotenv from 'dotenv';
-import {usersRoutes} from "./routes/usersRoutes.js";
-import {restaurantsRoutes} from "./routes/restaurantsRoutes";
-import {productsRoutes} from "./routes/productsRoutes";
+import {customerRoutes} from "./routes/customerRoutes";
+import {restaurantOwnerRoutes} from "./routes/restaurantOwnerRoutes";
+import {restaurantRoutes} from "./routes/restaurantRoutes";
+import {productRoutes} from "./routes/productRoutes";
+import {adminRoutes} from "./routes/adminRoutes";
+import {usersRoutes} from "./routes/usersRoutes";
 
 dotenv.config();
 
 const app: Express = express();
+const corsOptions = {
+    origin: true,
+    credentials: true
+};
+app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
-app.use('/api/v1', usersRoutes());
-app.use('/api/v1', restaurantsRoutes());
-app.use('/api/v1', productsRoutes());
 
-// app.use(cors());
 
+
+app.use('/api/v1/customers', customerRoutes());
+app.use('/api/v1/restaurant-owners', restaurantOwnerRoutes());
+app.use('/api/v1/admins', adminRoutes());
+app.use('/api/v1/users', usersRoutes());
+app.use('/api/v1/restaurants', restaurantRoutes());
+app.use('/api/v1/products', productRoutes());
 
 export const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -33,7 +47,7 @@ db.connect((error: QueryError | null) => {
         console.error('Error connecting to MySQL database: ', error);
         return;
     }
-    console.log('Connected to MySQL database');
+    console.log('Connected to MySQL database :)');
 });
 
 

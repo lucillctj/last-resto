@@ -1,0 +1,21 @@
+@import "../../../../styles";
+@import "../styles-nav-bar";
+
+.btn-icon {
+  background-color: white;
+  color: $blue;
+}
+
+.btn-icon.active {
+  background-color: $blue;
+  color: white;
+}
+
+.btn-icon:hover{
+  background-color: $blue;
+  color: white;
+}
+
+.icon-search{
+  font-size: 1.6em;
+}

@@ -1,0 +1,18 @@
+ <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Suppression du compte</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="redirectToDashboard()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Etes-vous sure de vouloir supprimer votre compte définitivement ?</p>
+      </div>
+      <div class="buttons">
+        <button type="button" class="btn btn-confirm" (click)="confirmToDelete()">Oui, supprimer</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal" (click)="redirectToDashboard()">Non, annuler</button>
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      </div>
+    </div>

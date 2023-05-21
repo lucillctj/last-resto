@@ -1,0 +1,35 @@
+<h1 class="title">Modifier mon restaurant</h1>
+
+<form>
+  <div class="form-group">
+    <label>Nom du restaurant</label>
+    <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="updatedRestaurant.name" name="name">
+  </div>
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text" class="form-control" placeholder="Description" [(ngModel)]="updatedRestaurant.description" name="description">
+  </div>
+  <div class="form-group">
+    <label>Adresse</label>
+    <input type="text" class="form-control" placeholder="Adresse" [(ngModel)]="updatedRestaurant.address" name="email">
+  </div>
+  <div class="form-group">
+    <label>Code postal</label>
+    <input type="text" class="form-control" placeholder="Code postal" [(ngModel)]="updatedRestaurant.post_code" name="email">
+  </div>
+  <div class="form-group">
+    <label>Ville</label>
+    <input type="text" class="form-control" placeholder="Ville" [(ngModel)]="updatedRestaurant.city" name="email">
+  </div>
+  <label>Téléphone</label>
+  <div class="form-group">
+    <input type="tel" class="form-control" placeholder="Téléphone" [(ngModel)]="updatedRestaurant.phone" name="phone">
+  </div>
+  <label>Site internet</label>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Site internet" [(ngModel)]="updatedRestaurant.website" name="phone">
+  </div>
+  <button type="submit" class="btn" (click)="updateRestaurant(updatedRestaurant)">Mettre à jour !</button>
+</form>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
