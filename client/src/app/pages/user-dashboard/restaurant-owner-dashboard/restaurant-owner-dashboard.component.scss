@@ -36,17 +36,10 @@ body{
   align-content: flex-start;
 }
 
-.btn-account{
-  margin: 0 auto 0.7em;
-  border-radius: 3em;
+.btn-dashboard{
   width: 60%;
-  height: 2.3em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.9em;
-  font-weight: 300;
 }
+
 .btn-update{
   border: none;
   background-color: $green;

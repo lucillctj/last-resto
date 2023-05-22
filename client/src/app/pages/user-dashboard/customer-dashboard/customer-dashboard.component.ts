@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
-import {PopupUpdateCustomerComponent} from "../../../components/popups/customer/popup-update-customer/popup-update-customer.component";
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
+import {
+  PopupUpdateCustomerComponent
+} from "../../../components/popups/customer/popup-update-customer/popup-update-customer.component";
 import {Customer} from "../../../interfaces/customer-interface";
 import {CustomerService} from "../../../services/api/customer.service";
 import {UserService} from "../../../services/api/user.service";
@@ -18,6 +20,7 @@ export class CustomerDashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService,
     private customerService: CustomerService,
     private authService: AuthService,
@@ -51,6 +54,10 @@ export class CustomerDashboardComponent implements OnInit {
   openPopupToDelete() {
     const modalRef = this.modalService.open(PopupDeleteUserComponent);
     modalRef.componentInstance.currentUser = this.currentUser;
+  }
+
+  redirectToRestaurantsList(){
+    this.router.navigate(['api/v1/restaurants']);
   }
 }
 

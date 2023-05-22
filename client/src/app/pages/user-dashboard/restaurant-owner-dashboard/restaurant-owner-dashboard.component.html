@@ -20,8 +20,8 @@
       <p class="email">{{ currentUser.email }}</p>
       <p class="phone">{{ currentUser.phone }}</p>
       <div class="bloc-buttons">
-        <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
-        <button class="btn-account btn-delete" type="button">Supprimer mon compte</button>
+        <button class="btn-dashboard btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
+        <button class="btn-dashboard btn-delete" type="button">Supprimer mon compte</button>
       </div>
     </div>
 
@@ -34,13 +34,13 @@
           </div>
         </div>
       </section>
-      <button *ngIf="!currentRestaurant.restaurant_id" class="btn-account btn-create-restaurant" type="button" (click)="openPopupToCreateRestaurant()">+ créer un restaurant</button>
+      <button *ngIf="!currentRestaurant.restaurant_id" class="btn-dashboard btn-create-restaurant" type="button" (click)="openPopupToCreateRestaurant()">+ créer un restaurant</button>
 
     </div>
 
   </div>
 </div>
-<div class="navbar">
+<div class="nav-bar">
   <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
 </div>
 

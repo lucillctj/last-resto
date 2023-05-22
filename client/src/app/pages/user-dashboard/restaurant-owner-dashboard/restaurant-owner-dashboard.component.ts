@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CustomerService} from "../../../services/api/customer.service";
 import {AuthService} from "../../../services/auth.service";
-import {PopupUpdateRestaurantOwnerComponent} from "../../../components/popups/restaurant-owner/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
-import { Router } from '@angular/router';
+import {
+  PopupUpdateRestaurantOwnerComponent
+} from "../../../components/popups/restaurant-owner/popup-update-restaurant-owner/popup-update-restaurant-owner.component";
 import {RestaurantService} from "../../../services/api/restaurant.service";
 import {Restaurant} from "../../../interfaces/restaurant-interface";
 import {
@@ -12,9 +13,6 @@ import {
 } from "../../../components/popups/restaurant/popup-create-restaurant/popup-create-restaurant.component";
 import {RestaurantOwnerService} from "../../../services/api/restaurant-owner.service";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
-import {
-  PopupDeleteRestaurantComponent
-} from "../../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component";
 
 @Component({
   selector: 'app-restaurant-owner-dashboard',
@@ -78,6 +76,5 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   openPopupToCreateRestaurant(){
     const modalRef = this.modalService.open(PopupCreateRestaurantComponent);
     modalRef.componentInstance.currentUser = this.currentUser;
-
   }
 }

@@ -10,22 +10,52 @@
 </head>
 
 <body *ngIf="currentUser">
+
+
 <h1 class="page-title">Mon profil</h1>
 <div class="card">
-  <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
-  <p class="address">{{ currentUser.address }} {{ currentUser.post_code }} {{ currentUser.city }}</p>
-  <p class="email">{{ currentUser.email }}</p>
-  <p class="phone">{{ currentUser.phone }}</p>
-<div class="bloc-buttons">
-  <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
-  <button class="btn-account btn-delete" type="button" (click)="openPopupToDelete()">Supprimer mon compte</button>
-</div>
-</div>
+  <div class="row">
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
+      <p class="address">{{ currentUser.address }} {{ currentUser.post_code }} {{ currentUser.city }}</p>
+      <p class="email">{{ currentUser.email }}</p>
+      <p class="phone">{{ currentUser.phone }}</p>
+      <div class="bloc-buttons">
+        <button class="btn-dashboard btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
+        <button class="btn-dashboard btn-delete" type="button" (click)="openPopupToDelete()">Supprimer mon compte</button>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <div class="reservation">
+        <h4 class="reservation-title">Mes réservations</h4>
+<!--        <div class="card card-product" *ngFor="let product of currentProducts">-->
+<!--          <p class="product-name">{{product.name}}</p>-->
+<!--          <p class="product-description">{{product.description}}</p>-->
+<!--          <p class="product-price">{{product.price}} €</p>-->
 
+<!--        </div>-->
+        <div>
+          <p>Vous n'avez aucune réservation en cours.</p>
+          <button class="btn-dashboard btn-redirect" type="button" (click)="redirectToRestaurantsList()">Voir les restaurants</button>
+
+
+        </div>
+<!--        <button *ngIf="currentProducts.length === 0" class="btn-dashboard btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>-->
+
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+
+</div>
 
 
 </body>
-<div class="navbar">
+<div class="nav-bar">
   <app-nav-bar-customer></app-nav-bar-customer>
 </div>
 </html>

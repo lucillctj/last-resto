@@ -3,6 +3,8 @@
 body{
   background-color: $blue;
   margin-top: 0;
+  overflow: auto;
+  position: relative;
 }
 
 .page-title{

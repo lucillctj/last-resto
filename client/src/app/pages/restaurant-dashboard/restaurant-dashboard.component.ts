@@ -30,7 +30,6 @@ export class RestaurantDashboardComponent implements OnInit {
     private modalService: NgbModal,
     private restaurantService: RestaurantService,
     private productService: ProductService,
-    private authService: AuthService
   ) {
     this.currentRestaurant = {} as Restaurant;
     this.currentProducts = [];
