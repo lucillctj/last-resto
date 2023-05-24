@@ -35,11 +35,9 @@ export class PopupCreateProductComponent {
     this.submitted = true;
 
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
-    console.log('Valeurs de newProduct avant la création :', this.newProduct);
     this.productService.createProduct(this.newProduct)
       .subscribe(() => {
           this.successMessage = 'Votre formule a bien été créé !';
-          console.log('nouveau produit', this.newProduct)
           setTimeout(() => {
             this.router.navigate([`/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`]);
             this.modalService.dismissAll()

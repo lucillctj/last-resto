@@ -9,6 +9,7 @@ export const customerRoutes = () => {
     router.get('/', CustomerController.getAllCustomers);
     router.get('/dashboard/:id', CustomerController.getCustomerDashboard);
     router.put('/update/:id', CustomerController.updateCustomer);
+    router.put('/update-product-id/:id', CustomerController.updateProductId)
     // router.delete('/delete/:id', CustomerController.deleteCustomer);
 
     return router;

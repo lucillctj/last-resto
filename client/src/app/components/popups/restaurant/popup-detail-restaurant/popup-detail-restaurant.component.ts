@@ -4,6 +4,10 @@ import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {RestaurantService} from "../../../../services/api/restaurant.service";
 import {Product} from "../../../../interfaces/product-interface";
 import {ProductService} from "../../../../services/api/product.service";
+import {AuthService} from "../../../../services/auth.service";
+import {CustomerService} from "../../../../services/api/customer.service";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Customer} from "../../../../interfaces/customer-interface";
 
 @Component({
   selector: 'app-popup-detail-restaurant',
@@ -12,6 +16,7 @@ import {ProductService} from "../../../../services/api/product.service";
 })
 export class PopupDetailRestaurantComponent implements OnInit {
   @Input() currentRestaurant!: Restaurant;
+  selectedProduct: Product | undefined;
 
   submitted = false;
   successMessage: string | null;
@@ -21,9 +26,12 @@ export class PopupDetailRestaurantComponent implements OnInit {
   constructor(
     private router: Router,
     private restaurantService: RestaurantService,
-    private productService: ProductService
-
+    private productService: ProductService,
+    private authService: AuthService,
+    private customerService: CustomerService,
+    private modalService: NgbModal
   ) {
+    this.selectedProduct = undefined;
     this.successMessage = null;
     this.errorMessage = null;
     this.currentProducts = [];
@@ -50,8 +58,23 @@ export class PopupDetailRestaurantComponent implements OnInit {
         })
   }
 
-  clickToBook(){
+  clickToBook() {
+    console.log(this.selectedProduct)
+    if (this.selectedProduct) {
+      const currentUser: Customer = this.authService.getCurrentUser();
+      this.customerService.bookProduct(currentUser, this.selectedProduct)
+        .subscribe(() => {
+            this.successMessage = 'Votre réservation a bien été prise en compte !'
+            setTimeout(() => {
+              this.router.navigate(['/api/v1/restaurants']);
+              this.modalService.dismissAll()
+            }, 2000)
+          },
+          error => {
+            console.log('Erreur lors de la réservation :', error);
+            this.errorMessage = 'Une erreur est survenue lors votre réservation, veuillez réessayer.';
 
+          })
+    }
   }
-
 }

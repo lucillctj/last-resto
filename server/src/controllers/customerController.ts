@@ -1,9 +1,9 @@
-import {Request, Response, NextFunction} from "express";
+import {Request, Response} from "express";
 import {db} from "../app";
 import {Customer} from "../models/customer";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth"
+import {generateAccessToken, setTokenCookie} from "../middleware/auth"
 
 export class CustomerController {
     public static async createCustomerAccount(req: Request, res: Response): Promise<void> {
@@ -150,6 +150,28 @@ export class CustomerController {
                     }
                     else {
                         res.status(201).send(`Utilisateur avec le rôle customer a été mis à jour !`);
+                    }
+                })
+            } else {
+                res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
+            }
+        } catch (error) {
+            res.status(400).json({error: 'Erreur !'});
+        }
+    }
+
+    public static async updateProductId(req: Request, res: Response): Promise<any> {
+        const body = req.body;
+        const userRequestId = parseInt(req.params.id);
+        const productId = body.product_id;
+        try {
+            if (userRequestId >= 1 && productId >= 1) {
+                const sql = `UPDATE users SET product_id = ? WHERE role = 'customer' AND user_id = ${userRequestId}`;
+                const params = [productId];
+                db.execute(sql, params, (error: QueryError | null) => {
+                    if (error) throw error.message;
+                    else {
+                        res.status(201).send({message: `Produit ajouté à l'utilisateur n°${userRequestId}!`});
                     }
                 })
             } else {

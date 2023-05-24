@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
 import {AuthService} from "../auth.service";
+import {Product} from "../../interfaces/product-interface";
 
 
 @Injectable(
@@ -11,7 +12,7 @@ import {AuthService} from "../auth.service";
 export class CustomerService {
   private apiUrl = 'http://localhost:3000/api/v1/customers';
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   createCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/signup`;
@@ -30,6 +31,15 @@ export class CustomerService {
   updateCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/update/${user.user_id}`;
     return this.http.put<any>(url, user);
+  }
+
+  bookProduct(user: Customer, product: Product): Observable<any> {
+    console.log('user', user)
+    console.log('product', product)
+
+
+    const url = `${this.apiUrl}/update-product-id/${user.user_id}`;
+    return this.http.put<any>(url, product);
   }
 
   // deleteCustomer(userId: number): Observable<void> {
