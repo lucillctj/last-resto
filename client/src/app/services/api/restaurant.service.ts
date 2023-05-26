@@ -21,9 +21,9 @@ export class RestaurantService {
     return this.http.get<Restaurant[]>(url);
   }
 
-  getRestaurantDashboard(restaurantId: number): Observable<Restaurant[]> {
+  getRestaurantDashboard(restaurantId: number): Observable<Restaurant> {
     const url = `${this.apiUrl}/dashboard/${restaurantId}`;
-    return this.http.get<Restaurant[]>(url);
+    return this.http.get<Restaurant>(url);
   }
 
   getAllRestaurants(): Observable<any> {

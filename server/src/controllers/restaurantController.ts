@@ -29,17 +29,31 @@ export class RestaurantController {
         }
     }
 
-    public static async getRestaurantDashboard(req: Request, res: Response): Promise<void> {
+    // public static async getRestaurantByProductId(req: Request, res: Response): Promise<any> {
+    //     const productRequestId = parseInt(req.params.id);
+    //     try {
+    //         db.query(
+    //             `SELECT * FROM restaurants WHERE product_id = ${productRequestId}`,
+    //             (error: Error | null, results: number) => {
+    //                 console.log('results', results)
+    //                 return res.status(200).send(results);
+    //             })
+    //     } catch (error) {
+    //         res.status(500).json({message: "Internal server error"});
+    //     }
+    // }
+
+    public static async getRestaurantDashboard(req: Request, res: Response): Promise<Restaurant | any> {
         const requestId = parseInt(req.params.id);
         try {
             db.query(
                 `SELECT * FROM restaurants WHERE restaurant_id = ${requestId}`,
                 (error: Error | null, results: Restaurant[]) => {
                     if (error) throw error;
-                    else if (results.length === 0) {
+                    else if (!results) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send(results);
+                        res.status(200).send(results[0]);
                     }
                 })
         } catch (error) {

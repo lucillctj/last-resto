@@ -23,7 +23,7 @@ body{
 
 .name{
   color: $blue;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
@@ -31,6 +31,7 @@ body{
   margin-top: 1em;
 }
 .btn-dashboard{
+  margin: 0.6em auto;
   width: 100%;
 }
 
@@ -60,4 +61,22 @@ body{
 
 .btn-redirect:hover{
   background-color: $blue-hover;
+}
+
+.card-booked-product{
+  background-color: $grey-bright;
+  top: 0;
+  margin: 0;
+  padding: 0.3em 0.7em;
+  width: 50vh;
+}
+
+.restaurant-name{
+  font-size: 1rem;
+  font-weight: 500;
+  color: $blue;
+}
+
+.product-name .product-description .product-price{
+  font-size: 0.7rem;
 }

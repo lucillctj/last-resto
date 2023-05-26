@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {db} from "../app";
 import {QueryError, ResultSetHeader} from "mysql2";
 import {Product} from "../models/product";
+import {Restaurant} from "../models/restaurant";
 
 export class ProductController {
     public static async getAllProducts(req: Request, res: Response): Promise<void> {
@@ -16,7 +17,7 @@ export class ProductController {
         }
     }
 
-    public static async getProductsByRestaurantId(req: Request, res: Response): Promise<void> {
+    public static async getProductsByRestaurantId(req: Request, res: Response): Promise<Product[] | any> {
         const restaurantRequestId = parseInt(req.params.id);
         try {
             db.query(
@@ -29,30 +30,31 @@ export class ProductController {
         }
     }
 
-    public static async getProductsByUserId(req: Request, res: Response): Promise<void> {
-        const userRequestId = parseInt(req.params.id);
+    public static async getRestaurantIdByProductId(req: Request, res: Response): Promise<any> {
+        const productRequestId = parseInt(req.params.id);
         try {
             db.query(
-                `SELECT * FROM products WHERE user_id = ${userRequestId}`,
-                (error: Error | null, results: Product[]) => {
-                    return res.status(200).send({results});
+                `SELECT restaurant_id FROM products WHERE product_id = ${productRequestId}`,
+                (error: Error | null, results: Restaurant[]) => {
+                    return res.status(200).send(results[0]);
                 })
         } catch (error) {
             res.status(500).json({message: "Internal server error"});
         }
     }
 
-    public static async getProductDashboard(req: Request, res: Response): Promise<void> {
+    public static async getProductById(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
             db.query(
                 `SELECT * FROM products WHERE product_id = ${requestId}`,
-                (error: Error | null, results: any) => {
+                (error: Error | null, results: Product[]) => {
                     if (error) throw error;
-                    else if (results.length === 0) {
+                    else if (!results) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send({results});
+                        console.log(results)
+                        res.status(200).send(results[0]);
                     }
                 })
         } catch (error) {

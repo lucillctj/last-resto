@@ -4,6 +4,7 @@ import {Customer} from "../models/customer";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
 import {generateAccessToken, setTokenCookie} from "../middleware/auth"
+import {Product} from "../models/product";
 
 export class CustomerController {
     public static async createCustomerAccount(req: Request, res: Response): Promise<void> {
@@ -102,18 +103,17 @@ export class CustomerController {
         }
     }
 
-    public static async getCustomerDashboard(req: Request, res: Response): Promise<void> {
+    public static async getCustomerDashboard(req: Request, res: Response): Promise<Customer | any> {
         const userId = parseInt(req.params.id);
         try {
             db.query(
                 `SELECT * FROM users WHERE role = 'customer' AND user_id = ${userId}`,
-                (error: Error | null, results: any) => {
-
+                (error: Error | null, results: Customer[]) => {
                     if (error) throw error;
                     else if (results.length === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send({results});
+                        res.status(200).send(results[0]);
                     }
                 })
         } catch (error) {
@@ -182,6 +182,24 @@ export class CustomerController {
         }
     }
 
+    public static async getProductIdByUserId(req: Request, res: Response): Promise<any> {
+        const userRequestId = parseInt(req.params.id);
+        console.log(userRequestId)
+        try {
+            db.query(
+                `SELECT product_id FROM users WHERE role = 'customer' AND user_id = ${userRequestId}`,
+                (error: Error | null, results: Product[]) => {
+                    if (error) throw error;
+                    else if (!results) {
+                        res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
+                    } else {
+                        res.status(200).send(results[0]);
+                    }
+                })
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
 
     // public static async deleteCustomer(req: Request, res: Response): Promise<void> {
     //     const requestId = parseInt(req.params.id);

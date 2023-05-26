@@ -39,6 +39,21 @@ h1{
   font-size: 2.3rem;
 }
 
+h3{
+  position: relative;
+  display: flex;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+h4{
+  position: relative;
+  display: flex;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
 p{
   color: $grey;
   font-weight: 300;
@@ -67,7 +82,7 @@ p{
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   font-weight: 300;
 }
 
@@ -93,8 +108,6 @@ p{
   border: 0;
   color: white;
   font-style: normal;
-  //font-weight: 500;
-  //font-size: 1.3rem;
   text-align: center;
 }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Product} from "../../interfaces/product-interface";
+import {Restaurant} from "../../interfaces/restaurant-interface";
 
 @Injectable(
   {providedIn: 'root'}
@@ -21,11 +22,21 @@ export class ProductService {
     return this.http.get<Product[]>(url);
   }
 
-  //pour récupérer les produits réservés par les clients
-  getProductsByUserId(userId: number): Observable<Product[]> {
-    const url = `${this.apiUrl}/user/${userId}`;
-    return this.http.get<Product[]>(url);
+  getRestaurantIdByProductId(productId: number): Observable<Product> {
+    const url = `${this.apiUrl}/${productId}/restaurant`;
+    return this.http.get<Product>(url);
   }
+
+  getProductById(productId: number): Observable<Product> {
+    const url = `${this.apiUrl}/${productId}`;
+    return this.http.get<Product>(url);
+  }
+
+  // //pour récupérer les produits réservés par les clients
+  // getProductsByUserId(userId: number): Observable<Product[]> {
+  //   const url = `${this.apiUrl}/user/${userId}`;
+  //   return this.http.get<Product[]>(url);
+  // }
 
   // getProductDashboard(productId: number): Observable<any> {
   //   const url = `${this.apiUrl}/dashboard/${productId}`;

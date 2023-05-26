@@ -28,22 +28,16 @@
     <div class="col-lg-6 col-md-3 col-sm-6">
       <div class="reservation">
         <h4 class="reservation-title">Mes réservations</h4>
-<!--        <div class="card card-product" *ngFor="let product of currentProducts">-->
-<!--          <p class="product-name">{{product.name}}</p>-->
-<!--          <p class="product-description">{{product.description}}</p>-->
-<!--          <p class="product-price">{{product.price}} €</p>-->
-
-<!--        </div>-->
-        <div>
+        <div class="card card-booked-product" *ngIf="currentRestaurant">
+          <p class="restaurant-name">{{currentRestaurant.name}}</p>
+          <div *ngIf="currentProduct">
+          <p class="product-detail">{{currentProduct.name}} : {{currentProduct.description}} ({{currentProduct.price}} €)</p>
+          </div>
+        </div>
+        <div *nfIf="!currentProduct">
           <p>Vous n'avez aucune réservation en cours.</p>
           <button class="btn-dashboard btn-redirect" type="button" (click)="redirectToRestaurantsList()">Voir les restaurants</button>
-
-
         </div>
-<!--        <button *ngIf="currentProducts.length === 0" class="btn-dashboard btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>-->
-
-
-
       </div>
     </div>
 

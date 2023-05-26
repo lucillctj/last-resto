@@ -44,7 +44,7 @@ export class RestaurantDashboardComponent implements OnInit {
       this.restaurantService.getRestaurantDashboard(currentRestaurantId)
         .subscribe(
           (data) => {
-            this.currentRestaurant = data[0];
+            this.currentRestaurant = data;
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);

@@ -20,6 +20,14 @@ body{
   height: auto;
 }
 
+.restaurant-name{
+  color: $green;
+}
+
+.restaurant-description{
+  margin-right: 5em;
+  font-weight: 400;
+}
 .bloc-buttons{
   margin-top: 1em;
   position: relative;
@@ -30,7 +38,7 @@ body{
   align-content: flex-start;
 }
 .btn-dashboard{
-  width: 60%;
+  width: 75%;
 }
 
 .btn-update{
@@ -65,13 +73,13 @@ body{
   border-radius: 0.3em;
   border: none;
   color: white;
+  margin: 0.5em;
 }
 .text-availability{
-  font-size: 0.9em;
-  font-weight: 600;
-  color: $grey;
+  margin-bottom: 0;
+  color: $green;
   display: flex;
-  align-items: center
+  align-items: center;
 }
 .form-switch{
   padding-left: 0;
@@ -82,8 +90,8 @@ body{
 }
 .form-check-input{
   position: relative;
-  right: 1em;
-  width: 3em;
+  right: 1.5em;
+  width: 3.5em;
   margin-left: 0;
 }
 
@@ -98,6 +106,10 @@ body{
   justify-content: space-between;
   padding: 0 0.5em;
   margin-bottom: 0.6em;
+}
+
+.products-title{
+  color: $green;
 }
 
 .product-name{

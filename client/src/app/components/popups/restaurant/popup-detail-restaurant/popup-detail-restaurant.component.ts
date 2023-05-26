@@ -42,7 +42,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
     this.restaurantService.getRestaurantDashboard(currentRestaurantId!)
       .subscribe(
         (data) => {
-          this.currentRestaurant = data[0];
+          this.currentRestaurant = data;
 
           this.productService.getProductsByRestaurantId(currentRestaurantId!)
             .subscribe(

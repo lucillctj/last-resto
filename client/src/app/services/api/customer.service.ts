@@ -23,9 +23,9 @@ export class CustomerService {
     return this.http.get<Customer[]>(this.apiUrl);
   }
 
-  getCustomerDashboard(userId: number): Observable<any> {
+  getCustomerDashboard(userId: number): Observable<Customer> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<any>(url);
+    return this.http.get<Customer>(url);
   }
 
   updateCustomer(user: Customer): Observable<any> {
@@ -34,12 +34,14 @@ export class CustomerService {
   }
 
   bookProduct(user: Customer, product: Product): Observable<any> {
-    console.log('user', user)
-    console.log('product', product)
-
-
     const url = `${this.apiUrl}/update-product-id/${user.user_id}`;
     return this.http.put<any>(url, product);
+  }
+
+  //pour récupérer les produits réservés par les clients
+  getProductIdByUserId(userId: number): Observable<any> {
+    const url = `${this.apiUrl}/${userId}/product`;
+    return this.http.get<any>(url);
   }
 
   // deleteCustomer(userId: number): Observable<void> {
