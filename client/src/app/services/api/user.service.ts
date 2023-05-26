@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import {User} from "../../interfaces/user-interface";
+import {AuthService} from "../auth.service";
 
 @Injectable(
   {providedIn: 'root'}
@@ -10,15 +11,12 @@ import {User} from "../../interfaces/user-interface";
 export class UserService {
   private apiUrl = 'http://localhost:3000/api/v1/users';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private authService: AuthService) { }
 
   login(user: User) {
     const url = `${this.apiUrl}/login`;
-    return this.http.post<any>(url, { user }, {withCredentials: true})
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        return user;
-      }))
+    return this.http.post<any>(url, user, {withCredentials: true});
   }
 
   logout(): Observable<void> {

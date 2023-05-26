@@ -18,7 +18,7 @@ export class UserController {
             db.query(`SELECT * FROM users WHERE email = ?`, [bodyUser.email], async (error: QueryError | null, results: any) => {
                 if (error) throw error;
                 else if (results.length === 0) {
-                    return res.status(401).send({message: 'Aucun utilisateur trouvé !', accessToken: null});
+                    return res.status(401).send({message: 'Aucun utilisateur trouvé !'});
                 } else {
                     const compareHashPassword = await bcrypt.compare(bodyUser.password, results[0].password);
                     if (!compareHashPassword) {
