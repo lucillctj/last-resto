@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
 import {PopupInformationComponent} from "../../popups/restaurant/popup-information/popup-information.component";
 import {Restaurant} from "../../../interfaces/restaurant-interface";
+import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -13,6 +14,7 @@ import {Restaurant} from "../../../interfaces/restaurant-interface";
 export class NavBarRestaurantOwnerComponent implements OnInit{
   isRestaurantDashboardActive: boolean;
   isUserDashboardActive: boolean;
+  currentRestaurantOwner: RestaurantOwner;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +24,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   ) {
     this.isRestaurantDashboardActive = false;
     this.isUserDashboardActive = false;
+    this.currentRestaurantOwner = {} as RestaurantOwner;
   }
 
   ngOnInit(){
@@ -43,16 +46,18 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
       this.router.navigate([urlRestaurantDashboard]);
     }
     else{
-        this.modalService.open(PopupInformationComponent);
+      this.modalService.open(PopupInformationComponent);
     }
   }
 
   redirectToUserDashboard() {
-    const currentUser = this.authService.getCurrentUser();
-    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${currentUser.user_id}`;
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentRestaurantOwner = user as RestaurantOwner;
+    });
+    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentRestaurantOwner.user_id}`;
 
     if (this.router.url === urlUserDashboard) {
-      return
+      return;
     } else {
       this.router.navigate([urlUserDashboard]);
     }

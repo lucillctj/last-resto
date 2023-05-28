@@ -3,36 +3,35 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {User} from "../interfaces/user-interface";
 import {Restaurant} from "../interfaces/restaurant-interface";
+import {Customer} from "../interfaces/customer-interface";
+import {RestaurantOwner} from "../interfaces/restaurantOwner-interface";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User | Customer | RestaurantOwner>;
+  public currentUser: Observable<User | Customer | RestaurantOwner>;
 
-  // currentRestaurantId: number | undefined;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     const storedUser = localStorage.getItem('currentUser');
-    this.currentUserSubject = new BehaviorSubject<User>(storedUser ? JSON.parse(storedUser) : null);
+    this.currentUserSubject = new BehaviorSubject<User | Customer | RestaurantOwner>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): User {
-    return this.currentUserSubject.getValue();
+  public setCurrentUser(user: User | Customer | RestaurantOwner | null): void {
+    this.currentUserSubject.next(user as User | Customer | RestaurantOwner);
   }
 
-  setCurrentUser(user: User) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  public getCurrentUser(): Observable<User | Customer | RestaurantOwner | null> {
+    return this.currentUserSubject.asObservable();
   }
 
-  getCurrentUser() {
-    const userString = localStorage.getItem('currentUser');
-    return userString ? JSON.parse(userString) : null;
+  forgetUser() {
+    localStorage.removeItem('currentUser')
   }
-
 
   setCurrentRestaurant(restaurant: Restaurant) {
     localStorage.setItem('currentRestaurant', JSON.stringify(restaurant));
@@ -50,12 +49,4 @@ export class AuthService {
 
 //this.storage.clear().subscribe(() => {});
 
-
-  // isLoggedIn(): boolean {
-  //   return !!this.currentUserId;
-  // }
-  //
-  // logout() {
-  //   this.currentUserId = null;
-  // }
 }

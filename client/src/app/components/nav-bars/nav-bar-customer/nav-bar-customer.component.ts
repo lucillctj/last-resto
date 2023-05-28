@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
-import {User} from "../../../interfaces/user-interface";
+import {Customer} from "../../../interfaces/customer-interface";
 
 @Component({
   selector: 'app-nav-bar-customer',
@@ -9,6 +9,7 @@ import {User} from "../../../interfaces/user-interface";
   styleUrls: ['./nav-bar-customer.component.scss', '../../../../styles.scss']
 })
 export class NavBarCustomerComponent implements OnInit{
+  currentCustomer: Customer;
   isSearchActive: boolean;
   isDashboardActive: boolean;
 
@@ -17,6 +18,7 @@ export class NavBarCustomerComponent implements OnInit{
     private router: Router,
     private authService: AuthService
   ) {
+    this.currentCustomer = {} as Customer;
     this.isSearchActive = false;
     this.isDashboardActive = false;
   }
@@ -41,8 +43,10 @@ export class NavBarCustomerComponent implements OnInit{
   }
 
   redirectToDashboard() {
-    const currentUser: User = this.authService.getCurrentUser();
-    const redirectUrl = `/api/v1/customers/dashboard/${currentUser.user_id}`;
+    this.authService.getCurrentUser().subscribe(currentUser => {
+      this.currentCustomer = currentUser as Customer;
+    });
+    const redirectUrl = `/api/v1/customers/dashboard/${this.currentCustomer.user_id}`;
     if (this.router.url === redirectUrl) {
       this.isDashboardActive = true;
 

@@ -98,13 +98,14 @@ export class RestaurantOwnerController {
         try {
             db.query(
                 `SELECT * FROM users WHERE role = 'restaurant owner' AND user_id = ${requestId}`,
-                (error: Error | null, results: any) => {
+                (error: Error | null, results: RestaurantOwner[]) => {
 
                     if (error) throw error;
                     else if (results.length === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send({results});
+                        console.log(results[0])
+                        res.status(200).send(results[0]);
                     }
                 })
         } catch (error) {

@@ -20,9 +20,9 @@ export class RestaurantOwnerService {
     return this.http.get<RestaurantOwner[]>(this.apiUrl);
   }
 
-  getRestaurantOwnerDashboard(userId: number): Observable<any> {
+  getRestaurantOwnerDashboard(userId: number): Observable<RestaurantOwner> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<any>(url);
+    return this.http.get<RestaurantOwner>(url);
   }
 
   updateRestaurantOwner(user: RestaurantOwner): Observable<any> {

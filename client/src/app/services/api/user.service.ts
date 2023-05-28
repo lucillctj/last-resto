@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {User} from "../../interfaces/user-interface";
-import {AuthService} from "../auth.service";
 
 @Injectable(
   {providedIn: 'root'}
@@ -11,8 +10,7 @@ import {AuthService} from "../auth.service";
 export class UserService {
   private apiUrl = 'http://localhost:3000/api/v1/users';
 
-  constructor(private http: HttpClient,
-              private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   login(user: User) {
     const url = `${this.apiUrl}/login`;
@@ -21,7 +19,6 @@ export class UserService {
 
   logout(): Observable<void> {
     const url = `${this.apiUrl}/logout`;
-    localStorage.removeItem('currentUser');
     return this.http.post<void>(url, null);
   }
 

@@ -113,6 +113,7 @@ export class CustomerController {
                     else if (results.length === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
+                        console.log(results[0])
                         res.status(200).send(results[0]);
                     }
                 })

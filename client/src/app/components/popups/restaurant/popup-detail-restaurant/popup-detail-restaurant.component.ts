@@ -8,6 +8,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {CustomerService} from "../../../../services/api/customer.service";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Customer} from "../../../../interfaces/customer-interface";
+import {User} from "../../../../interfaces/user-interface";
 
 @Component({
   selector: 'app-popup-detail-restaurant',
@@ -16,12 +17,13 @@ import {Customer} from "../../../../interfaces/customer-interface";
 })
 export class PopupDetailRestaurantComponent implements OnInit {
   @Input() currentRestaurant!: Restaurant;
-  selectedProduct: Product | undefined;
 
+  selectedProduct: Product | undefined;
   submitted = false;
   successMessage: string | null;
   errorMessage: string | null;
   currentProducts: Product[];
+  currentCustomer: Customer;
 
   constructor(
     private router: Router,
@@ -35,6 +37,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
     this.successMessage = null;
     this.errorMessage = null;
     this.currentProducts = [];
+    this.currentCustomer = {} as Customer;
   }
 
   ngOnInit() {
@@ -61,8 +64,12 @@ export class PopupDetailRestaurantComponent implements OnInit {
   clickToBook() {
     console.log(this.selectedProduct)
     if (this.selectedProduct) {
-      const currentUser: Customer = this.authService.getCurrentUser();
-      this.customerService.bookProduct(currentUser, this.selectedProduct)
+      this.authService.getCurrentUser().subscribe(currentUser => {
+        this.currentCustomer = currentUser as Customer;
+        console.log(currentUser)
+      });
+
+      this.customerService.bookProduct(this.currentCustomer, this.selectedProduct)
         .subscribe(() => {
             this.successMessage = 'Votre réservation a bien été prise en compte !'
             setTimeout(() => {

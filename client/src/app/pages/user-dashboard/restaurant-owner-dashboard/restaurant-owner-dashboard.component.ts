@@ -13,6 +13,7 @@ import {
 } from "../../../components/popups/restaurant/popup-create-restaurant/popup-create-restaurant.component";
 import {RestaurantOwnerService} from "../../../services/api/restaurant-owner.service";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
+import {PopupDeleteUserComponent} from "../../../components/popups/user/popup-delete-user/popup-delete-user.component";
 
 @Component({
   selector: 'app-restaurant-owner-dashboard',
@@ -41,7 +42,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
     if (currentUserId) {
       this.restaurantOwnerService.getRestaurantOwnerDashboard(currentUserId)
         .subscribe((data) => {
-            this.currentUser = data.results[0];
+            this.currentUser = data;
             this.authService.setCurrentUser(this.currentUser);
 
             this.restaurantService.getRestaurantByUserId(currentUserId)
@@ -67,6 +68,11 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
 
   openPopupToUpdate() {
     this.modalService.open(PopupUpdateRestaurantOwnerComponent);
+  }
+
+  openPopupToDelete() {
+    const modalRef = this.modalService.open(PopupDeleteUserComponent);
+    modalRef.componentInstance.currentUser = this.currentUser;
   }
 
   showRestaurantPage(restaurantId: number | undefined) {
