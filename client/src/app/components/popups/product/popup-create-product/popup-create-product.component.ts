@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
+import { NgForm } from '@angular/forms';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from "../../../../services/auth.service";
@@ -13,6 +14,9 @@ import {Product} from "../../../../interfaces/product-interface";
 })
 export class PopupCreateProductComponent {
   @Input() currentRestaurant!: Restaurant;
+  @ViewChild('form', { static: false })
+
+  form!: NgForm;
   submitted = false;
   newProduct: Product;
   successMessage: string | null;
@@ -33,7 +37,9 @@ export class PopupCreateProductComponent {
 
   onSubmit() {
     this.submitted = true;
-
+    if(!this.form.form.valid){
+      return
+    }
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
     this.productService.createProduct(this.newProduct)
       .subscribe(() => {

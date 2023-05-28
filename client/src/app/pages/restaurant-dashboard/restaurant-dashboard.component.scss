@@ -1,4 +1,5 @@
 @import "../../../styles.scss";
+@import "../../styles-form-popup";
 
 body{
   background-color: $green;
@@ -16,7 +17,7 @@ body{
   padding: 2em;
   border-radius: 0.3em;
   border: none;
-  width: 215vh;
+  width: 150vh;
   height: auto;
 }
 
@@ -67,7 +68,6 @@ body{
 
 .card-detail{
   position: relative;
-  top: 1.2em;
   background-color: $grey-bright;
   padding: 0.4em 1em;
   border-radius: 0.3em;
@@ -138,4 +138,13 @@ body{
 .btn-create-product:hover{
   background-color: $green;
   color: white;
+}
+
+.btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: $green;
+  background-color: transparent;
 }

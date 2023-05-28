@@ -20,7 +20,7 @@ export class RestaurantController {
         const userRequestId = parseInt(req.params.id);
         try {
             db.query(
-                `SELECT * FROM restaurants WHERE user_id =${userRequestId}`,
+                `SELECT * FROM restaurants WHERE restaurant_owner_id =${userRequestId}`,
                 (error: Error | null, results: Restaurant[]) => {
                     return res.status(200).send(results);
                 })
@@ -71,14 +71,14 @@ export class RestaurantController {
             city: body.city,
             phone: body.phone,
             website: body.website || null,
-            isReserved: body.is_reserved,
-            userId: body.user_id
+            isAvailable: body.is_available,
+            restaurantOwnerId: body.restaurant_owner_id
         };
         try {
-            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.userId! >=1 && (Object.keys(body).length === 7 || 8)
+            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.restaurantOwnerId! >=1 && (Object.keys(body).length === 7 || 8)
             ) {
-                const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_reserved, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-                const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, false, restaurant.userId];
+                const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_available, restaurant_owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, false, restaurant.restaurantOwnerId];
                 db.execute(sql, params, async (error: QueryError | null) => {
                     if (error) throw error;
                     else {
@@ -96,10 +96,9 @@ export class RestaurantController {
         }
     }
 
-
     public static async updateRestaurant(req: Request, res: Response): Promise<void> {
         const body = req.body;
-        const requestId = parseInt(req.params.id);
+        const restaurantRequestId = parseInt(req.params.id);
         const restaurant: Restaurant = {
             restaurantId: body.restaurant_id,
             name: body.name,
@@ -109,13 +108,13 @@ export class RestaurantController {
             city: body.city,
             phone: body.phone,
             website: body.website,
-            isReserved: body.is_reserved,
-            userId: body.user_id
+            isAvailable: body.is_available,
+            restaurantOwnerId: body.restaurant_owner_id
         };
         try {
             if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.address !== '' && Object.keys(body).length === 8 || 9) {
-                const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, is_reserved = ?, user_id = ? WHERE restaurant_id = ${requestId}`;
-                const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, restaurant.isReserved, restaurant.userId];
+                const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, is_available = ?, restaurant_owner_id = ? WHERE restaurant_id = ${restaurantRequestId}`;
+                const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, restaurant.isAvailable, restaurant.restaurantOwnerId];
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
@@ -131,6 +130,31 @@ export class RestaurantController {
         } catch (error) {
             console.log(error);
             res.status(400).json({error: 'Missing values'});
+        }
+    }
+
+    public static async updateAvailability(req: Request, res: Response): Promise<void> {
+        const restaurantRequestId = parseInt(req.params.id);
+        const isAvailable: boolean = req.body.isAvailable;
+        try {
+            if (typeof isAvailable !== undefined && isAvailable !== null) {
+                const sql = `UPDATE restaurants SET is_available = ? WHERE restaurant_id = ${restaurantRequestId}`;
+                const params = [isAvailable]
+                db.execute(sql, params,async (error: QueryError | null, results: any) => {
+                    if (error) throw error;
+                    else if (results.affectedRows === 0) {
+                        res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
+                    } else {
+                        res.status(201).send({message: `Restaurant availability was updated!`});
+                    }
+                })
+
+            } else {
+                res.status(400).json({error: 'Missing or incorrect values'});
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({error: 'Error'});
         }
     }
 

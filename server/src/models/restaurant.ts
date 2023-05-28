@@ -7,10 +7,10 @@ export class Restaurant {
     city: string;
     phone: string;
     website?: string;
-    isReserved?: boolean;
-    userId?: number;
+    isAvailable?: boolean;
+    restaurantOwnerId?: number;
 
-    constructor(restaurantId: number, name: string, description: string, address: string, postCode: string, city: string, phone: string, website: string, isReserved: boolean, userId: number) {
+    constructor(restaurantId: number, name: string, description: string, address: string, postCode: string, city: string, phone: string, website: string, isAvailable: boolean, restaurantOwnerId: number) {
         this.restaurantId = restaurantId;
         this.name = name;
         this.description = description;
@@ -19,8 +19,8 @@ export class Restaurant {
         this.city = city;
         this.phone = phone;
         this.website = website;
-        this.isReserved = isReserved;
-        this.userId = userId;
+        this.isAvailable = isAvailable;
+        this.restaurantOwnerId = restaurantOwnerId;
 
     }
 

@@ -34,13 +34,13 @@ export class PopupCreateRestaurantComponent {
 
   onSubmit() {
     this.submitted = true;
-    this.newRestaurant.user_id = this.currentUser.user_id;
-    console.log('new resto user id', this.newRestaurant.user_id)
+    this.newRestaurant.restaurant_owner_id = this.currentUser.user_id;
+    console.log('new resto user id', this.newRestaurant.restaurant_owner_id)
     this.restaurantService.createRestaurant(this.newRestaurant)
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été créé !';
           setTimeout(() => {
-            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.newRestaurant.user_id}`]);
+            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.newRestaurant.restaurant_owner_id}`]);
             location.reload();
             this.modalService.dismissAll()
           }, 2000)

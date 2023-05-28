@@ -36,6 +36,11 @@ export class RestaurantService {
     return this.http.put<any>(url, restaurant);
   }
 
+  updateAvailability(restaurant: Restaurant, isAvailable: boolean): Observable<any> {
+    const url = `${this.apiUrl}/update-availability/${restaurant.restaurant_id}`;
+    return this.http.put<any>(url, {isAvailable});
+  }
+
   deleteRestaurant(restaurant: Restaurant): Observable<void> {
     const url = `${this.apiUrl}/delete/${restaurant.restaurant_id}`;
     return this.http.delete<void>(url);

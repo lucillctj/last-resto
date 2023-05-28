@@ -9,6 +9,7 @@ export const restaurantRoutes = () => {
     router.get('/user/:id', RestaurantController.getRestaurantByUserId);
     router.get('/dashboard/:id', RestaurantController.getRestaurantDashboard);
     router.put('/update/:id', RestaurantController.updateRestaurant);
+    router.put('/update-availability/:id', RestaurantController.updateAvailability);
     router.delete('/delete/:id', RestaurantController.deleteRestaurant);
 
     return router;

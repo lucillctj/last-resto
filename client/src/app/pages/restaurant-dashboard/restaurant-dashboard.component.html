@@ -35,8 +35,9 @@
                 <h4 class="form-check-label text-availability" for="flexSwitchCheckDefault">Disponibilité</h4>
               </div>
               <div class="col-lg-3">
-                <input class="form-check-input switch" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <input class="form-check-input switch" type="checkbox" [(ngModel)]="isAvailable" (change)="updateAvailability()" role="switch" id="flexSwitchCheckDefault">
               </div>
+              <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
             </div>
           </div>
         </div>
@@ -47,22 +48,24 @@
               <p class="product-name">{{product.name}}</p>
               <p class="product-description">{{product.description}}</p>
               <p class="product-price">{{product.price}} €</p>
-
-            </div>
-
-            <div *ngIf="currentProducts.length === 0">
-              <p>Vous n'avez créé aucune formule enregistrée pour ce restaurant.</p>
-            </div>
-
-            <button class="btn-dashboard btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>
-
-          </div>
+              <button class="btn-icon" (click)="deleteProduct(product)">
+                <i class="bi bi-trash3"></i>
+              </button>
         </div>
-      </section>
+
+        <div *ngIf="currentProducts.length === 0">
+          <p>Vous n'avez créé aucune formule enregistrée pour ce restaurant.</p>
+        </div>
+
+        <button class="btn-dashboard btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>
 
     </div>
-
   </div>
+  </section>
+
+</div>
+
+</div>
 </div>
 
 <div class="nav-bar">

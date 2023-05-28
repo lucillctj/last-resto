@@ -5,6 +5,6 @@ export interface RestaurantOwner {
   email: string;
   phone: string;
   password: string;
-  restaurantId?: number | undefined;
+  restaurant_id?: number | undefined;
   role: 'restaurant owner';
 }
