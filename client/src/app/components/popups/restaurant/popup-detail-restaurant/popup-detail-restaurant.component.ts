@@ -8,7 +8,6 @@ import {AuthService} from "../../../../services/auth.service";
 import {CustomerService} from "../../../../services/api/customer.service";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Customer} from "../../../../interfaces/customer-interface";
-import {User} from "../../../../interfaces/user-interface";
 
 @Component({
   selector: 'app-popup-detail-restaurant',
@@ -68,7 +67,9 @@ export class PopupDetailRestaurantComponent implements OnInit {
         this.currentCustomer = currentUser as Customer;
         console.log(currentUser)
       });
-
+      if(!this.currentCustomer) {
+        this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
+      }
       this.customerService.bookProduct(this.currentCustomer, this.selectedProduct)
         .subscribe(() => {
             this.successMessage = 'Votre réservation a bien été prise en compte !'
@@ -82,6 +83,5 @@ export class PopupDetailRestaurantComponent implements OnInit {
             this.errorMessage = 'Une erreur est survenue lors votre réservation, veuillez réessayer.';
 
           })
-    }
-  }
+    }}
 }
