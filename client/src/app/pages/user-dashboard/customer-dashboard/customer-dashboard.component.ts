@@ -50,37 +50,32 @@ export class CustomerDashboardComponent implements OnInit {
         .subscribe((data) => {
             this.currentUser = data;
             this.authService.setCurrentUser(this.currentUser);
-
             this.customerService.getProductIdByUserId(currentUserId)
               .subscribe(async (data) => {
-                  console.log('data 2 ---->', data)
-
                   this.currentProductId = data.product_id;
-                  if (this.currentProductId) {
-                    await this.productService.getProductById(this.currentProductId!)
-                      .subscribe((data) => {
-                        console.log('currentProduct', data)
-                        this.currentProduct = data;
-                        this.productService.getRestaurantIdByProductId(this.currentProductId!)
-                          .subscribe((data) => {
-                              console.log('currentRestaurantId', data)
-                              this.currentRestaurantId = data.restaurant_id;
-                              this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!)
-                                .subscribe((data) => {
-                                    this.currentRestaurant = data;
-                                  },
-                                  (error) => {
-                                    console.error('Une erreur s\'est produite lors de la récupération des données des données du restaurant.', error);
-                                  });
-                            },
-                            (error) => {
-                              console.error('Une erreur s\'est produite lors de la récupération de l\'identifiant du restaurant.', error);
-                            });
-                      })
-                  }
-                  else {
+
+                  if (!this.currentProductId) {
                     return;
                   }
+
+                  await this.productService.getProductById(this.currentProductId!)
+                    .subscribe((data) => {
+                      this.currentProduct = data;
+                      this.productService.getRestaurantIdByProductId(this.currentProductId!)
+                        .subscribe((data) => {
+                            this.currentRestaurantId = data.restaurant_id;
+                            this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!)
+                              .subscribe((data) => {
+                                  this.currentRestaurant = data;
+                                },
+                                (error) => {
+                                  console.error('Une erreur s\'est produite lors de la récupération des données des données du restaurant.', error);
+                                });
+                          },
+                          (error) => {
+                            console.error('Une erreur s\'est produite lors de la récupération de l\'identifiant du restaurant.', error);
+                          });
+                    })
                 },
                 (error) => {
                   console.error('Une erreur s\'est produite lors de la récupération des données des produits.', error);

@@ -27,14 +27,16 @@
     </div>
     <div class="col-lg-6 col-md-3 col-sm-6">
       <div class="reservation">
-        <h4 class="reservation-title">Mes réservations</h4>
-        <div class="card card-booked-product" *ngIf="currentRestaurant">
-          <p class="restaurant-name">{{currentRestaurant.name}}</p>
-          <div *ngIf="currentProduct">
-          <p class="product-detail">{{currentProduct.name}} : {{currentProduct.description}} ({{currentProduct.price}} €)</p>
+        <h4 class="reservation-title">Ma réservation</h4>
+        <div class="card card-booked-product" *ngIf="currentProduct.product_id">
+          <div *ngIf="currentRestaurant">
+            <p class="restaurant-name">{{currentRestaurant.name}}</p>
+            <div>
+              <p class="product-detail">{{currentProduct.name}} : {{currentProduct.description}} ({{currentProduct.price}} €)</p>
+            </div>
           </div>
         </div>
-        <div *nfIf="!currentProduct">
+        <div *ngIf="!currentProduct.product_id">
           <p>Vous n'avez aucune réservation en cours.</p>
           <button class="btn-dashboard btn-redirect" type="button" (click)="redirectToRestaurantsList()">Voir les restaurants</button>
         </div>
