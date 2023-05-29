@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {RestaurantOwner} from "../../../../interfaces/restaurantOwner-interface";
 import {RestaurantService} from "../../../../services/api/restaurant.service";
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {AuthService} from "../../../../services/auth.service";
-
 
 @Component({
   selector: 'app-popup-create-restaurant',
@@ -14,6 +14,9 @@ import {AuthService} from "../../../../services/auth.service";
 })
 export class PopupCreateRestaurantComponent {
   @Input() currentUser!: RestaurantOwner;
+  @ViewChild('form', { static: false })
+
+  form!: NgForm;
   submitted = false;
   newRestaurant: Restaurant;
   successMessage: string | null;
@@ -34,6 +37,10 @@ export class PopupCreateRestaurantComponent {
 
   onSubmit() {
     this.submitted = true;
+    if(!this.form.form.valid){
+      return
+    }
+
     this.newRestaurant.restaurant_owner_id = this.currentUser.user_id;
     console.log('new resto user id', this.newRestaurant.restaurant_owner_id)
     this.restaurantService.createRestaurant(this.newRestaurant)

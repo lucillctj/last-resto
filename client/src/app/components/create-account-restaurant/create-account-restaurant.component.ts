@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
 import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from "../../services/auth.service";
 
 @Component({
@@ -10,6 +11,9 @@ import {AuthService} from "../../services/auth.service";
   styleUrls: ['./create-account-restaurant.component.scss', '../../../styles.scss']
 })
 export class CreateAccountRestaurantComponent {
+  @ViewChild('form', { static: false })
+
+  form!: NgForm;
   submitted = false;
   newUser: RestaurantOwner;
   errorMessageEmail: string | null;
@@ -29,6 +33,9 @@ export class CreateAccountRestaurantComponent {
 
   onSubmit() {
     this.submitted = true;
+    if(!this.form.form.valid){
+      return
+    }
 
     this.restaurantOwnerService.createRestaurantOwner(this.newUser)
       .subscribe((res) => {
