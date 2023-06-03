@@ -19,33 +19,24 @@ export class CustomerService {
     return this.http.post<any>(url, user, {withCredentials: true});
   }
 
-  getAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.apiUrl);
-  }
-
   getCustomerDashboard(userId: number): Observable<Customer> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<Customer>(url);
+    return this.http.get<Customer>(url, { withCredentials: true });
   }
 
   updateCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/update/${user.user_id}`;
-    return this.http.put<any>(url, user);
+    return this.http.put<any>(url, user, {withCredentials: true});
   }
 
   bookProduct(user: Customer, product: Product): Observable<any> {
     const url = `${this.apiUrl}/update-product-id/${user.user_id}`;
-    return this.http.put<any>(url, product);
+    return this.http.put<any>(url, product, {withCredentials: true});
   }
 
   //pour récupérer les produits réservés par les clients
   getProductIdByUserId(userId: number): Observable<any> {
     const url = `${this.apiUrl}/${userId}/product`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, {withCredentials: true});
   }
-
-  // deleteCustomer(userId: number): Observable<void> {
-  //   const url = `${this.apiUrl}/delete/${userId}`;
-  //   return this.http.delete<void>(url);
-  // }
 }

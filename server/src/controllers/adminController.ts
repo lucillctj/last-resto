@@ -1,9 +1,9 @@
-import {Request, Response, NextFunction} from "express";
+import {NextFunction, Request, Response} from "express";
 import {db} from "../app";
 import {Admin} from "../models/admin";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from 'bcryptjs';
-import { generateAccessToken, generateRefreshToken } from "../middleware/auth"
+import {generateAccessToken} from "../middleware/auth"
 
 export class AdminController {
     public static async createAdminAccount(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -63,12 +63,10 @@ export class AdminController {
                         return res.status(401).json({message: "Mot de passe invalide"});
                     }
                     const accessToken = generateAccessToken(results.insertId);
-                    const refreshToken = generateRefreshToken(results.insertId);
 
                     return res.status(200).send({
                         message: "Authentification réussie",
-                        accessToken,
-                        refreshToken
+                        accessToken
                     });
                 }
             });

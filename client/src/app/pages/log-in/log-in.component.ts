@@ -25,7 +25,10 @@ export class LogInComponent {
     this.userService.login(user)
       .subscribe((res) => {
           this.authService.setCurrentUser(user);
-          this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+          console.log('role', res.userRole)
+          if(res.userRole === "customer"){
+            this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+          }
         },
         error => {
         console.log('error', error)

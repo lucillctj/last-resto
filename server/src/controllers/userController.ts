@@ -1,9 +1,8 @@
 import {Request, Response} from "express";
-import {Customer} from "../models/customer";
 import {db} from "../app";
 import {QueryError} from "mysql2/index";
 import bcrypt from "bcryptjs";
-import {generateAccessToken, generateRefreshToken, setTokenCookie} from "../middleware/auth";
+import {generateAccessToken, setTokenCookie} from "../middleware/auth";
 import {ResultSetHeader} from "mysql2";
 
 export class UserController {
@@ -14,7 +13,7 @@ export class UserController {
             email: body.email,
             password: body.password
         };
-        if (bodyUser.email !== '' && bodyUser.password !== '' && Object.keys(body).length === 2) {
+        if (bodyUser.email !== '' && bodyUser.password !== '') {
             db.query(`SELECT * FROM users WHERE email = ?`, [bodyUser.email], async (error: QueryError | null, results: any) => {
                 if (error) throw error;
                 else if (results.length === 0) {
@@ -26,14 +25,11 @@ export class UserController {
                     }
                     const accessToken = generateAccessToken(results[0].user_id);
                     setTokenCookie(res, accessToken);
-                    const refreshToken = generateRefreshToken(results[0].user_id);
 
                     return res.status(200).send({
                         message: "Authentification réussie",
                         userId: results[0].user_id,
-                        userRole: results[0].role,
-                        accessToken,
-                        refreshToken,
+                        userRole: results[0].role
                     });
                 }
             });

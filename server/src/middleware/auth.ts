@@ -5,6 +5,7 @@ dotenv.config();
 
 export const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.token;
+
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -16,19 +17,21 @@ export const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+export function generateAccessToken(userId: any) {
+    return jwt.sign({userId}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '1800s'});
+}
+
 export const setTokenCookie = (res: Response, token: string) => {
     res.cookie('token', token, {
         maxAge: 7200000,
         secure: true,
         httpOnly: true,
         sameSite: 'lax'
-    });
+    })
+        .status(200);
 };
 
-export function generateAccessToken(userId: any) {
-    return jwt.sign({userId}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '1800s'});
-}
 
-export function generateRefreshToken(userId: any) {
-    return jwt.sign({userId}, process.env.REFRESH_TOKEN_SECRET!, {expiresIn: '60d'});
-}
+// export function generateRefreshToken(userId: any) {
+//     return jwt.sign({userId}, process.env.REFRESH_TOKEN_SECRET!, {expiresIn: '60d'});
+// }

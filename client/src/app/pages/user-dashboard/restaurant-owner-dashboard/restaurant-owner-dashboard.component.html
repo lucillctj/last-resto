@@ -9,10 +9,10 @@
   <link rel="stylesheet" type="text/scss" href="../../../../styles.scss">
 </head>
 
-<body *ngIf="currentUser">
+<body>
 <h1 class="page-title">Mon profil restaurateur</h1>
 
-<div class="card card-profil">
+<div class="card card-profil" *ngIf="currentUser.user_id">
 
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">

@@ -83,6 +83,7 @@ export class CustomerDashboardComponent implements OnInit {
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
+            this.router.navigate(['api/v1']);
           });
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');

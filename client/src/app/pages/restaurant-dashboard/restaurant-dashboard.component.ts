@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+
 import {
   PopupUpdateRestaurantComponent
 } from "../../components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component";
@@ -28,6 +29,7 @@ export class RestaurantDashboardComponent implements OnInit {
   successMessage: string | null;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private restaurantService: RestaurantService,
@@ -54,6 +56,7 @@ export class RestaurantDashboardComponent implements OnInit {
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+            this.router.navigate(['api/v1']);
           })
     } else {
       console.error('L\'ID du restaurant n\'est pas un nombre valide.');
@@ -66,7 +69,7 @@ export class RestaurantDashboardComponent implements OnInit {
           this.currentProducts = data;
         },
         (error) => {
-          console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+          console.error('Une erreur s\'est produite lors de la récupération des formules du restaurant.', error);
         })
   }
 

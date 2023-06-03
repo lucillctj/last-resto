@@ -14,47 +14,31 @@ export class ProductService {
 
   createProduct(product: Product): Observable<any> {
     const url = `${this.apiUrl}/create`;
-    return this.http.post<any>(url, product);
+    return this.http.post<any>(url, product, {withCredentials: true});
   }
 
   getProductsByRestaurantId(restaurantId: number): Observable<Product[]> {
     const url = `${this.apiUrl}/restaurant/${restaurantId}`;
-    return this.http.get<Product[]>(url);
+    return this.http.get<Product[]>(url, {withCredentials: true});
   }
 
   getRestaurantIdByProductId(productId: number): Observable<Product> {
     const url = `${this.apiUrl}/${productId}/restaurant`;
-    return this.http.get<Product>(url);
+    return this.http.get<Product>(url, {withCredentials: true});
   }
 
   getProductById(productId: number): Observable<Product> {
     const url = `${this.apiUrl}/${productId}`;
-    return this.http.get<Product>(url);
-  }
-
-  // //pour récupérer les produits réservés par les clients
-  // getProductsByUserId(userId: number): Observable<Product[]> {
-  //   const url = `${this.apiUrl}/user/${userId}`;
-  //   return this.http.get<Product[]>(url);
-  // }
-
-  // getProductDashboard(productId: number): Observable<any> {
-  //   const url = `${this.apiUrl}/dashboard/${productId}`;
-  //   return this.http.get<any>(url);
-  // }
-
-  getAllProducts(): Observable<any> {
-    const url = `${this.apiUrl}`;
-    return this.http.get<any>(url);
+    return this.http.get<Product>(url, {withCredentials: true});
   }
 
   updateProduct(product: Product): Observable<any> {
     const url = `${this.apiUrl}/update/${product.product_id}`;
-    return this.http.put<any>(url, product);
+    return this.http.put<any>(url, product, {withCredentials: true});
   }
 
   deleteProduct(product: Product): Observable<void> {
     const url = `${this.apiUrl}/delete/${product.product_id}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(url, {withCredentials: true});
   }
 }

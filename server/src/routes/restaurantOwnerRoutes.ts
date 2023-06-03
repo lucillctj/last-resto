@@ -6,11 +6,8 @@ const router = express.Router();
 
 export const restaurantOwnerRoutes = () => {
     router.post('/signup', RestaurantOwnerController.createRestaurantOwnerAccount);
-    router.post('/login', verifyAuth, RestaurantOwnerController.loginToRestaurantOwnerAccount);
-    router.get('/', RestaurantOwnerController.getAllRestaurantOwners);
-    router.get('/dashboard/:id', RestaurantOwnerController.getRestaurantOwnerDashboard);
-    router.put('/update/:id', RestaurantOwnerController.updateRestaurantOwner);
-    // router.delete('/delete/:id', RestaurantOwnerController.deleteRestaurantOwner);
-
+    // router.get('/', RestaurantOwnerController.getAllRestaurantOwners);
+    router.get('/dashboard/:id', verifyAuth, RestaurantOwnerController.getRestaurantOwnerDashboard);
+    router.put('/update/:id', verifyAuth, RestaurantOwnerController.updateRestaurantOwner);
     return router;
 }

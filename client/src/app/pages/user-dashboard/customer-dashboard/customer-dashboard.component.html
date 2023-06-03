@@ -9,11 +9,9 @@
   <link rel="stylesheet" type="text/scss" href="../../../../styles.scss">
 </head>
 
-<body *ngIf="currentUser">
-
-
+<body>
 <h1 class="page-title">Mon profil</h1>
-<div class="card">
+<div class="card" *ngIf="currentUser.user_id">
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">
       <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
@@ -42,14 +40,8 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
-
 </div>
-
-
 </body>
 <div class="nav-bar">
   <app-nav-bar-customer></app-nav-bar-customer>
