@@ -16,22 +16,13 @@ export class RestaurantOwnerService {
     return this.http.post<any>(url, user, {withCredentials: true});
   }
 
-  getAllRestaurantOwners(): Observable<RestaurantOwner[]> {
-    return this.http.get<RestaurantOwner[]>(this.apiUrl);
-  }
-
-  getRestaurantOwnerDashboard(userId: number): Observable<any> {
+  getRestaurantOwnerDashboard(userId: number): Observable<RestaurantOwner> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<any>(url);
+    return this.http.get<RestaurantOwner>(url, {withCredentials: true});
   }
 
   updateRestaurantOwner(user: RestaurantOwner): Observable<any> {
     const url = `${this.apiUrl}/update/${user.user_id}`;
-    return this.http.put<any>(url, user);
+    return this.http.put<any>(url, user, {withCredentials: true});
   }
-
-  // deleteRestaurantOwner(userId: number): Observable<void> {
-  //   const url = `${this.apiUrl}/delete/${userId}`;
-  //   return this.http.delete<void>(url);
-  // }
 }

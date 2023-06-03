@@ -11,6 +11,9 @@ import {AuthService} from "../../services/auth.service";
   styleUrls: ['./create-account-customer.component.scss', '../../../styles.scss']
 })
 export class CreateAccountCustomerComponent {
+  @ViewChild('form', { static: false })
+
+  form!: NgForm;
   submitted = false;
   newUser: Customer;
   errorMessageEmail: string | null;
@@ -43,6 +46,9 @@ export class CreateAccountCustomerComponent {
 
   onSubmit() {
     this.submitted = true;
+    if(!this.form.form.valid){
+      return
+    }
 
     this.customerService.createCustomer(this.newUser)
       .subscribe((res) => {

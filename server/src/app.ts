@@ -9,17 +9,20 @@ import {restaurantRoutes} from "./routes/restaurantRoutes";
 import {productRoutes} from "./routes/productRoutes";
 import {adminRoutes} from "./routes/adminRoutes";
 import {usersRoutes} from "./routes/usersRoutes";
+import {verifyAuth} from "./middleware/auth";
 
 dotenv.config();
 
 const app: Express = express();
+
 const corsOptions = {
-    origin: true,
+    origin: 'http://localhost:4200',
     credentials: true
 };
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
+// app.use(verifyAuth);
 
 
 

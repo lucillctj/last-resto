@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import {RestaurantOwner} from "../../../../interfaces/restaurantOwner-interface";
-import {RestaurantOwnerService} from "../../../../services/api/restaurant-owner.service";
+import {Component} from '@angular/core';
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {RestaurantService} from "../../../../services/api/restaurant.service";
 
 @Component({

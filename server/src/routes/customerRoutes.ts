@@ -6,10 +6,10 @@ const router = express.Router();
 
 export const customerRoutes = () => {
     router.post('/signup', CustomerController.createCustomerAccount);
-    router.get('/', CustomerController.getAllCustomers);
-    router.get('/dashboard/:id', CustomerController.getCustomerDashboard);
-    router.put('/update/:id', CustomerController.updateCustomer);
-    // router.delete('/delete/:id', CustomerController.deleteCustomer);
+    router.get('/dashboard/:id', verifyAuth, CustomerController.getCustomerDashboard);
+    router.put('/update/:id', verifyAuth, CustomerController.updateCustomer);
+    router.put('/update-product-id/:id', verifyAuth, CustomerController.updateProductId)
+    router.get('/:id/product', verifyAuth, CustomerController.getProductIdByUserId)
 
     return router;
 }

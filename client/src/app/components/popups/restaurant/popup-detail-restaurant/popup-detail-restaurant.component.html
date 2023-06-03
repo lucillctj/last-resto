@@ -9,23 +9,23 @@
       <p class="description">{{currentRestaurant.description}}</p>
       <p class="address">{{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
       <p class="phone">{{currentRestaurant.phone}}</p>
-<!--      <div class="bloc-buttons">-->
-<!--        <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>-->
-<!--        <button class="btn-account btn-delete" type="button" (click)="openPopupToDelete()">Supprimer ce restaurant</button>-->
-<!--      </div>-->
     </div>
 
     <div class="col-lg-6 col-md-3 col-sm-6">
       <section class="product-selection">
-        <select class="form-select" multiple aria-label="multiple select example">
-          <option selected>Sélectionner une formule</option>
-          <option *ngFor="let product of currentProducts" value="{{product.name}}">{{product.name}} {{product.description}} {{product.price}}</option>
+        <p>Sélection :</p>
+        <select class="form-select" [(ngModel)]="selectedProduct">
+          <option disabled selected>Sélectionner une formule</option>
+          <option *ngFor="let product of currentProducts" [ngValue]="product">{{product.name}} {{product.description}} {{product.price}}</option>
         </select>
       </section>
+      <p *ngIf="currentProducts.length === 0">Ce restaurant ne propose aucune formule pour le moment.</p>
+
+    <button type="button" class="btn" [disabled]="!selectedProduct" (click)="clickToBook()">C'est parti !</button>
+      <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
     </div>
-
-    <button type="button" class="btn" (click)="clickToBook()">C'est parti !</button>
-
   </div>
 </div>
 </div>

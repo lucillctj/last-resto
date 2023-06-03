@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {User} from "../../interfaces/user-interface";
 
 @Injectable(
@@ -14,16 +14,11 @@ export class UserService {
 
   login(user: User) {
     const url = `${this.apiUrl}/login`;
-    return this.http.post<any>(url, { user }, {withCredentials: true})
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        return user;
-      }))
+    return this.http.post<any>(url, user, {withCredentials: true});
   }
 
   logout(): Observable<void> {
     const url = `${this.apiUrl}/logout`;
-    localStorage.removeItem('currentUser');
     return this.http.post<void>(url, null);
   }
 

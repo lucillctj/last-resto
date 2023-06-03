@@ -31,8 +31,8 @@
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn" [disabled]="!form.form.valid" > Créer mon restaurant !</button>
-      <div *ngIf="!form.form.valid" class="error-message">Tous les champs sont requis !</div>
+      <button type="submit" class="btn"> Créer mon restaurant !</button>
+      <div *ngIf="submitted && !form.form.valid" class="error-message">Tous les champs sont requis ! (excepté le site internet)</div>
     </div>
   </form>
   <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>

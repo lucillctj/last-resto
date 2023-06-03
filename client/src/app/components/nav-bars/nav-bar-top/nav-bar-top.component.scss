@@ -1,0 +1,41 @@
+@import "../../../../styles";
+@import "../styles-nav-bar";
+
+.logo-nav-bar{
+  width: 8%;
+  padding: 0.2em 0;
+}
+
+.btn-logout{
+  background-color: $orange;
+  font-size: 0.8rem;
+  margin-top: 0;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.btn-login{
+  color: $orange;
+  border: solid 0.15em;
+  font-size: 0.8rem;
+  margin-top: 0;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.btn-login:hover{
+  color: white;
+  border: solid 0.15em $orange;
+  background-color: $orange;
+}
+
+
+.current-user-name{
+  position: relative;
+  right: 2em;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+}

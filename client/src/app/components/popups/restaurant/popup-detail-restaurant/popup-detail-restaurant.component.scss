@@ -1,5 +1,5 @@
 @import "../../../../../styles";
-@import "../../../styles-form-popup";
+@import "../../../../styles-form-popup";
 
 .title{
   padding-top: 0.6em;
@@ -8,7 +8,7 @@
 
 .name{
   color: $blue;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 

@@ -7,7 +7,7 @@ export interface Restaurant {
   city: string;
   phone: string;
   website: string;
-  is_reserved: boolean;
-  user_id: number | undefined;
+  is_available: any;
+  restaurant_owner_id: number | undefined;
 
 }

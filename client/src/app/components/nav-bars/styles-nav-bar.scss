@@ -1,6 +1,6 @@
 @import "../../../styles";
 
-.navbar {
+.nav-bar {
   width: 35%;
   display: flex;
   justify-content: center;
@@ -14,18 +14,35 @@
   left: 32.5%
 }
 
+.navbar-expand-lg{
+  padding: 0;
+}
+.navbar-nav .nav-link{
+  padding: 1em;
+}
+
+.navbar-brand{
+  margin-left: 2em;
+  padding: 0;
+}
+
+.navbar-collapse{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 3em;
+}
+
 .btn-icon {
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
   border-radius: 0.8em;
-  //background-color: white;
   width: 3em;
   height: 3em;
-  margin: 0 3.5em;
+  margin: 0.3em 3.5em;
 }
 
 .icon-profil {
-  font-size: 1.6em;
+  font-size: 1.6rem;
 }

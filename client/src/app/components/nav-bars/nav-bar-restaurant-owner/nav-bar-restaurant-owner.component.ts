@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
 import {PopupInformationComponent} from "../../popups/restaurant/popup-information/popup-information.component";
 import {Restaurant} from "../../../interfaces/restaurant-interface";
+import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
+import {RestaurantService} from "../../../services/api/restaurant.service";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -13,15 +15,20 @@ import {Restaurant} from "../../../interfaces/restaurant-interface";
 export class NavBarRestaurantOwnerComponent implements OnInit{
   isRestaurantDashboardActive: boolean;
   isUserDashboardActive: boolean;
+  currentRestaurantOwner: RestaurantOwner;
+  currentRestaurant: Restaurant;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private modalService: NgbModal,
+    private restaurantService: RestaurantService
   ) {
     this.isRestaurantDashboardActive = false;
     this.isUserDashboardActive = false;
+    this.currentRestaurantOwner = {} as RestaurantOwner;
+    this.currentRestaurant = {} as Restaurant;
   }
 
   ngOnInit(){
@@ -34,25 +41,47 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   }
 
   redirectToRestaurantDashboard() {
-    const currentRestaurant: Restaurant = this.authService.getCurrentRestaurant();
-    const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${currentRestaurant.restaurant_id}`;
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    console.log(currentUserId)
+    if (currentUserId) {
+      this.restaurantService.getRestaurantByUserId(currentUserId)
+        .subscribe(
+          (data) => {
+            this.currentRestaurant = data[0];
 
-    if (this.router.url === urlRestaurantDashboard) {
-      return
-    } else if(currentRestaurant.restaurant_id) {
-      this.router.navigate([urlRestaurantDashboard]);
+            if(!this.currentRestaurant.restaurant_id){
+              this.modalService.open(PopupInformationComponent);
+              return;
+            }
+            else if (this.router.url === urlRestaurantDashboard) {
+              return;
+            }
+            else{
+              const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`;
+              this.router.navigate([urlRestaurantDashboard]);
+            }
+
+          },
+          (error) => {
+            console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+          })
+    } else {
+      console.error('L\'ID du restaurant n\'est pas un nombre valide.');
     }
-    else{
-        this.modalService.open(PopupInformationComponent);
-    }
+
+    const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`;
   }
 
+
+
   redirectToUserDashboard() {
-    const currentUser = this.authService.getCurrentUser();
-    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${currentUser.user_id}`;
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentRestaurantOwner = user as RestaurantOwner;
+    });
+    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentRestaurantOwner.user_id}`;
 
     if (this.router.url === urlUserDashboard) {
-      return
+      return;
     } else {
       this.router.navigate([urlUserDashboard]);
     }

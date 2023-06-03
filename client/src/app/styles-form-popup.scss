@@ -7,7 +7,7 @@ section{
   padding-top: 1em;
   font-style: normal;
   font-weight: 600;
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 form{
@@ -39,11 +39,10 @@ form{
 .error-message{
   color: red;
   position: relative;
-  //top: 0.7em;
-  //padding-bottom: 0.8em;
-  font-size: 0.8em;
+  font-size: 0.8rem;
   font-weight: 400;
   text-align: center;
+  margin-top: 0.5em;
 }
 
 .success-message{
@@ -51,8 +50,7 @@ form{
   position: relative;
   text-align: center;
   margin-top: 0.7em;
-  //bottom: 0.7em;
-  font-size: 0.9em;
+  font-size: 0.8rem;
   font-weight: 400;
 }
 

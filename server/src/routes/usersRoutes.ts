@@ -1,14 +1,13 @@
 import express from "express";
-import {verifyAuth} from "../middleware/auth";
 import {UserController} from "../controllers/userController";
-import {CustomerController} from "../controllers/customerController";
+import {verifyAuth} from "../middleware/auth";
 
 const router = express.Router();
 
 export const usersRoutes = () => {
     router.post('/login', UserController.loginToUserAccount);
     router.get('/logout', UserController.logoutToAccount);
-    router.delete('/delete/:id', UserController.deleteUser);
+    router.delete('/delete/:id', verifyAuth, UserController.deleteUser);
 
     return router;
 }

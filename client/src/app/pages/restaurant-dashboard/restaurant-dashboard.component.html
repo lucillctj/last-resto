@@ -9,20 +9,20 @@
   <link rel="stylesheet" type="text/scss" href="../../../styles.scss">
 </head>
 
-<body *ngIf="currentRestaurant">
+<body>
 <h1 class="page-title">Mon restaurant : {{currentRestaurant.name}}</h1>
 
-<div class="card card-restaurant">
+<div class="card card-restaurant" *ngIf="currentRestaurant.restaurant_id">
 
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">
-      <p class="name">{{currentRestaurant.name}}</p>
-      <p class="description">{{currentRestaurant.description}}</p>
-      <p class="address">{{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
-      <p class="phone">{{currentRestaurant.phone}}</p>
+      <h3 class="restaurant-name">{{currentRestaurant.name}}</h3>
+      <p class="restaurant-description">{{currentRestaurant.description}}</p>
+      <p>Adresse : {{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
+      <p>Téléphone : {{currentRestaurant.phone}}</p>
       <div class="bloc-buttons">
-        <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>
-        <button class="btn-account btn-delete" type="button" (click)="openPopupToDelete()">Supprimer ce restaurant</button>
+        <button class="btn-dashboard btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>
+        <button class="btn-dashboard btn-delete" type="button" (click)="openPopupToDelete()">Supprimer ce restaurant</button>
       </div>
     </div>
 
@@ -32,27 +32,32 @@
           <div class="form-check form-switch">
             <div class="row">
               <div class="col-lg-9">
-                <label class="form-check-label text-availability" for="flexSwitchCheckDefault">Disponibilité</label>
+                <h4 class="form-check-label text-availability" for="flexSwitchCheckDefault">Disponibilité</h4>
               </div>
               <div class="col-lg-3">
-                <input class="form-check-input switch" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <input class="form-check-input switch" type="checkbox" [(ngModel)]="isAvailable" (change)="updateAvailability()" role="switch" id="flexSwitchCheckDefault">
               </div>
+              <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
             </div>
           </div>
         </div>
         <div class="products-section">
           <div class="card card-detail">
-            <div class="products-title">Les formules</div>
+            <h4 class="products-title">Les formules</h4>
             <div class="card card-product" *ngFor="let product of currentProducts">
               <p class="product-name">{{product.name}}</p>
               <p class="product-description">{{product.description}}</p>
               <p class="product-price">{{product.price}} €</p>
-
+              <button class="btn-icon" (click)="deleteProduct(product)">
+                <i class="bi bi-trash3"></i>
+              </button>
             </div>
-            <button *ngIf="currentProducts.length === 0" class="btn-account btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>
 
+            <div *ngIf="currentProducts.length === 0">
+              <p>Vous n'avez créé aucune formule enregistrée pour ce restaurant.</p>
+            </div>
 
-
+            <button class="btn-dashboard btn-create-product" type="button" (click)="openPopupToCreateProduct()">+ créer un produit</button>
 
           </div>
         </div>
@@ -63,7 +68,7 @@
   </div>
 </div>
 
-<div class="navbar">
+<div class="nav-bar">
   <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
 </div>
 

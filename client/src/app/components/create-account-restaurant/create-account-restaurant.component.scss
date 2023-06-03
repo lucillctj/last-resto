@@ -1,5 +1,5 @@
 @import "../../../styles.scss";
-@import "../styles-form-popup";
+@import "../../styles-form-popup";
 
 .title{
   color: $green;
@@ -9,7 +9,7 @@
   color: $green;
   font-style: normal;
   font-weight: 400;
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 .form-control{

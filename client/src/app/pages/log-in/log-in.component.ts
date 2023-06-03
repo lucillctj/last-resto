@@ -25,20 +25,21 @@ export class LogInComponent {
     this.userService.login(user)
       .subscribe((res) => {
           this.authService.setCurrentUser(user);
-          this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+          console.log('role', res.userRole)
+          if(res.userRole === "customer"){
+            this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+          }
         },
         error => {
-          if (error.status === 401 && error.error === "Aucun utilisateur trouvé !") {
+        console.log('error', error)
+          if (error.status === 401 && error.error.message === "Aucun utilisateur trouvé !") {
             this.errorMessage = 'Aucun utilisateur trouvé !';
           }
-          else if (error.status === 401 && error.error === "Mot de passe invalide") {
+          else if (error.status === 401 && error.error.message === "Mot de passe invalide") {
             this.errorMessage = 'Mot de passe invalide';
           }
-          else if (error.status === 400){
-            this.errorMessage = 'Certains champs sont manquants.';
-          }
           else{
-            this.errorMessage = 'Erreur lors de l\'inscription, veuillez rééssayer ultérieurement.';
+            this.errorMessage = 'Erreur lors de la connexion, veuillez rééssayer ultérieurement.';
           }
         }
       )

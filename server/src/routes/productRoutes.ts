@@ -1,17 +1,17 @@
 import express from "express";
-import { ProductController } from "../controllers/productController";
-import {RestaurantController} from "../controllers/restaurantController";
+import {ProductController} from "../controllers/productController";
+import {verifyAuth} from "../middleware/auth";
 
 const router = express.Router();
 
 export const productRoutes = () => {
-    router.post('/create', ProductController.createProduct);
-    router.get('/', ProductController.getAllProducts);
-    router.get('/restaurant/:id', ProductController.getProductsByRestaurantId);
-    router.get('/user/:id', ProductController.getProductsByUserId);
-    // router.get('/dashboard/:id', ProductController.getProductDashboard);
-    router.put('/update/:id', ProductController.updateProduct);
-    router.delete('/delete/:id', ProductController.deleteProduct);
+    router.post('/create', verifyAuth, ProductController.createProduct);
+    // router.get('/', ProductController.getAllProducts);
+    router.get('/restaurant/:id', verifyAuth, ProductController.getProductsByRestaurantId);
+    router.get('/:id/restaurant', verifyAuth, ProductController.getRestaurantIdByProductId);
+    router.get('/:id', verifyAuth, ProductController.getProductById);
+    router.put('/update/:id', verifyAuth, ProductController.updateProduct);
+    router.delete('/delete/:id', verifyAuth, ProductController.deleteProduct);
 
     return router;
 }

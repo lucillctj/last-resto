@@ -13,17 +13,17 @@ export class RestaurantService {
 
   createRestaurant(restaurant: Restaurant): Observable<any> {
     const url = `${this.apiUrl}/create`;
-    return this.http.post<any>(url, restaurant);
+    return this.http.post<any>(url, restaurant, {withCredentials: true});
   }
 
   getRestaurantByUserId(userId: number): Observable<Restaurant[]> {
     const url = `${this.apiUrl}/user/${userId}`;
-    return this.http.get<Restaurant[]>(url);
+    return this.http.get<Restaurant[]>(url, {withCredentials: true});
   }
 
-  getRestaurantDashboard(restaurantId: number): Observable<Restaurant[]> {
+  getRestaurantDashboard(restaurantId: number): Observable<Restaurant> {
     const url = `${this.apiUrl}/dashboard/${restaurantId}`;
-    return this.http.get<Restaurant[]>(url);
+    return this.http.get<Restaurant>(url, {withCredentials: true});
   }
 
   getAllRestaurants(): Observable<any> {
@@ -33,11 +33,16 @@ export class RestaurantService {
 
   updateRestaurant(restaurant: Restaurant): Observable<any> {
     const url = `${this.apiUrl}/update/${restaurant.restaurant_id}`;
-    return this.http.put<any>(url, restaurant);
+    return this.http.put<any>(url, restaurant, {withCredentials: true});
+  }
+
+  updateAvailability(restaurant: Restaurant, isAvailable: boolean): Observable<any> {
+    const url = `${this.apiUrl}/update-availability/${restaurant.restaurant_id}`;
+    return this.http.put<any>(url, {isAvailable}, {withCredentials: true});
   }
 
   deleteRestaurant(restaurant: Restaurant): Observable<void> {
     const url = `${this.apiUrl}/delete/${restaurant.restaurant_id}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(url, {withCredentials: true});
   }
 }

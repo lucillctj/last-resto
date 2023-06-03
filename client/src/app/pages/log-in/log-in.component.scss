@@ -1,4 +1,5 @@
 @import "../../../styles";
+@import "../../styles-form-popup";
 
 body {
   background-color: $orange;
@@ -12,7 +13,6 @@ section{
   background-color: white;
   border-radius: 2em;
   width: 70vh;
-
 }
 
 .title{
@@ -20,7 +20,7 @@ section{
   color: $orange;
   font-style: normal;
   font-weight: 600;
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 form{

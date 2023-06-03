@@ -30,16 +30,18 @@ export class PopupDeleteUserComponent {
   }
 
   async confirmToDelete() {
-    try {
-      await this.userService.deleteUser(this.currentUser);
-      this.successMessage = 'Votre compte a bien été supprimé !';
-      setTimeout(() => {
-        this.router.navigate(['/api/v1']);
-        this.modalService.dismissAll()
-      }, 2000000);
-    } catch (error) {
-      this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.';
-    }
+    await this.userService.deleteUser(this.currentUser)
+      .subscribe(() => {
+          this.authService.setCurrentUser(null);
+          this.successMessage = 'Votre compte a bien été supprimé !';
+          setTimeout(() => {
+            this.router.navigate(['/api/v1']);
+            this.modalService.dismissAll()
+          }, 3000);
+        },
+        error => {
+          this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.';
+        })
   }
 
   redirectToDashboard(){

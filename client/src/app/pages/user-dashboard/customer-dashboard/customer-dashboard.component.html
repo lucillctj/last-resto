@@ -9,23 +9,41 @@
   <link rel="stylesheet" type="text/scss" href="../../../../styles.scss">
 </head>
 
-<body *ngIf="currentUser">
+<body>
 <h1 class="page-title">Mon profil</h1>
-<div class="card">
-  <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
-  <p class="address">{{ currentUser.address }} {{ currentUser.post_code }} {{ currentUser.city }}</p>
-  <p class="email">{{ currentUser.email }}</p>
-  <p class="phone">{{ currentUser.phone }}</p>
-<div class="bloc-buttons">
-  <button class="btn-account btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
-  <button class="btn-account btn-delete" type="button" (click)="openPopupToDelete()">Supprimer mon compte</button>
+<div class="card" *ngIf="currentUser.user_id">
+  <div class="row">
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <p class="name">{{ currentUser.first_name }} {{currentUser.last_name }}</p>
+      <p class="address">{{ currentUser.address }} {{ currentUser.post_code }} {{ currentUser.city }}</p>
+      <p class="email">{{ currentUser.email }}</p>
+      <p class="phone">{{ currentUser.phone }}</p>
+      <div class="bloc-buttons">
+        <button class="btn-dashboard btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
+        <button class="btn-dashboard btn-delete" type="button" (click)="openPopupToDelete()">Supprimer mon compte</button>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-3 col-sm-6">
+      <div class="reservation">
+        <h4 class="reservation-title">Ma réservation</h4>
+        <div class="card card-booked-product" *ngIf="currentProduct.product_id">
+          <div *ngIf="currentRestaurant">
+            <p class="restaurant-name">{{currentRestaurant.name}}</p>
+            <div>
+              <p class="product-detail">{{currentProduct.name}} : {{currentProduct.description}} ({{currentProduct.price}} €)</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!currentProduct.product_id">
+          <p>Vous n'avez aucune réservation en cours.</p>
+          <button class="btn-dashboard btn-redirect" type="button" (click)="redirectToRestaurantsList()">Voir les restaurants</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-
-
-
 </body>
-<div class="navbar">
+<div class="nav-bar">
   <app-nav-bar-customer></app-nav-bar-customer>
 </div>
 </html>

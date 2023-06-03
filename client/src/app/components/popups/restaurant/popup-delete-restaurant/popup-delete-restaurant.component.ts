@@ -33,7 +33,7 @@ export class PopupDeleteRestaurantComponent {
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été supprimé !';
           setTimeout(() => {
-            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentRestaurant.user_id}`]);
+            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentRestaurant.restaurant_owner_id}`]);
             this.modalService.dismissAll()
           }, 2000)
         },

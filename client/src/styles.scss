@@ -31,6 +31,7 @@ body {
 }
 
 h1{
+  padding-top: 0.5em;
   position: relative;
   display: flex;
   justify-content: center;
@@ -39,10 +40,25 @@ h1{
   font-size: 2.3rem;
 }
 
+h3{
+  position: relative;
+  display: flex;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+h4{
+  position: relative;
+  display: flex;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
 p{
   color: $grey;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5em;
 }
 
@@ -58,6 +74,17 @@ p{
   color: #fff;
   display: flex;
   align-items: center;
+}
+
+.btn-dashboard{
+  margin: 0 auto 0.7em;
+  border-radius: 3em;
+  height: 2.3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 300;
 }
 
 .fas{
@@ -79,11 +106,9 @@ p{
   width: 100%;
   height: 2.2em;
   border-radius: 4em;
-  border: 0;
-  //color: #FFFFFF;
+  //border: 0;
+  color: white;
   font-style: normal;
-  //font-weight: 500;
-  //font-size: 1.3rem;
   text-align: center;
 }
 
@@ -97,4 +122,8 @@ p{
   font-weight: 500;
   font-size: 1.3rem;
   text-align: center;
+}
+
+.modal.show .modal-dialog{
+  margin-top: 10em;
 }
