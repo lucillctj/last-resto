@@ -87,17 +87,20 @@ export class RestaurantOwnerController {
             password: body.password,
             role: 'restaurant owner'
         };
+
+        const hashPassword = await bcrypt.hash(bodyRestaurantOwner.password, 10);
+
         try {
             if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
                 const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
-                const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, bodyRestaurantOwner.password];
+                const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword];
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     }
                     else {
-                        res.status(201).send(`Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`);
+                        res.status(201).send({message: `Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`});
                     }
                 })
             }else {

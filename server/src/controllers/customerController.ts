@@ -97,15 +97,15 @@ export class CustomerController {
         const hashPassword = await bcrypt.hash(bodyCustomer.password, 10);
 
         try {
-            if (bodyCustomer.firstName !== '' && bodyCustomer.lastName !== '' && bodyCustomer.email !== '' && bodyCustomer.phone !== '' && bodyCustomer.password !== '' && bodyCustomer.address !== '' && bodyCustomer.postCode !== '' && bodyCustomer.city !== '' && Object.keys(body).length === 8) {
+            if (bodyCustomer.firstName !== '' && bodyCustomer.lastName !== '' && bodyCustomer.email !== '' && bodyCustomer.phone !== '' && bodyCustomer.address !== '' && bodyCustomer.postCode !== '' && bodyCustomer.city !== '' && Object.keys(body).length >= 7) {
                 const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, address = ?, post_code = ?, city = ? WHERE role = 'customer' AND user_id = ${requestId}`;
                 const params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, hashPassword, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
-                        res.status(201).send(`Utilisateur avec le rôle customer a été mis à jour !`);
+                        res.status(201).json({message: 'Utilisateur avec le rôle customer a été mis à jour !'});
                     }
                 })
             } else {
