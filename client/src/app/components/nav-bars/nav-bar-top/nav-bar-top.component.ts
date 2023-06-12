@@ -28,8 +28,6 @@ export class NavBarTopComponent implements OnInit{
 
   ngOnChanges(){
     this.currentUser = this.authService.getCurrentUser();
-    console.log('2---->', this.currentUser)
-
   }
 
   redirectToRestaurantsList(){
@@ -40,11 +38,17 @@ export class NavBarTopComponent implements OnInit{
     this.router.navigate(['/api/v1/users/login']);
   }
 
-  async logout() {
+  logout() {
     this.authService.forgetUser();
     this.authService.setCurrentUser(null);
-    await this.userService.logout();
-    this.router.navigate(['api/v1']);
+    this.userService.logout()
+      .subscribe(() => {
+          this.router.navigate(['api/v1']);
+        },
+        error => {
+        console.log('error', error)
+        }
+      )
   }
 
 }

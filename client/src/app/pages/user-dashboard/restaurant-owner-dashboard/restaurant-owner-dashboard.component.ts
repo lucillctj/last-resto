@@ -14,6 +14,7 @@ import {
 import {RestaurantOwnerService} from "../../../services/api/restaurant-owner.service";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
 import {PopupDeleteUserComponent} from "../../../components/popups/user/popup-delete-user/popup-delete-user.component";
+import {UserService} from "../../../services/api/user.service";
 
 @Component({
   selector: 'app-restaurant-owner-dashboard',
@@ -27,6 +28,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private userService: UserService,
     private customerService: CustomerService,
     private restaurantOwnerService: RestaurantOwnerService,
     private restaurantService: RestaurantService,
@@ -58,8 +60,17 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
-            this.router.navigate(['api/v1']);
-          })
+            this.authService.forgetUser();
+            this.authService.setCurrentUser(null);
+            this.userService.logout()
+              .subscribe(() => {
+                  this.router.navigate(['api/v1']);
+                },
+                error => {
+                  console.log('error', error)
+                }
+              )
+          });
 
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');

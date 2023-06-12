@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {db} from "../app";
 import {QueryError} from "mysql2/index";
 import bcrypt from "bcryptjs";
-import {generateAccessToken, setTokenCookie} from "../middleware/auth";
+import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
 import {ResultSetHeader} from "mysql2";
 
 export class UserController {
@@ -41,10 +41,11 @@ export class UserController {
 
     public static async logoutToAccount(req: Request, res: Response): Promise<void> {
         try {
-            res.clearCookie('token');
+            clearTokenCookie(res);
+            console.log('déconnecté')
             res.status(200).json({message: "Utilisateur déconnecté"});
         } catch (error) {
-            res.status(500).json({message: "Internal server error"});
+            res.status(400).json({message: "Une erreur s'est produite lors de la déconnexion"});
         }
     }
 
@@ -62,7 +63,7 @@ export class UserController {
                     }
                 })
         } catch (error) {
-            res.status(500).json({message: "Internal server error"});
+            res.status(400).json({message: "Internal server error"});
         }
     }
 }

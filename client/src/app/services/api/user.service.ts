@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from "../../interfaces/user-interface";
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable(
   {providedIn: 'root'}
@@ -10,7 +11,8 @@ import {User} from "../../interfaces/user-interface";
 export class UserService {
   private apiUrl = 'http://localhost:3000/api/v1/users';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private cookies: CookieService) { }
 
   login(user: User) {
     const url = `${this.apiUrl}/login`;
@@ -19,7 +21,8 @@ export class UserService {
 
   logout(): Observable<void> {
     const url = `${this.apiUrl}/logout`;
-    return this.http.post<void>(url, null);
+    this.cookies.delete('token');
+    return this.http.post<void>(url, null, {withCredentials: true});
   }
 
   deleteUser(user: User): Observable<void> {

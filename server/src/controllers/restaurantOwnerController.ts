@@ -26,6 +26,9 @@ export class RestaurantOwnerController {
                     if (error) {
                         await errorValues(req, res, error, bodyRestaurantOwner);
                     } else {
+                        console.log('userId generate', results.insertId)
+                        console.log('userId generate 2', results.userId)
+
                         const accessToken = generateAccessToken(results.insertId);
                         setTokenCookie(res, accessToken);
                         res.status(201).send({

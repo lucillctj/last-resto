@@ -10,15 +10,21 @@ export const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
         return res.status(401).json({ error: 'Unauthorized' });
     }
     try {
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!);
+        const reqUserId = parseInt(req.params.id);
+        const decodedToken: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!);
+        const tokenUserId: number = decodedToken.userId;
+
+        if(reqUserId != tokenUserId){
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
         next();
     } catch (error) {
         return res.status(403).json({ error: 'Invalid token' });
     }
 };
 
-export function generateAccessToken(userId: any) {
-    return jwt.sign({userId}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '1800s'});
+export function generateAccessToken(userId: number) {
+    return jwt.sign({userId: userId}, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '1800s'});
 }
 
 export const setTokenCookie = (res: Response, token: string) => {
@@ -27,6 +33,17 @@ export const setTokenCookie = (res: Response, token: string) => {
         secure: true,
         httpOnly: true,
         sameSite: 'lax'
+    })
+        .status(200);
+};
+export const clearTokenCookie = (res: Response) => {
+    res.clearCookie('token', {
+        // path: '/',
+        // maxAge: 7200000,
+        // secure: true,
+        // httpOnly: true,
+        // sameSite: 'lax'
+
     })
         .status(200);
 };
