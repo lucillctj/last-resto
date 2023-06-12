@@ -25,9 +25,11 @@ export class LogInComponent {
     this.userService.login(user)
       .subscribe((res) => {
           this.authService.setCurrentUser(user);
-          console.log('role', res.userRole)
           if(res.userRole === "customer"){
             this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+          }
+          else if(res.userRole === "restaurant owner"){
+            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${res.userId}`]);
           }
         },
         error => {

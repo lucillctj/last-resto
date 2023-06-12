@@ -5,6 +5,7 @@ import {User} from "../interfaces/user-interface";
 import {Restaurant} from "../interfaces/restaurant-interface";
 import {Customer} from "../interfaces/customer-interface";
 import {RestaurantOwner} from "../interfaces/restaurantOwner-interface";
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Injectable({
@@ -15,7 +16,8 @@ export class AuthService {
   public currentUser: Observable<User | Customer | RestaurantOwner>;
 
 
-  constructor() {
+  constructor(private cookies: CookieService)
+  {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | Customer | RestaurantOwner>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
