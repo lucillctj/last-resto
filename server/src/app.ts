@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express, {Express} from 'express';
 import cookieParser from 'cookie-parser';
 import mysql, {QueryError} from 'mysql2';
 import cors from 'cors';
@@ -9,7 +9,6 @@ import {restaurantRoutes} from "./routes/restaurantRoutes";
 import {productRoutes} from "./routes/productRoutes";
 import {adminRoutes} from "./routes/adminRoutes";
 import {usersRoutes} from "./routes/usersRoutes";
-import {verifyAuth} from "./middleware/auth";
 
 dotenv.config();
 
