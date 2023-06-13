@@ -20,6 +20,7 @@
       <p class="restaurant-description">{{currentRestaurant.description}}</p>
       <p>Adresse : {{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
       <p>Téléphone : {{currentRestaurant.phone}}</p>
+      <p *ngIf="currentRestaurant.website">Site web : {{currentRestaurant.website}}</p>
       <div class="bloc-buttons">
         <button class="btn-dashboard btn-update" type="button" (click)="openPopupToUpdate()">Modifier</button>
         <button class="btn-dashboard btn-delete" type="button" (click)="openPopupToDelete()">Supprimer ce restaurant</button>
@@ -37,7 +38,9 @@
               <div class="col-lg-3">
                 <input class="form-check-input switch" type="checkbox" [(ngModel)]="isAvailable" (change)="updateAvailability()" role="switch" id="flexSwitchCheckDefault">
               </div>
-              <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+              <div *ngIf="successMessage" class="success-message message-availability">{{ successMessage }}</div>
+              <div *ngIf="errorMessage" class="error-message message-availability">{{ successMessage }}</div>
+
             </div>
           </div>
         </div>

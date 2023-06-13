@@ -21,8 +21,8 @@ export class RestaurantOwnerService {
     return this.http.get<RestaurantOwner>(url, {withCredentials: true});
   }
 
-  updateRestaurantOwner(user: RestaurantOwner): Observable<any> {
-    const url = `${this.apiUrl}/update/${user.user_id}`;
-    return this.http.put<any>(url, user, {withCredentials: true});
+  updateRestaurantOwner(updatedUser: RestaurantOwner, currentUser: RestaurantOwner): Observable<any> {
+    const url = `${this.apiUrl}/update/${currentUser.user_id}`;
+    return this.http.put<any>(url, updatedUser, {withCredentials: true});
   }
 }

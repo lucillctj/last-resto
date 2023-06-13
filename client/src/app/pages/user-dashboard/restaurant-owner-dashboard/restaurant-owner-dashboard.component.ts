@@ -40,7 +40,8 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   }
 
   ngOnInit(){
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+    console.log("current id", currentUserId)
     if (currentUserId) {
       this.restaurantOwnerService.getRestaurantOwnerDashboard(currentUserId)
         .subscribe((data) => {
@@ -51,7 +52,6 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
               .subscribe((data) => {
                   if(data.length >= 1) {
                     this.currentRestaurant = data[0];
-                    this.authService.setCurrentRestaurant(data[0]);
                   }
                 },
                 (error) => {
@@ -74,20 +74,25 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
 
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');
+      this.router.navigate(['api/v1']);
     }
   }
 
   openPopupToUpdate() {
-    this.modalService.open(PopupUpdateRestaurantOwnerComponent);
+    const modalRef = this.modalService.open(PopupUpdateRestaurantOwnerComponent);
+    modalRef.componentInstance.currentUser = this.currentUser;
+
   }
 
   openPopupToDelete() {
     const modalRef = this.modalService.open(PopupDeleteUserComponent);
     modalRef.componentInstance.currentUser = this.currentUser;
+    modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
+
   }
 
   showRestaurantPage(restaurantId: number | undefined) {
-    this.router.navigate([`api/v1/restaurants/dashboard/${restaurantId}`]);
+    this.router.navigate([`api/v1/restaurants/dashboard/${restaurantId}/user/${this.currentUser.user_id}`]);
   }
 
   openPopupToCreateRestaurant(){

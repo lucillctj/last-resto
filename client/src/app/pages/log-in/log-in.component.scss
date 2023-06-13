@@ -23,30 +23,12 @@ section{
   font-size: 2rem;
 }
 
-form{
-  padding: 0 2em 2em;
-}
-.form-group{
-  margin-top: 0.6em;
-}
-
 .form-control{
-  border-radius: 5em;
-  border: 0;
   background-color: rgb(248, 200, 166);
 }
 
-.form-control::placeholder{
-  padding-left: 0.6em;
-  color: white;
-}
-
-.form-check{
-  text-align: left;
-}
-
-.placeholder{
-  color: white;
+.error-message-login{
+    top: 1em;
 }
 
 .btn {

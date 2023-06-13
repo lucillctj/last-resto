@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {RestaurantService} from "../../../../services/api/restaurant.service";
 import {Product} from "../../../../interfaces/product-interface";
@@ -26,6 +26,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private productService: ProductService,
     private authService: AuthService,
@@ -41,12 +42,14 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   ngOnInit() {
     const currentRestaurantId = this.currentRestaurant.restaurant_id;
-    this.restaurantService.getRestaurantDashboard(currentRestaurantId!)
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+
+    this.restaurantService.getRestaurantDashboard(currentRestaurantId!, currentUserId)
       .subscribe(
         (data) => {
           this.currentRestaurant = data;
 
-          this.productService.getProductsByRestaurantId(currentRestaurantId!)
+          this.productService.getProductsByRestaurantId(currentRestaurantId!, currentUserId)
             .subscribe(
               (data) => {
                 this.currentProducts = data

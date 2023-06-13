@@ -27,6 +27,8 @@ export class RestaurantDashboardComponent implements OnInit {
   isAvailable: boolean;
   newAvailability: boolean | undefined;
   successMessage: string | null;
+  errorMessage: string | null;
+  currentUserId: number;
 
   constructor(
     private router: Router,
@@ -40,19 +42,19 @@ export class RestaurantDashboardComponent implements OnInit {
     this.isAvailable = true || false;
     this.newAvailability = undefined;
     this.successMessage = null;
-
+    this.errorMessage = null;
+    this.currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
   }
 
   ngOnInit() {
     const currentRestaurantId = parseInt(this.route.snapshot.paramMap.get("id")!);
 
     if (currentRestaurantId) {
-      this.restaurantService.getRestaurantDashboard(currentRestaurantId)
+      this.restaurantService.getRestaurantDashboard(currentRestaurantId, this.currentUserId)
         .subscribe(
           (data) => {
             this.currentRestaurant = data;
             this.isAvailable = data.is_available.data[0];
-            console.log('isAvailable ? ', this.isAvailable)
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
@@ -60,9 +62,10 @@ export class RestaurantDashboardComponent implements OnInit {
           })
     } else {
       console.error('L\'ID du restaurant n\'est pas un nombre valide.');
+      this.router.navigate(['api/v1']);
     }
 
-    this.productService.getProductsByRestaurantId(currentRestaurantId)
+    this.productService.getProductsByRestaurantId(currentRestaurantId, this.currentUserId)
       .subscribe(
         (data) => {
           console.log(data)
@@ -75,12 +78,15 @@ export class RestaurantDashboardComponent implements OnInit {
 
 
   openPopupToUpdate() {
-    this.modalService.open(PopupUpdateRestaurantComponent);
+    const modalRef = this.modalService.open(PopupUpdateRestaurantComponent);
+    modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
+    modalRef.componentInstance.currentUserId = this.currentUserId;
   }
 
   openPopupToDelete() {
     const modalRef = this.modalService.open(PopupDeleteRestaurantComponent);
     modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
+    modalRef.componentInstance.currentUserId = this.currentUserId;
   }
 
   updateAvailability() {
@@ -89,17 +95,19 @@ export class RestaurantDashboardComponent implements OnInit {
         () => {
           this.successMessage = 'La disponibilité du restaurant a bien été prise en compte !'},
         (error) => {
-          console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+          this.errorMessage = 'Une erreur est survenue !';
+        console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
         })
   }
 
   openPopupToCreateProduct(){
     const modalRef = this.modalService.open(PopupCreateProductComponent);
     modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
+    modalRef.componentInstance.currentUserId = this.currentUserId;
   }
 
   deleteProduct(currentProduct: Product){
-    this.productService.deleteProduct(currentProduct)
+    this.productService.deleteProduct(currentProduct, this.currentUserId)
       .subscribe(() => {
           console.log('produit  supprimé', currentProduct.name)
         },

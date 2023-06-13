@@ -41,7 +41,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   }
 
   redirectToRestaurantDashboard() {
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
     console.log(currentUserId)
     if (currentUserId) {
       this.restaurantService.getRestaurantByUserId(currentUserId)
@@ -57,7 +57,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
               return;
             }
             else{
-              const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`;
+              const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}/user/${this.currentRestaurant.restaurant_owner_id}`;
               this.router.navigate([urlRestaurantDashboard]);
             }
 

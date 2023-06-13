@@ -61,7 +61,7 @@ export class CustomerController {
     // }
 
     public static async getCustomerDashboard(req: Request, res: Response): Promise<Customer | any> {
-        const userId = parseInt(req.params.id);
+        const userId = parseInt(req.params.user);
         try {
             db.query(
                 `SELECT * FROM users WHERE role = 'customer' AND user_id = ${userId}`,
@@ -80,7 +80,7 @@ export class CustomerController {
 
     public static async updateCustomer(req: Request, res: Response): Promise<void> {
         const body = req.body;
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
         const bodyCustomer: Customer = {
             userId: requestId,
             firstName: body.first_name,
@@ -94,12 +94,21 @@ export class CustomerController {
             role: 'customer'
         };
 
-        const hashPassword = await bcrypt.hash(bodyCustomer.password, 10);
-
         try {
-            if (bodyCustomer.firstName !== '' && bodyCustomer.lastName !== '' && bodyCustomer.email !== '' && bodyCustomer.phone !== '' && bodyCustomer.address !== '' && bodyCustomer.postCode !== '' && bodyCustomer.city !== '' && Object.keys(body).length >= 7) {
-                const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, address = ?, post_code = ?, city = ? WHERE role = 'customer' AND user_id = ${requestId}`;
-                const params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, hashPassword, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
+            let sql;
+            let params;
+
+            if (bodyCustomer.firstName !== '' && bodyCustomer.lastName !== '' && bodyCustomer.email !== '' && bodyCustomer.phone !== '' && bodyCustomer.city !== '' && bodyCustomer.address !== '' && bodyCustomer.postCode !== '' && bodyCustomer.city !== '' && Object.keys(body).length >= 7) {
+                if (bodyCustomer.password) {
+                    const hashPassword = await bcrypt.hash(bodyCustomer.password, 10);
+                    sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ?, address = ?, post_code = ?, city = ? WHERE role = 'customer' AND user_id = ${requestId}`;
+                    params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, hashPassword, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
+                }
+                else {
+                    sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, post_code = ?, city = ? WHERE role = 'customer' AND user_id = ${requestId}`;
+                    params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
+                }
+
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
@@ -111,14 +120,17 @@ export class CustomerController {
             } else {
                 res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
             }
-        } catch (error) {
+        }
+        catch(error){
+            console.log(error)
             res.status(400).json({error: 'Erreur !'});
         }
     }
 
+
     public static async updateProductId(req: Request, res: Response): Promise<any> {
         const body = req.body;
-        const userRequestId = parseInt(req.params.id);
+        const userRequestId = parseInt(req.params.user);
         const productId = body.product_id;
         try {
             if (userRequestId >= 1 && productId >= 1) {
@@ -139,7 +151,7 @@ export class CustomerController {
     }
 
     public static async getProductIdByUserId(req: Request, res: Response): Promise<any> {
-        const userRequestId = parseInt(req.params.id);
+        const userRequestId = parseInt(req.params.user);
         try {
             db.query(
                 `SELECT product_id FROM users WHERE role = 'customer' AND user_id = ${userRequestId}`,

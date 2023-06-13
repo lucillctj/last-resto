@@ -10,7 +10,8 @@ export const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
         return res.status(401).json({ error: 'Unauthorized' });
     }
     try {
-        const reqUserId = parseInt(req.params.id);
+        const reqUserId = parseInt(req.params.user);
+        console.log(reqUserId)
         const decodedToken: any = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!);
         const tokenUserId: number = decodedToken.userId;
 
@@ -30,21 +31,14 @@ export function generateAccessToken(userId: number) {
 export const setTokenCookie = (res: Response, token: string) => {
     res.cookie('token', token, {
         maxAge: 7200000,
-        secure: true,
+        secure: false,
         httpOnly: true,
         sameSite: 'lax'
     })
         .status(200);
 };
 export const clearTokenCookie = (res: Response) => {
-    res.clearCookie('token', {
-        // path: '/',
-        // maxAge: 7200000,
-        // secure: true,
-        // httpOnly: true,
-        // sameSite: 'lax'
-
-    })
+    res.clearCookie('token')
         .status(200);
 };
 
