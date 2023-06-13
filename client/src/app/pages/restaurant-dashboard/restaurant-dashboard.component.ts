@@ -68,7 +68,6 @@ export class RestaurantDashboardComponent implements OnInit {
     this.productService.getProductsByRestaurantId(currentRestaurantId, this.currentUserId)
       .subscribe(
         (data) => {
-          console.log(data)
           this.currentProducts = data;
         },
         (error) => {
@@ -86,7 +85,7 @@ export class RestaurantDashboardComponent implements OnInit {
   openPopupToDelete() {
     const modalRef = this.modalService.open(PopupDeleteRestaurantComponent);
     modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
-    modalRef.componentInstance.currentUserId = this.currentUserId;
+    modalRef.componentInstance.currentProducts = this.currentProducts;
   }
 
   updateAvailability() {
@@ -109,7 +108,7 @@ export class RestaurantDashboardComponent implements OnInit {
   deleteProduct(currentProduct: Product){
     this.productService.deleteProduct(currentProduct, this.currentUserId)
       .subscribe(() => {
-          console.log('produit  supprimé', currentProduct.name)
+          console.log('produit supprimé', currentProduct.name)
         },
         (error) => {
           console.error('Une erreur s\'est produite lors de la suppression du produit.', error);

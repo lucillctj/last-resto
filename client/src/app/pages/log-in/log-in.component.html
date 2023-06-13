@@ -25,7 +25,7 @@
 <!--    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
 <!--  </div>-->
   <button type="submit" class="btn" [disabled]="!user.email || !user.password" (click)="loginToAccount(user)">Go !</button>
-  <div *ngIf="errorMessage" class="error-message error-message-login">{{ errorMessage }}</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 </form>
 </section>
 </body>

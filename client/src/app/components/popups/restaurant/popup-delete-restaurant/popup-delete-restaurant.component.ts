@@ -4,6 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from "../../../../services/auth.service";
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {RestaurantService} from "../../../../services/api/restaurant.service";
+import {Product} from "../../../../interfaces/product-interface";
 
 @Component({
   selector: 'app-popup-delete-restaurant',
@@ -12,6 +13,7 @@ import {RestaurantService} from "../../../../services/api/restaurant.service";
 })
 export class PopupDeleteRestaurantComponent {
   @Input() currentRestaurant!: Restaurant;
+  @Input() currentProducts!: Product[];
 
   successMessage: string | null;
   errorMessage: string | null;
@@ -29,6 +31,10 @@ export class PopupDeleteRestaurantComponent {
   }
 
   async confirmToDelete() {
+    if(this.currentProducts.length >= 1){
+      this.errorMessage = 'Veuillez supprimer toutes vos formules avant de supprimer le restaurant.';
+      return;
+    }
     this.restaurantService.deleteRestaurant(this.currentRestaurant)
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été supprimé !';
@@ -38,7 +44,6 @@ export class PopupDeleteRestaurantComponent {
           }, 2000)
         },
         error => {
-          console.log('Erreur lors de la suppression du restaurant :', error);
           this.errorMessage = 'Erreur lors de la suppression du restaurant, veuillez réessayer ultérieurement.';
         })
   }

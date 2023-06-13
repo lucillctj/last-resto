@@ -17,7 +17,7 @@
 
   <div class="form-group">
     <button type="submit" class="btn" > Créer la formule !</button>
-    <div *ngIf="submitted && !form.form.valid" class="error-message error-message-product">Tous les champs sont requis !</div>
+    <div *ngIf="submitted && !form.form.valid" class="error-message">Tous les champs sont requis !</div>
   </div>
 </form>
 <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>

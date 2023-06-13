@@ -42,7 +42,6 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
 
   redirectToRestaurantDashboard() {
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
-    console.log(currentUserId)
     if (currentUserId) {
       this.restaurantService.getRestaurantByUserId(currentUserId)
         .subscribe(

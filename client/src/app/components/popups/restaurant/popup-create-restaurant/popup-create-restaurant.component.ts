@@ -42,7 +42,6 @@ export class PopupCreateRestaurantComponent {
     }
 
     this.newRestaurant.restaurant_owner_id = this.currentUser.user_id;
-    console.log('new resto user id', this.newRestaurant.restaurant_owner_id)
     this.restaurantService.createRestaurant(this.newRestaurant)
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été créé !';
@@ -53,7 +52,6 @@ export class PopupCreateRestaurantComponent {
           }, 2000)
         },
         error => {
-          console.log('Erreur lors de la création du restaurant :', error);
           this.errorMessage = 'Erreur lors de la création du restaurant, veuillez réessayer ultérieurement.';
         }
       );

@@ -31,7 +31,7 @@ export class NavBarTopComponent implements OnInit{
   }
 
   redirectToRestaurantsList(){
-    this.router.navigate(['/api/v1/restaurants']);
+    this.router.navigate(['/api/v1']);
   }
 
   login(){

@@ -41,7 +41,6 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
 
   ngOnInit(){
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
-    console.log("current id", currentUserId)
     if (currentUserId) {
       this.restaurantOwnerService.getRestaurantOwnerDashboard(currentUserId)
         .subscribe((data) => {

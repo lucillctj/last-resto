@@ -13,20 +13,6 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  getCookieValue(cookieName: string) {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split(';');
-
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(`${cookieName}=`)) {
-        return cookie.substring(cookieName.length + 1);
-      }
-    }
-
-    return null;
-  }
-
   createCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/signup`;
     return this.http.post<any>(url, user, {withCredentials: true});
@@ -34,8 +20,6 @@ export class CustomerService {
 
   getCustomerDashboard(userId: number): Observable<Customer> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    const token = this.getCookieValue('token')
-console.log('------>', token)
     return this.http.get<Customer>(url, { withCredentials: true });
   }
 

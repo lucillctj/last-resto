@@ -64,11 +64,9 @@ export class PopupDetailRestaurantComponent implements OnInit {
   }
 
   clickToBook() {
-    console.log(this.selectedProduct)
     if (this.selectedProduct) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         this.currentCustomer = currentUser as Customer;
-        console.log(currentUser)
       });
       if(!this.currentCustomer) {
         this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
@@ -82,7 +80,6 @@ export class PopupDetailRestaurantComponent implements OnInit {
             }, 2000)
           },
           error => {
-            console.log('Erreur lors de la réservation :', error);
             this.errorMessage = 'Une erreur est survenue lors votre réservation, veuillez réessayer.';
 
           })
