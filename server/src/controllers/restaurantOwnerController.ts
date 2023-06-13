@@ -58,7 +58,6 @@ export class RestaurantOwnerController {
 
     public static async getRestaurantOwnerDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.user);
-        console.log("requestId", requestId)
         try {
             db.query(
                 `SELECT * FROM users WHERE role = 'restaurant owner' AND user_id = ${requestId}`,

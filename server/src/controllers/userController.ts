@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {db} from "../app";
-import {QueryError} from "mysql2/index";
+import {QueryError} from "mysql2";
 import bcrypt from "bcryptjs";
 import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
 import {ResultSetHeader} from "mysql2";
@@ -49,16 +49,17 @@ export class UserController {
     }
 
     public static async deleteUser(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
         try {
             db.execute(
                 `DELETE FROM users WHERE user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
                     if (error) throw error;
 
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
-                        res.status(200).send('L\'utilisateur a été supprimé !');
+                        clearTokenCookie(res);
+                        res.status(200).send({message: 'L\'utilisateur a été supprimé !'});
                     }
                 })
         } catch (error) {

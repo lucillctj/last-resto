@@ -49,7 +49,6 @@ export class PopupCreateProductComponent {
           this.modalService.dismissAll();
         },
         error => {
-          console.log('Erreur lors de la création de la formule :', error);
           this.errorMessage = 'Erreur lors de la création de la formule, veuillez réessayer ultérieurement.';
         })
   }

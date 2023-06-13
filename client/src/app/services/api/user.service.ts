@@ -24,6 +24,6 @@ export class UserService {
 
   deleteUser(user: User): Observable<void> {
     const url = `${this.apiUrl}/delete/${user.user_id}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(url, {withCredentials: true});
   }
 }
