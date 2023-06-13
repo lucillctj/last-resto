@@ -44,7 +44,7 @@ export class CustomerDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
     if (currentUserId) {
       this.customerService.getCustomerDashboard(currentUserId)
         .subscribe((data) => {
@@ -58,13 +58,14 @@ export class CustomerDashboardComponent implements OnInit {
                     return;
                   }
 
-                  await this.productService.getProductById(this.currentProductId!)
+                  await this.productService.getProductById(this.currentProductId!, currentUserId)
                     .subscribe((data) => {
                       this.currentProduct = data;
-                      this.productService.getRestaurantIdByProductId(this.currentProductId!)
+                      this.productService.getRestaurantIdByProductId(this.currentProductId!, currentUserId)
                         .subscribe((data) => {
                             this.currentRestaurantId = data.restaurant_id;
-                            this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!)
+                            const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+                            this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!, currentUserId)
                               .subscribe((data) => {
                                   this.currentRestaurant = data;
                                 },

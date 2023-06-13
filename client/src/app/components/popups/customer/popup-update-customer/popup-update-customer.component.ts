@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Customer} from "../../../../interfaces/customer-interface";
 import {CustomerService} from "../../../../services/api/customer.service";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from "../../../../services/auth.service";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -20,11 +21,14 @@ export class PopupUpdateCustomerComponent implements OnInit{
   errorMessagePhone: string | null;
   errorMessage: string | null;
   passwordModified: boolean;
+  newPassword: string;
 
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
-    private router: Router) {
+    private router: Router,
+    private modalService: NgbModal
+  ) {
     this.updatedUser = {} as Customer;
     this.currentCustomer = {} as Customer;
 
@@ -33,18 +37,13 @@ export class PopupUpdateCustomerComponent implements OnInit{
     this.errorMessagePhone = null;
     this.errorMessage = null;
     this.passwordModified = false;
+    this.newPassword = '';
   }
 
   ngOnInit(){
     this.authService.getCurrentUser().subscribe(currentUser => {
       this.currentCustomer = currentUser as Customer;
     });
-
-    if (this.updatedUser.password) {
-      this.updatedUser.password = this.currentCustomer.password;
-    } else {
-      this.updatedUser.password = '';
-    }
 
     this.updatedUser.first_name = this.currentCustomer.first_name;
     this.updatedUser.last_name = this.currentCustomer.last_name;
@@ -55,25 +54,17 @@ export class PopupUpdateCustomerComponent implements OnInit{
     this.updatedUser.city = this.currentCustomer.city;
   }
 
-  onPasswordChange() {
-    this.passwordModified = true;
-  }
-
   onSubmit() {
     this.submitted = true;
-    if (this.passwordModified) {
-      this.updatedUser.password // Mettez ici la logique appropriée pour mettre à jour le mot de passe en base de données
-    } else {
-     return // Réaffectez la valeur d'origine du mot de passe
+    if(this.newPassword != ''){
+      this.updatedUser.password = this.newPassword;
     }
 
-    console.log('2', this.currentCustomer.last_name)
-
-    if(this.updatedUser) {
-      this.customerService.updateCustomer(this.updatedUser)
-        .subscribe((res) => {
+    if(this.updatedUser.first_name && this.updatedUser.last_name &&  this.updatedUser.email && this.updatedUser.phone && this.updatedUser.address && this.updatedUser.post_code && this.updatedUser.city) {
+      this.customerService.updateCustomer(this.updatedUser, this.currentCustomer)
+        .subscribe(() => {
             this.successMessage = 'Vos informations ont bien été mises à jour !';
-            this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+            this.modalService.dismissAll()
           },
           error => {
             if (error.status === 400 && error.error === "Cet email existe déjà !") {
@@ -84,20 +75,12 @@ export class PopupUpdateCustomerComponent implements OnInit{
               this.errorMessage = 'Certains champs sont manquants ou incorrects.';
             } else {
               this.errorMessage = 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.'
-              console.log(error);
             }
           }
         )
     }
-    else if (!this.updatedUser) {
-      this.customerService.updateCustomer(this.currentCustomer)
-        .subscribe((res) => {
-            this.successMessage = 'L\'utilisateur n\'a pas été modifié.';
-            this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
-          },
-          error => {
-            this.errorMessage = 'Erreur, veuillez rééssayer ultérieurement.';
-          })
+    else {
+      this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }
   }
 }

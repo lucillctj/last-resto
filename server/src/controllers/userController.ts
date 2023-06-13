@@ -42,7 +42,6 @@ export class UserController {
     public static async logoutToAccount(req: Request, res: Response): Promise<void> {
         try {
             clearTokenCookie(res);
-            console.log('déconnecté')
             res.status(200).json({message: "Utilisateur déconnecté"});
         } catch (error) {
             res.status(400).json({message: "Une erreur s'est produite lors de la déconnexion"});

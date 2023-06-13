@@ -6,6 +6,7 @@ import {Restaurant} from "../models/restaurant";
 export class RestaurantController {
     public static async createRestaurant(req: Request, res: Response): Promise<void> {
         const body = req.body;
+        const requestId = parseInt(req.params.user);
         const restaurant: Restaurant = {
             name: body.name,
             description: body.description,
@@ -15,7 +16,7 @@ export class RestaurantController {
             phone: body.phone,
             website: body.website || null,
             isAvailable: body.is_available,
-            restaurantOwnerId: body.restaurant_owner_id
+            restaurantOwnerId: requestId
         };
         try {
             if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.restaurantOwnerId! >=1 && (Object.keys(body).length === 7 || 8)
@@ -25,8 +26,6 @@ export class RestaurantController {
                 db.execute(sql, params, async (error: QueryError | null) => {
                     if (error) throw error;
                     else {
-                        // const sqlUpdate = `UPDATE users SET restaurant_id = ? WHERE role = 'restaurant owner' AND user_id = ?`;
-                        // await db.execute(sqlUpdate, [restaurantResults.insertId, restaurant.userId], async () =>
                         res.status(201).send({message: `Restaurant ${restaurant.name} was created!`});
                     }
                 })
@@ -51,7 +50,7 @@ export class RestaurantController {
     }
 
     public static async getRestaurantByUserId(req: Request, res: Response): Promise<void> {
-        const userRequestId = parseInt(req.params.id);
+        const userRequestId = parseInt(req.params.user);
         try {
             db.query(
                 `SELECT * FROM restaurants WHERE restaurant_owner_id =${userRequestId}`,
@@ -84,7 +83,8 @@ export class RestaurantController {
     public static async updateRestaurant(req: Request, res: Response): Promise<void> {
         const body = req.body;
         const restaurantRequestId = parseInt(req.params.id);
-        const restaurant: Restaurant = {
+        const requestUserId = parseInt(req.params.user);
+        const bodyRestaurant: Restaurant = {
             restaurantId: body.restaurant_id,
             name: body.name,
             description: body.description,
@@ -93,19 +93,18 @@ export class RestaurantController {
             city: body.city,
             phone: body.phone,
             website: body.website,
-            isAvailable: body.is_available,
-            restaurantOwnerId: body.restaurant_owner_id
+            restaurantOwnerId: requestUserId
         };
         try {
-            if (restaurant.name !== '' && restaurant.description !== '' && restaurant.address !== '' && restaurant.postCode !== '' && restaurant.city !== '' && restaurant.phone !== '' && restaurant.address !== '' && Object.keys(body).length === 8 || 9) {
-                const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, is_available = ?, restaurant_owner_id = ? WHERE restaurant_id = ${restaurantRequestId}`;
-                const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, restaurant.isAvailable, restaurant.restaurantOwnerId];
+            if (bodyRestaurant.name !== '' && bodyRestaurant.description !== '' && bodyRestaurant.address !== '' && bodyRestaurant.postCode !== '' && bodyRestaurant.city !== '' && bodyRestaurant.phone !== '' && Object.keys(body).length >= 6) {
+                const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, restaurant_owner_id = ? WHERE restaurant_id = ${restaurantRequestId}`;
+                const params = [bodyRestaurant.name, bodyRestaurant.description, bodyRestaurant.address, bodyRestaurant.postCode, bodyRestaurant.city, bodyRestaurant.phone, bodyRestaurant.website, bodyRestaurant.restaurantOwnerId];
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
                         res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(201).send({message: `Restaurant ${restaurant.name} was updated!`});
+                        res.status(201).send({message: `Restaurant ${bodyRestaurant.name} was updated!`});
                     }
                 })
 
@@ -113,7 +112,7 @@ export class RestaurantController {
                 res.status(400).json({error: 'Missing or incorrect values'});
             }
         } catch (error) {
-            res.status(400).json({error: 'Missing values'});
+            res.status(400).json({error: 'Erreur !'});
         }
     }
 

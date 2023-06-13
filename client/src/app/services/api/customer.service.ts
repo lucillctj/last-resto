@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
-import {AuthService} from "../auth.service";
 import {Product} from "../../interfaces/product-interface";
 
 
@@ -14,6 +13,20 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
+  getCookieValue(cookieName: string) {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(`${cookieName}=`)) {
+        return cookie.substring(cookieName.length + 1);
+      }
+    }
+
+    return null;
+  }
+
   createCustomer(user: Customer): Observable<any> {
     const url = `${this.apiUrl}/signup`;
     return this.http.post<any>(url, user, {withCredentials: true});
@@ -21,12 +34,14 @@ export class CustomerService {
 
   getCustomerDashboard(userId: number): Observable<Customer> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
+    const token = this.getCookieValue('token')
+console.log('------>', token)
     return this.http.get<Customer>(url, { withCredentials: true });
   }
 
-  updateCustomer(user: Customer): Observable<any> {
-    const url = `${this.apiUrl}/update/${user.user_id}`;
-    return this.http.put<any>(url, user, {withCredentials: true});
+  updateCustomer(updatedUser: Customer, currentUser: Customer): Observable<any> {
+    const url = `${this.apiUrl}/update/${currentUser.user_id}`;
+    return this.http.put<any>(url, updatedUser, {withCredentials: true});
   }
 
   bookProduct(user: Customer, product: Product): Observable<any> {

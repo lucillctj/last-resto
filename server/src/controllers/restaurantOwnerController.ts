@@ -26,9 +26,6 @@ export class RestaurantOwnerController {
                     if (error) {
                         await errorValues(req, res, error, bodyRestaurantOwner);
                     } else {
-                        console.log('userId generate', results.insertId)
-                        console.log('userId generate 2', results.userId)
-
                         const accessToken = generateAccessToken(results.insertId);
                         setTokenCookie(res, accessToken);
                         res.status(201).send({
@@ -60,7 +57,8 @@ export class RestaurantOwnerController {
     // }
 
     public static async getRestaurantOwnerDashboard(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
+        console.log("requestId", requestId)
         try {
             db.query(
                 `SELECT * FROM users WHERE role = 'restaurant owner' AND user_id = ${requestId}`,
@@ -80,7 +78,7 @@ export class RestaurantOwnerController {
 
     public static async updateRestaurantOwner(req: Request, res: Response): Promise<void> {
         const body = req.body;
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
         const bodyRestaurantOwner: RestaurantOwner = {
             userId: requestId,
             firstName: body.first_name,
@@ -91,12 +89,21 @@ export class RestaurantOwnerController {
             role: 'restaurant owner'
         };
 
-        const hashPassword = await bcrypt.hash(bodyRestaurantOwner.password, 10);
-
         try {
-            if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
-                const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
-                const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword];
+            let sql;
+            let params;
+
+            if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && Object.keys(body).length >= 4) {
+                if (bodyRestaurantOwner.password) {
+                    const hashPassword = await bcrypt.hash(bodyRestaurantOwner.password, 10);
+                    sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
+                    params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword];
+                }
+                else{
+                    sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
+                    params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone];
+                }
+
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
@@ -106,7 +113,7 @@ export class RestaurantOwnerController {
                         res.status(201).send({message: `Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`});
                     }
                 })
-            }else {
+            } else {
                 res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
             }
         } catch (error) {

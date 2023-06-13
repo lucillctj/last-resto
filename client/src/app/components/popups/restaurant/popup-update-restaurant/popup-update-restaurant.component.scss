@@ -2,11 +2,11 @@
 @import "../../../../styles-form-popup";
 
 .title{
-  color: $salmon;
+  color: $green;
 }
 
 .form-control{
-  background-color: rgba(227, 120, 92, 0.4);
+  background-color: rgba(49, 119, 101, 0.4);
 }
 
 .form-control::placeholder{
@@ -15,9 +15,9 @@
 }
 
 .btn {
-  background: $salmon;
+  background: $green;
 }
 
 .btn:hover {
-  background: $salmon-hover;
+  background: $green-hover;
 }
