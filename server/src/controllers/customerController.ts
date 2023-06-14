@@ -78,6 +78,41 @@ export class CustomerController {
         }
     }
 
+    public static async getUserByProductId(req: Request, res: Response): Promise<any> {
+        const requestId = parseInt(req.params.id);
+        try {
+            db.query(
+                `SELECT user_id FROM users WHERE product_id = ${requestId}`,
+                (error: Error | null, userIds: number[]) => {
+                    if (error) throw error;
+                    else if (!userIds) {
+                        res.status(404).send({message: "No-one has reserved this product"});
+                    } else {
+                        res.status(200).send(userIds);
+                    }
+                })
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+
+    // public static async deleteProductIdByUserId(req: Request, res: Response): Promise<void> {
+    //     const userId = parseInt(req.params.user);
+    //
+    //     try {
+    //         db.query(
+    //             `UPDATE users SET product_id = NULL WHERE role = 'customer' AND user_id = ${userId}`,
+    //             (error: Error | null, results) => {
+    //                 if (error) throw error;
+    //                 else {
+    //                     res.status(200).json({message: "Product id de l'utilisateur mis à jour"});
+    //                 }
+    //             })
+    //     } catch (error) {
+    //         res.status(500).json({message: "Internal server error"});
+    //     }
+    // }
+
     public static async updateCustomer(req: Request, res: Response): Promise<void> {
         const body = req.body;
         const requestId = parseInt(req.params.user);
@@ -129,17 +164,19 @@ export class CustomerController {
 
 
     public static async updateProductId(req: Request, res: Response): Promise<any> {
-        const body = req.body;
         const userRequestId = parseInt(req.params.user);
-        const productId = body.product_id;
+        const productIdValue = req.body.productId;
+        console.log(req.body)
+
+        console.log(req.body.productId)
         try {
-            if (userRequestId >= 1 && productId >= 1) {
+            if (userRequestId >= 1 && productIdValue >= 1 || productIdValue === null) {
                 const sql = `UPDATE users SET product_id = ? WHERE role = 'customer' AND user_id = ${userRequestId}`;
-                const params = [productId];
+                const params = [productIdValue];
                 db.execute(sql, params, (error: QueryError | null) => {
                     if (error) throw error.message;
                     else {
-                        res.status(201).send({message: `Produit ajouté à l'utilisateur n°${userRequestId}!`});
+                        res.status(201).send({message: `Produit mis à jour sur l'utilisateur n°${userRequestId}!`});
                     }
                 })
             } else {

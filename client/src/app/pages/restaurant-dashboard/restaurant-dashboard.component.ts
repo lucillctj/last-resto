@@ -86,6 +86,7 @@ export class RestaurantDashboardComponent implements OnInit {
     const modalRef = this.modalService.open(PopupDeleteRestaurantComponent);
     modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
     modalRef.componentInstance.currentProducts = this.currentProducts;
+    modalRef.componentInstance.currentUserId = this.currentUserId;
   }
 
   updateAvailability() {

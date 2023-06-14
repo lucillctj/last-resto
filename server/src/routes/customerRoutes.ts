@@ -7,8 +7,9 @@ const router = express.Router();
 export const customerRoutes = () => {
     router.post('/signup', CustomerController.createCustomerAccount);
     router.get('/dashboard/:user', verifyAuth, CustomerController.getCustomerDashboard);
+    router.get('/:id/get-user/user/:user', verifyAuth, CustomerController.getUserByProductId);
     router.put('/update/:user', verifyAuth, CustomerController.updateCustomer);
-    router.put('/update-product-id/:user', verifyAuth, CustomerController.updateProductId)
+    router.put('/update-product-id/:user', CustomerController.updateProductId)
     router.get('/:user/product', verifyAuth, CustomerController.getProductIdByUserId)
 
     return router;

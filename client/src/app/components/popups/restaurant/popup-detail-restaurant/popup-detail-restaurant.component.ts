@@ -71,7 +71,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
       if(!this.currentCustomer) {
         this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
       }
-      this.customerService.bookProduct(this.currentCustomer, this.selectedProduct)
+      this.customerService.updateProductId(this.currentCustomer.user_id, this.selectedProduct.product_id)
         .subscribe(() => {
             this.successMessage = 'Votre réservation a bien été prise en compte !'
             setTimeout(() => {

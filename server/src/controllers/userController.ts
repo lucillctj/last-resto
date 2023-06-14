@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
 import {db} from "../app";
-import {QueryError} from "mysql2";
+import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from "bcryptjs";
 import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
-import {ResultSetHeader} from "mysql2";
+import axios from 'axios';
 
 export class UserController {
 
@@ -33,8 +33,7 @@ export class UserController {
                     });
                 }
             });
-        }
-        else {
+        } else {
             res.status(400).json({error: 'Certains champs sont manquants.'});
         }
     }
@@ -50,6 +49,24 @@ export class UserController {
 
     public static async deleteUser(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.user);
+        const getRestaurantsUrl = `http://localhost:3000/api/v1/restaurants/user/${requestId}`;
+        const restaurants = await axios.get(getRestaurantsUrl, {
+            headers: {
+                Cookie: `token=${req.cookies.token}`
+            }
+        });
+
+        if (restaurants.data.length >= 1) {
+            for (const restaurant of restaurants.data) {
+
+                const deleteRestaurantUrl = `http://localhost:3000/api/v1/restaurants/delete/${restaurant.restaurant_id}/user/${requestId}`;
+                await axios.delete(deleteRestaurantUrl, {
+                    headers: {
+                        Cookie: `token=${req.cookies.token}`
+                    }
+                });
+            }
+        }
         try {
             db.execute(
                 `DELETE FROM users WHERE user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
