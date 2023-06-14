@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from "../interfaces/user-interface";
-import {Restaurant} from "../interfaces/restaurant-interface";
 import {Customer} from "../interfaces/customer-interface";
 import {RestaurantOwner} from "../interfaces/restaurantOwner-interface";
 
