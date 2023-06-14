@@ -34,6 +34,14 @@ export class NavBarTopComponent implements OnInit{
     this.router.navigate(['/api/v1']);
   }
 
+  redirectToUserDashboard() {
+    if (this.currentUser.role === 'customer') {
+      this.router.navigate([`/api/v1/customers/dashboard/${this.currentUser.user_id}`]);
+    } else if (this.currentUser.role === 'restaurant owner') {
+      this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentUser.user_id}`]);
+    }
+  }
+
   login(){
     this.router.navigate(['/api/v1/users/login']);
   }
@@ -46,7 +54,7 @@ export class NavBarTopComponent implements OnInit{
           this.router.navigate(['api/v1']);
         },
         error => {
-        console.log('error', error)
+          console.log('error', error)
         }
       )
   }
