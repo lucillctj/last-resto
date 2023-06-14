@@ -49,13 +49,8 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
         .subscribe(
           (data) => {
             this.currentRestaurant = data[0];
-
-            if(!this.currentRestaurant.restaurant_id){
+            if(data.length === 0){
               this.modalService.open(PopupInformationComponent);
-              return;
-            }
-            else if (this.router.url === urlRestaurantDashboard) {
-              return;
             }
             else{
               const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}/user/${this.currentRestaurant.restaurant_owner_id}`;
@@ -69,11 +64,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
     } else {
       console.error('L\'ID du restaurant n\'est pas un nombre valide.');
     }
-
-    const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`;
   }
-
-
 
   redirectToUserDashboard() {
     const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentUserId}`;
