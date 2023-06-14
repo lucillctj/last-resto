@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
 import {Product} from "../../interfaces/product-interface";
+import {User} from "../../interfaces/user-interface";
 
 
 @Injectable(
@@ -23,14 +24,20 @@ export class CustomerService {
     return this.http.get<Customer>(url, { withCredentials: true });
   }
 
+  getUserByProductId(product: Product, userId: number): Observable<any> {
+    const url = `${this.apiUrl}/${product.product_id}/get-user/user/${userId}`;
+    return this.http.get<any>(url, {withCredentials: true});
+  }
+
   updateCustomer(updatedUser: Customer, currentUser: Customer): Observable<any> {
     const url = `${this.apiUrl}/update/${currentUser.user_id}`;
     return this.http.put<any>(url, updatedUser, {withCredentials: true});
   }
 
-  bookProduct(user: Customer, product: Product): Observable<any> {
-    const url = `${this.apiUrl}/update-product-id/${user.user_id}`;
-    return this.http.put<any>(url, product, {withCredentials: true});
+  updateProductId(userId: number | undefined, productId: number | null | undefined): Observable<any> {
+    const url = `${this.apiUrl}/update-product-id/${userId}`;
+    console.log(url)
+    return this.http.put<any>(url, {productId}, {withCredentials: true});
   }
 
   //pour récupérer les produits réservés par les clients
