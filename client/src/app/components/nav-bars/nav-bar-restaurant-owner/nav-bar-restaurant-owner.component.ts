@@ -17,6 +17,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   isUserDashboardActive: boolean;
   currentRestaurantOwner: RestaurantOwner;
   currentRestaurant: Restaurant;
+  currentUserId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,6 +30,8 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
     this.isUserDashboardActive = false;
     this.currentRestaurantOwner = {} as RestaurantOwner;
     this.currentRestaurant = {} as Restaurant;
+    this.currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+
   }
 
   ngOnInit(){
@@ -41,9 +44,8 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   }
 
   redirectToRestaurantDashboard() {
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
-    if (currentUserId) {
-      this.restaurantService.getRestaurantByUserId(currentUserId)
+    if (this.currentUserId) {
+      this.restaurantService.getRestaurantByUserId(this.currentUserId)
         .subscribe(
           (data) => {
             this.currentRestaurant = data[0];
@@ -74,10 +76,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
 
 
   redirectToUserDashboard() {
-    this.authService.getCurrentUser().subscribe(user => {
-      this.currentRestaurantOwner = user as RestaurantOwner;
-    });
-    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentRestaurantOwner.user_id}`;
+    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentUserId}`;
 
     if (this.router.url === urlUserDashboard) {
       return;
