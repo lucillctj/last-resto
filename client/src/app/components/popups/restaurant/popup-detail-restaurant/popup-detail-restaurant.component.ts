@@ -44,22 +44,13 @@ export class PopupDetailRestaurantComponent implements OnInit {
     const currentRestaurantId = this.currentRestaurant.restaurant_id;
     const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
 
-    this.restaurantService.getRestaurantDashboard(currentRestaurantId!, currentUserId)
+    this.productService.getProductsByRestaurantId(currentRestaurantId!, currentUserId)
       .subscribe(
         (data) => {
-          this.currentRestaurant = data;
-
-          this.productService.getProductsByRestaurantId(currentRestaurantId!, currentUserId)
-            .subscribe(
-              (data) => {
-                this.currentProducts = data
-              },
-              (error) => {
-                console.error('Une erreur s\'est produite lors de la récupération des données des formules.', error);
-              })
+          this.currentProducts = data
         },
         (error) => {
-          console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+          console.error('Une erreur s\'est produite lors de la récupération des données des formules.', error);
         })
   }
 
