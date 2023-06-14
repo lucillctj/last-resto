@@ -16,7 +16,7 @@ export class RestaurantService {
     return this.http.post<any>(url, restaurant, {withCredentials: true});
   }
 
-  getRestaurantByUserId(userId: number): Observable<Restaurant[]> {
+  getRestaurantByUserId(userId: number): Observable<any> {
     const url = `${this.apiUrl}/user/${userId}`;
     return this.http.get<Restaurant[]>(url, {withCredentials: true});
   }
