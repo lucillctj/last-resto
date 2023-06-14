@@ -31,10 +31,10 @@ export class PopupDeleteRestaurantComponent {
   }
 
   async confirmToDelete() {
-    if(this.currentProducts.length >= 1){
-      this.errorMessage = 'Veuillez supprimer toutes vos formules avant de supprimer le restaurant.';
-      return;
-    }
+    // if(this.currentProducts.length >= 1){
+    //   this.errorMessage = 'Veuillez supprimer toutes vos formules avant de supprimer le restaurant.';
+    //   return;
+    // }
     this.restaurantService.deleteRestaurant(this.currentRestaurant)
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été supprimé !';

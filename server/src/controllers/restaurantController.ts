@@ -2,6 +2,8 @@ import {Request, Response} from "express";
 import {db} from "../app";
 import {QueryError, ResultSetHeader} from "mysql2";
 import {Restaurant} from "../models/restaurant";
+import axios, {AxiosInstance} from 'axios';
+import {Product} from "../models/product";
 
 export class RestaurantController {
     public static async createRestaurant(req: Request, res: Response): Promise<void> {
@@ -142,18 +144,45 @@ export class RestaurantController {
 
     public static async deleteRestaurant(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
-        try {
-            db.execute(
-                `DELETE FROM restaurants WHERE restaurant_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
-                    if (error) throw error;
-                    else if (results.affectedRows === 0) {
-                        res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
-                    } else {
-                        res.status(200).send({message:`Restaurant ${requestId} was deleted!`});
-                    }
-                })
-        } catch (error) {
-            res.status(500).json({message: "Internal server error"});
+        const userId = parseInt(req.params.user);
+
+        try{
+            const getProductUrl = `http://localhost:3000/api/v1/products/restaurant/${requestId}/user/${userId}`;
+            const products = await axios.get(getProductUrl);
+            if (products.data.length >= 1) {
+                for (const product of products.data) {
+                    const deleteProductUrl = `http://localhost:3000/api/v1/products/delete/${product.product_id}/user/${userId}`;
+                    await axios.delete(deleteProductUrl, {
+                        headers: {
+                            Cookie: `token=${req.cookies.token}`
+                        }})
+                }
+            }
+            try {
+                db.execute(
+                    `DELETE FROM restaurants WHERE restaurant_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
+                        if (error) throw error;
+                        else if (results.affectedRows === 0) {
+                            res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
+                        } else {
+                            res.status(200).send({message:`Restaurant ${requestId} was deleted!`});
+                        }
+                    })
+            } catch (error) {
+                res.status(500).json({message: "Internal server error"});
+            }
+
         }
+        catch (error){
+            console.log('-------->error', error)
+        }
+
+        // console.log('products', products)
+        // try{
+        // //     if (products.data.length > 0) {
+        // //
+        // //
+        // // }
+        // //
     }
 }
