@@ -143,18 +143,6 @@ export class RestaurantController {
 
     public static async deleteRestaurant(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
-        // const userId = parseInt(req.params.user);
-        // const getProductUrl = `http://localhost:3000/api/v1/products/restaurant/${requestId}/user/${userId}`;
-        // const products = await axios.get(getProductUrl);
-        // if (products.data.length >= 1) {
-        //     for (const product of products.data) {
-        //         const deleteProductUrl = `http://localhost:3000/api/v1/products/delete/${product.product_id}/user/${userId}`;
-        //         await axios.delete(deleteProductUrl, {
-        //             headers: {
-        //                 Cookie: `token=${req.cookies.token}`
-        //             }})
-        //     }
-        // }
         try {
             db.execute(
                 `DELETE FROM restaurants WHERE restaurant_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
