@@ -51,7 +51,6 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
               .subscribe((data) => {
                   if(data.length >= 1) {
                     this.currentRestaurant = data[0];
-                    console.log(this.currentRestaurant)
                   }
                 },
                 (error) => {
