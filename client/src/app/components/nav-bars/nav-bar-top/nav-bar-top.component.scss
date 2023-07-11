@@ -6,12 +6,13 @@
   padding: 0.2em 0;
 }
 
+.btn-nav-bar{
+  margin: auto;
+}
+
 .btn-dashboard{
   font-size: 0.8rem;
-  margin-top: 0;
   padding: 1em;
-  display: flex;
-  align-items: center;
   color: $orange;
 }
 
