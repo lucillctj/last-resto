@@ -28,9 +28,8 @@ export function generateAccessToken(userId: number) {
 export const setTokenCookie = (res: Response, token: string) => {
     res.cookie('token', token, {
         maxAge: 7200000,
-        secure: false,
-        httpOnly: true,
-        sameSite: 'lax'
+        secure: true,
+        httpOnly: true
     })
         .status(200);
 };
@@ -38,6 +37,8 @@ export const clearTokenCookie = (res: Response) => {
     res.clearCookie('token')
         .status(200);
 };
+
+
 
 
 // export function generateRefreshToken(userId: any) {
