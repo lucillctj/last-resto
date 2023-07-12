@@ -24,7 +24,7 @@
 
     <div class="form-group">
       <input type="password" [(ngModel)]="newUser.password" class="form-control" placeholder="Mot de passe" name="password" required minlength="6">
-      <div *ngIf="newUser.password && newUser.password.length < 6" class="error-message">Le mot de passe doit contenir au moins 6 caractères.</div>
+      <div *ngIf="newUser.password && newUser.password.length < 6" class="error-message error-message-password">Le mot de passe doit contenir au moins 6 caractères.</div>
     </div>
 
 <!--    <div class="form-check">-->
