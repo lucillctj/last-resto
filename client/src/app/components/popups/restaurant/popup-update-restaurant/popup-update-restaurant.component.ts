@@ -50,9 +50,12 @@ export class PopupUpdateRestaurantComponent implements OnInit{
     if(this.updatedRestaurant.name && this.updatedRestaurant.description && this.updatedRestaurant.address && this.updatedRestaurant.post_code && this.updatedRestaurant.city && this.updatedRestaurant.phone){
       this.restaurantService.updateRestaurant(this.updatedRestaurant)
         .subscribe(() => {
-          this.successMessage = 'Votre restaurant a bien été mis à jour !';
-          this.modalService.dismissAll();
-        },
+            this.successMessage = 'Votre restaurant a bien été mis à jour !';
+            setTimeout(() => {
+              location.reload();
+              this.modalService.dismissAll()
+            }, 2000)
+          },
           error => {
             this.errorMessage = 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
           })

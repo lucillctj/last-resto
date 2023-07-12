@@ -12,7 +12,7 @@
   <div class="buttons">
     <button type="button" class="btn btn-confirm" (click)="confirmToDelete()">Oui, supprimer</button>
     <button type="button" class="btn btn-cancel" data-dismiss="modal" (click)="redirectToDashboard()">Non, annuler</button>
-    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="successMessage" class="success-message-delete">{{ successMessage }}</div>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
   </div>
