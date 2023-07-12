@@ -102,7 +102,7 @@ body{
   border: none;
 }
 
-.card-product{
+.card-product {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -110,7 +110,23 @@ body{
   margin-bottom: 0.6em;
 }
 
-.products-title{
+.card-reservations{
+  margin-top: 1em;
+  position: relative;
+  background-color: $grey-bright;
+  padding: 0.4em 1em;
+  border-radius: 0.3em;
+  border: none;
+  color: white;
+}
+
+.card-reservation {
+  display: flex;
+  padding: 0.3em 0.5em 0;
+  margin-bottom: 0.6em;
+}
+
+.products-title {
   color: $green;
 }
 
@@ -149,4 +165,8 @@ body{
   border: none;
   color: $green;
   background-color: transparent;
+}
+
+.reservations-title{
+  color: $green;
 }

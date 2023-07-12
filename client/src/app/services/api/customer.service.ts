@@ -24,7 +24,12 @@ export class CustomerService {
     return this.http.get<Customer>(url, { withCredentials: true });
   }
 
-  getUserByProductId(product: Product, userId: number): Observable<any> {
+  getDataCustomer(userId: number, restaurantOwnerId: number): Observable<Customer> {
+    const url = `${this.apiUrl}/data/customer/${userId}/${restaurantOwnerId}`;
+    return this.http.get<Customer>(url, { withCredentials: true });
+  }
+
+  getUserIdByProductId(product: Product, userId: number): Observable<any> {
     const url = `${this.apiUrl}/${product.product_id}/get-user/user/${userId}`;
     return this.http.get<any>(url, {withCredentials: true});
   }

@@ -37,7 +37,7 @@ export class PopupDeleteRestaurantComponent {
 
   confirmToDelete() {
     this.currentProducts.forEach(async (product: Product) => {
-      await this.customerService.getUserByProductId(product, this.currentUserId)
+      await this.customerService.getUserIdByProductId(product, this.currentUserId)
         .subscribe((results) => {
             results.forEach((res: any) => {
               this.customerService.updateProductId(res.user_id, null)
