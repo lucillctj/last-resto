@@ -139,7 +139,7 @@ export class RestaurantDashboardComponent implements OnInit {
   deleteProduct(currentProduct: Product){
     this.productService.deleteProduct(currentProduct, this.currentUserId)
       .subscribe(() => {
-          console.log('produit supprimé', currentProduct.name)
+          this.ngOnInit();
         },
         (error) => {
           console.error('Une erreur s\'est produite lors de la suppression du produit.', error);

@@ -35,18 +35,12 @@ export class PopupDeleteUserComponent {
 
   async confirmToDelete() {
     if (this.currentUser.role === "restaurant owner") {
-      try{
         const restaurants = await this.restaurantService.getRestaurantByUserId(this.currentUser.user_id as number).toPromise();
         console.log(restaurants)
         if (restaurants!.length >= 1) {
-          for (const restaurant of restaurants!) {
-            await this.restaurantService.deleteRestaurant(restaurant).toPromise();
-            console.log('restaurant correctement supprimé !');
-          }
+          this.errorMessage = 'Veuillez supprimer votre restaurant, avant de réessayer.';
         }
-      } catch (error) {
-        console.error('Une erreur s\'est produite lors de la récupération des données du restaurant :', error);
-      }
+      return;
     }
 
     this.userService.deleteUser(this.currentUser)

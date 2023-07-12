@@ -58,7 +58,7 @@ export class PopupDeleteRestaurantComponent {
       this.currentProducts.forEach(async (product: Product) => {
         this.productService.deleteProduct(product, this.currentUserId)
           .subscribe(() => {
-              console.log('produit supprimé', product.name);
+              console.log('produit supprimé :', product.name);
             },
             (error) => {
               console.error('Une erreur s\'est produite lors de la suppression du produit.', error);

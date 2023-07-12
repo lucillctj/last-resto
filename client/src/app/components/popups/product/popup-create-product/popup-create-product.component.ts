@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import { NgForm } from '@angular/forms';
+import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from "../../../../services/auth.service";
@@ -46,7 +46,6 @@ export class PopupCreateProductComponent {
     this.productService.createProduct(this.newProduct, this.currentUserId)
       .subscribe(() => {
           this.modalService.dismissAll();
-          location.reload();
         },
         error => {
           this.errorMessage = 'Erreur lors de la création de la formule, veuillez réessayer ultérieurement.';
