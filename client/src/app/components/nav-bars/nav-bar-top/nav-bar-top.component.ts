@@ -27,8 +27,9 @@ export class NavBarTopComponent implements OnInit{
   }
 
   ngOnChanges(){
-    this.currentUser = this.authService.getCurrentUser();
-  }
+    this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user;
+    });  }
 
   redirectToRestaurantsList(){
     this.router.navigate(['/api/v1']);

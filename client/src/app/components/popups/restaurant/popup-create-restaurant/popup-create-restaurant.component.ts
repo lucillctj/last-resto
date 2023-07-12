@@ -47,7 +47,6 @@ export class PopupCreateRestaurantComponent {
           this.successMessage = 'Votre restaurant a bien été créé !';
           setTimeout(() => {
             this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.newRestaurant.restaurant_owner_id}`]);
-            location.reload();
             this.modalService.dismissAll()
           }, 2000)
         },
