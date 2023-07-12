@@ -36,7 +36,7 @@ export class PopupDeleteRestaurantComponent {
   }
 
   confirmToDelete() {
-    this.currentProducts.forEach(async (product) => {
+    this.currentProducts.forEach(async (product: Product) => {
       await this.customerService.getUserByProductId(product, this.currentUserId)
         .subscribe((results) => {
             results.forEach((res: any) => {
@@ -53,26 +53,30 @@ export class PopupDeleteRestaurantComponent {
             console.error(error);
           })
     })
-    this.currentProducts.forEach(async (product) => {
-      this.productService.deleteProduct(product, this.currentUserId)
-        .subscribe(() => {
-            console.log('produit supprimé', product.name);
-            this.restaurantService.deleteRestaurant(this.currentRestaurant)
-              .subscribe(() => {
-                  this.successMessage = 'Votre restaurant a bien été supprimé !';
-                  setTimeout(() => {
-                    this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentRestaurant.restaurant_owner_id}`]);
-                    this.modalService.dismissAll()
-                  }, 2000)
-                },
-                error => {
-                  this.errorMessage = 'Erreur lors de la suppression du restaurant, veuillez réessayer ultérieurement.';
-                })
-          },
-          (error) => {
-            console.error('Une erreur s\'est produite lors de la suppression du produit.', error);
-          })
-    })
+
+    if(this.currentProducts.length > 0){
+      this.currentProducts.forEach(async (product: Product) => {
+        this.productService.deleteProduct(product, this.currentUserId)
+          .subscribe(() => {
+              console.log('produit supprimé', product.name);
+            },
+            (error) => {
+              console.error('Une erreur s\'est produite lors de la suppression du produit.', error);
+            })
+      })
+    }
+
+    this.restaurantService.deleteRestaurant(this.currentRestaurant)
+      .subscribe(() => {
+          this.successMessage = 'Votre restaurant a bien été supprimé !';
+          setTimeout(() => {
+            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentUserId}`]);
+            this.modalService.dismissAll()
+          }, 2000)
+        },
+        error => {
+          this.errorMessage = 'Erreur lors de la suppression du restaurant, veuillez réessayer ultérieurement.';
+        })
   }
 
   redirectToDashboard(){

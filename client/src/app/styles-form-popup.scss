@@ -40,16 +40,28 @@ form{
   color: white;
 }
 
+.error-message-password{
+  top: 0.7em;
+}
+
 .error-message{
   color: red;
   position: relative;
   font-size: 0.8rem;
   font-weight: 400;
   text-align: center;
-  //top: 0.7em;
 }
 
 .success-message{
+  color: green;
+  position: relative;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-align: center;
+  top: 0.6em;
+}
+
+.success-message-create{
   color: green;
   position: relative;
   font-size: 0.8rem;
