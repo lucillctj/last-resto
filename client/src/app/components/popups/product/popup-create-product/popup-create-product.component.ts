@@ -45,8 +45,8 @@ export class PopupCreateProductComponent {
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
     this.productService.createProduct(this.newProduct, this.currentUserId)
       .subscribe(() => {
-          this.successMessage = 'Votre formule a bien été créé !';
           this.modalService.dismissAll();
+          location.reload();
         },
         error => {
           this.errorMessage = 'Erreur lors de la création de la formule, veuillez réessayer ultérieurement.';

@@ -63,7 +63,10 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit{
       this.restaurantOwnerService.updateRestaurantOwner(this.updatedUser, this.currentRestaurantOwner)
         .subscribe(() => {
             this.successMessage = 'Vos informations ont bien été mises à jour !';
-            this.modalService.dismissAll()
+            setTimeout(() => {
+              location.reload();
+              this.modalService.dismissAll()
+            }, 2000)
           },
           error => {
             if (error.status === 400 && error.error === "Cet email existe déjà !") {

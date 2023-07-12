@@ -64,7 +64,10 @@ export class PopupUpdateCustomerComponent implements OnInit{
       this.customerService.updateCustomer(this.updatedUser, this.currentCustomer)
         .subscribe(() => {
             this.successMessage = 'Vos informations ont bien été mises à jour !';
-            this.modalService.dismissAll()
+            setTimeout(() => {
+              location.reload();
+              this.modalService.dismissAll()
+            }, 2000)
           },
           error => {
             if (error.status === 400 && error.error === "Cet email existe déjà !") {
