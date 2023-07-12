@@ -78,7 +78,25 @@ export class CustomerController {
         }
     }
 
-    public static async getUserByProductId(req: Request, res: Response): Promise<any> {
+    public static async getDataCustomer(req: Request, res: Response): Promise<Customer | any> {
+        const userId = parseInt(req.params.customer);
+        try {
+            db.query(
+                `SELECT * FROM users WHERE role = 'customer' AND user_id = ${userId}`,
+                (error: Error | null, results: Customer[]) => {
+                    if (error) throw error;
+                    else if (results.length === 0) {
+                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                    } else {
+                        res.status(200).send(results[0]);
+                    }
+                })
+        } catch (error) {
+            res.status(500).json({message: "Internal server error"});
+        }
+    }
+
+    public static async getUserIdByProductId(req: Request, res: Response): Promise<any> {
         const requestId = parseInt(req.params.id);
         try {
             db.query(

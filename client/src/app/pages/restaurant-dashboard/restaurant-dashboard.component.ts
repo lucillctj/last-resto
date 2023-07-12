@@ -15,6 +15,8 @@ import {Product} from "../../interfaces/product-interface";
 import {
   PopupCreateProductComponent
 } from "../../components/popups/product/popup-create-product/popup-create-product.component";
+import {CustomerService} from "../../services/api/customer.service";
+import {Customer} from "../../interfaces/customer-interface";
 
 @Component({
   selector: 'app-restaurant-dashboard',
@@ -29,13 +31,18 @@ export class RestaurantDashboardComponent implements OnInit {
   successMessage: string | null;
   errorMessage: string | null;
   currentUserId: number;
+  usersIdsHasReserved!: any;
+  userHasReserved!: Customer;
+  productReserved!: Product;
+
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private restaurantService: RestaurantService,
-    private productService: ProductService
+    private productService: ProductService,
+    private customerService: CustomerService
   ) {
     this.currentRestaurant = {} as Restaurant;
     this.currentProducts = [];
@@ -69,9 +76,32 @@ export class RestaurantDashboardComponent implements OnInit {
       .subscribe(
         (data) => {
           this.currentProducts = data;
-        },
-        (error) => {
-          console.error('Une erreur s\'est produite lors de la récupération des formules du restaurant.', error);
+
+          if (this.currentProducts.length > 0) {
+            this.currentProducts.forEach(async (product: Product) => {
+              await this.customerService.getUserIdByProductId(product, this.currentUserId)
+                .subscribe((results) => {
+                    this.usersIdsHasReserved = results;
+                    this.usersIdsHasReserved.forEach((user: any) => {
+                        this.customerService.getDataCustomer(user.user_id, this.currentUserId)
+                          .subscribe((result) => {
+                              this.userHasReserved = result;
+                            this.productReserved = product;
+
+                            },
+                            (error) => {
+                              console.error(error);
+                            })
+                      },
+                      (error: Error) => {
+                        console.error(error);
+                      })
+                  },
+                  (error) => {
+                    console.error('Une erreur s\'est produite lors de la récupération des formules du restaurant.', error);
+                  })
+            })
+          }
         })
   }
 
@@ -96,7 +126,7 @@ export class RestaurantDashboardComponent implements OnInit {
           this.successMessage = 'La disponibilité du restaurant a bien été prise en compte !'},
         (error) => {
           this.errorMessage = 'Une erreur est survenue !';
-        console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+          console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
         })
   }
 

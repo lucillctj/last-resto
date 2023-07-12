@@ -69,8 +69,22 @@
     </div>
 
   </div>
-</div>
+  <div class="row">
+    <div class="card card-reservations">
+      <h4 class="reservations-title">Mes réservations</h4>
 
+      <div class="card card-reservation" *ngIf="userHasReserved">
+        <p class="reservation-user-name">Nom de client : {{userHasReserved.first_name}} {{userHasReserved.last_name}}</p>
+        <p class="reservation-user-productReserved" *ngIf="productReserved">Formule réservée : {{productReserved.name}}</p>
+      </div>
+
+      <div *ngIf="!userHasReserved">
+        <p>Vous n'avez créé aucune réservation effectuée.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
 <div class="nav-bar">
   <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
 </div>
