@@ -30,7 +30,7 @@ body {
   position: relative;
 }
 
-h1{
+h1 {
   padding-top: 0.5em;
   position: relative;
   display: flex;
@@ -38,7 +38,12 @@ h1{
   color: white;
   font-weight: 600;
   font-size: 2.3rem;
+
+  //@media (max-width: 768px) {
+  //  font-size: 2rem;
+  //}
 }
+
 
 h3{
   position: relative;
@@ -115,13 +120,17 @@ p{
 .btn-orange, .btn-green{
   position: relative;
   top: 35%;
-  width: 22em;
+  width: 85%;
   height: 2.8em;
   border-radius: 4em;
   font-style: normal;
   font-weight: 500;
   font-size: 1.3rem;
   text-align: center;
+
+  @media (max-width: 768px) {
+    top: 15%;
+  }
 }
 
 .modal.show .modal-dialog{
