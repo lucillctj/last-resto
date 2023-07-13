@@ -1,11 +1,18 @@
-<div class="nav-bar" >
+<div class="row nav-bar" >
   <div class="row buttons-icon">
-    <button class="col-6 btn-icon" [class.active]="isSearchActive" (click)="redirectToRestaurantSearch()">
+    <button class="col-6 col-xs-2 btn-icon" [class.active]="isSearchActive" (click)="redirectToRestaurantSearch()">
       <i class="bi bi-search icon-search"></i>
     </button>
-    <button class="col-6 btn-icon" [class.active]="isDashboardActive" (click)="redirectToDashboard()">
+    <button class="col-6 col-xs-2 btn-icon" [class.active]="isDashboardActive" (click)="redirectToDashboard()">
       <i class="bi bi-person icon-profil"></i>
     </button>
+
+<!--    <button class="col-6 col-xs-2">-->
+<!--      <i class="bi bi-search icon-search"></i>-->
+<!--    </button>-->
+<!--    <button class="col-6 col-xs-2">-->
+<!--      <i class="bi bi-person icon-profil"></i>-->
+<!--    </button>-->
 
   </div>
 </div>

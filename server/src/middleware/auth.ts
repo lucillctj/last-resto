@@ -28,7 +28,7 @@ export function generateAccessToken(userId: number) {
 export const setTokenCookie = (res: Response, token: string) => {
     res.cookie('token', token, {
         maxAge: 7200000,
-        secure: true,
+        secure: false,
         httpOnly: true
     })
         .status(200);
