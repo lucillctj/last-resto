@@ -29,8 +29,13 @@
 
 .logo {
   width: 45%;
-  margin-top: 10%;
+  margin-top: 20%;
   margin-bottom: 5%;
+
+  @media (max-width: 768px) {
+    width: 55%;
+    margin-bottom: 5%;
+  }
 }
 
 .title {
@@ -41,11 +46,20 @@
   font-weight: 600;
   font-size: 2.6rem;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 }
 .sub-title {
   color: $orange;
   font-weight: 300;
   font-size: 1.3rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-bottom: 2.5em;
+  }
 }
 .btn-orange {
   border: 0;
