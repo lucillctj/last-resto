@@ -101,9 +101,16 @@ p{
   margin-right: auto;
   padding-top: 5em;
   position: relative;
-  width: 32em;
   border-radius: 4em;
   text-align: center;
+  width: 40%;
+
+  @media (max-width: 1065px) {
+    width: 55%;
+  }
+  @media (max-width: 500px) {
+    width: 92%;
+  }
 }
 
 .btn {
