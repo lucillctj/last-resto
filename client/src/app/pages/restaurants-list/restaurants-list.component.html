@@ -11,11 +11,13 @@
 
 <body>
 <h1 class="page-title">Les restaurants</h1>
-<div class="card" *ngFor="let restaurant of currentRestaurants" (click)="openPopupDetailRestaurant(restaurant)">
+<div class="card col-lg-5 col-11" *ngFor="let restaurant of currentRestaurants; let i = index" (click)="openPopupDetailRestaurant(restaurant)" [class.last-card]="i === currentRestaurants.length - 1">
   <p class="name">{{ restaurant.name }}</p>
   <p class="city">{{ restaurant.city }}</p>
   <p class="description">{{ restaurant.description }}</p>
 </div>
+
+<div class="margin-bottom"></div>
 
 <div class="nav-bar">
   <app-nav-bar-customer></app-nav-bar-customer>
