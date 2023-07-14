@@ -19,7 +19,6 @@ body{
   padding: 1em;
   border-radius: 0.3em;
   border: none;
-  width: 140vh;
   height: auto;
 }
 
@@ -27,4 +26,8 @@ body{
   color: $blue;
   font-size: 1.2rem;
   font-weight: 500;
+}
+
+.card.last-card {
+  margin-bottom: 10em !important;
 }
