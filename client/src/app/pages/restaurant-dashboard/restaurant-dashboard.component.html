@@ -12,10 +12,10 @@
 <body>
 <h1 class="page-title">Mon restaurant : {{currentRestaurant.name}}</h1>
 
-<div class="card card-restaurant" *ngIf="currentRestaurant.restaurant_id">
+<div class="card col-lg-9 col-10" *ngIf="currentRestaurant.restaurant_id">
 
   <div class="row">
-    <div class="col-lg-6 col-md-3 col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
       <h3 class="restaurant-name">{{currentRestaurant.name}}</h3>
       <p class="restaurant-description">{{currentRestaurant.description}}</p>
       <p>Adresse : {{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
@@ -27,15 +27,15 @@
       </div>
     </div>
 
-    <div class="col-lg-6 col-md-3 col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-6">
       <section class="details-restaurant-section">
-        <div class="card card-detail">
+        <div class="card-detail">
           <div class="form-check form-switch">
             <div class="row">
-              <div class="col-lg-9">
+              <div class="col-9">
                 <h4 class="form-check-label text-availability" for="flexSwitchCheckDefault">Disponibilité</h4>
               </div>
-              <div class="col-lg-3">
+              <div class="col-2">
                 <input class="form-check-input switch" type="checkbox" [(ngModel)]="isAvailable" (change)="updateAvailability()" role="switch" id="flexSwitchCheckDefault">
               </div>
               <div *ngIf="successMessage" class="success-message success-message-available">{{ successMessage }}</div>
@@ -45,9 +45,9 @@
           </div>
         </div>
         <div class="products-section">
-          <div class="card card-detail">
+          <div class="card-detail">
             <h4 class="products-title">Les formules</h4>
-            <div class="card card-product" *ngFor="let product of currentProducts">
+            <div class="card-product" *ngFor="let product of currentProducts">
               <p class="product-name">{{product.name}}</p>
               <p class="product-description">{{product.description}}</p>
               <p class="product-price">{{product.price}} €</p>
@@ -69,11 +69,11 @@
     </div>
 
   </div>
-  <div class="row">
-    <div class="card card-reservations">
+  <div class="reservations-list">
+    <div class="card-reservations">
       <h4 class="reservations-title">Mes réservations</h4>
 
-      <div class="card card-reservation" *ngIf="userHasReserved">
+      <div class="card-reservation" *ngIf="userHasReserved">
         <p class="reservation-user-name">Nom du client : {{userHasReserved.first_name}} {{userHasReserved.last_name}}</p>
         <p class="reservation-user-productReserved" *ngIf="productReserved">Formule réservée : {{productReserved.name}}</p>
       </div>
@@ -84,10 +84,9 @@
 
     </div>
   </div>
+  <div class="nav-bar">
+    <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
+  </div>
 </div>
-<div class="nav-bar">
-  <app-nav-bar-restaurant-owner></app-nav-bar-restaurant-owner>
-</div>
-
 </body>
 </html>

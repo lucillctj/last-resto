@@ -41,6 +41,7 @@ h1 {
 
   @media (max-width: 768px) {
     padding-top: 0;
+    font-size: 2rem;
   }
 }
 
@@ -141,4 +142,26 @@ p{
 
 .modal.show .modal-dialog{
   margin-top: 3em;
+}
+
+.card{
+  top: 5em;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  padding: 1em 1.4em;
+  border-radius: 0.3em;
+  border: none;
+  height: auto;
+  margin-bottom: 10em !important;
+}
+
+.page-title{
+  top: 1.5em;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    top: 1.7em;
+    margin: 0 1em;
+  }
 }

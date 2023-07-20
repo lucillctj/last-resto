@@ -6,20 +6,6 @@ body{
   position: relative;
 }
 
-.page-title{
-  top: 1.5em;
-}
-.card{
-  top: 5em;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-  padding: 1em 1.4em;
-  border-radius: 0.3em;
-  border: none;
-  height: auto;
-}
-
 .name{
   color: $blue;
   font-size: 1.2rem;
@@ -43,7 +29,7 @@ body{
   background-color: $blue-hover;
 }
 .btn-delete{
-  border: 0.4em $grey;
+  border: none;
   color: $grey;
 }
 .btn-delete:hover{
