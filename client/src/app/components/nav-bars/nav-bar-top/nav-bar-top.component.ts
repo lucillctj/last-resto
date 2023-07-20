@@ -26,10 +26,10 @@ export class NavBarTopComponent implements OnInit{
     });
   }
 
-  ngOnChanges(){
-    this.authService.getCurrentUser().subscribe(user => {
-      this.currentUser = user;
-    });  }
+  // ngOnChanges(){
+  //   this.authService.getCurrentUser().subscribe(user => {
+  //     this.currentUser = user;
+  //   });  }
 
   redirectToRestaurantsList(){
     this.router.navigate(['/api/v1']);
