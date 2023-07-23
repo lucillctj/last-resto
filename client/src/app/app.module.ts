@@ -33,6 +33,7 @@ import { RestaurantsListComponent } from './pages/restaurants-list/restaurants-l
 import { PopupDetailRestaurantComponent } from './components/popups/restaurant/popup-detail-restaurant/popup-detail-restaurant.component';
 import { PopupCreateProductComponent } from './components/popups/product/popup-create-product/popup-create-product.component';
 import { NavBarTopComponent } from './components/nav-bars/nav-bar-top/nav-bar-top.component';
+import { RedirectToCreateAccountComponent } from './components/popups/user/redirect-to-create-account/redirect-to-create-account.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { NavBarTopComponent } from './components/nav-bars/nav-bar-top/nav-bar-to
     RestaurantsListComponent,
     PopupDetailRestaurantComponent,
     PopupCreateProductComponent,
-    NavBarTopComponent
+    NavBarTopComponent,
+    RedirectToCreateAccountComponent
   ],
   imports: [
     BrowserModule,

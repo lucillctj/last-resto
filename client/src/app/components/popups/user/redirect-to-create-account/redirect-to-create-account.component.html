@@ -1,0 +1,14 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Vous n'avez pas de compte</h5>
+    <button class="close-button" (click)="closePopup()">&times;</button>
+  </div>
+  <div class="modal-body">
+    <p>Pour accéder à la page profil, vous devez créer un compte.</p>
+
+  </div>
+  <div class="buttons">
+    <button type="button" class="btn btn-confirm" (click)="redirectToHomePage()">Créer un compte</button>
+    <button type="button" class="btn btn-cancel" data-dismiss="modal" (click)="closePopup()">Annuler</button>
+  </div>
+</div>
