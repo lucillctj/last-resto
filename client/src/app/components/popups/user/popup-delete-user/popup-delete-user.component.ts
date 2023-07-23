@@ -55,7 +55,7 @@ export class PopupDeleteUserComponent {
         })
   }
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
   }
 }

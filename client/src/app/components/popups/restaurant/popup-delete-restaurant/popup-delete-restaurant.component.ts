@@ -79,7 +79,7 @@ export class PopupDeleteRestaurantComponent {
         })
   }
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
   }
 }

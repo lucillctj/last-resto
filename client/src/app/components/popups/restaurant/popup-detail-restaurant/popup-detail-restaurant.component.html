@@ -1,7 +1,9 @@
 <div class="detail-section">
+  <button class="close-button" (click)="closePopup()">&times;</button>
+
   <h1 class="title">Réserver</h1>
 
-<div class="card card-restaurant" *ngIf="currentRestaurant">
+<div class="card-restaurant" *ngIf="currentRestaurant">
 
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">

@@ -86,4 +86,8 @@ export class PopupUpdateCustomerComponent implements OnInit{
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }
   }
+
+  closePopup(){
+    this.modalService.dismissAll()
+  }
 }

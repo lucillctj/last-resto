@@ -52,7 +52,7 @@ export class PopupCreateProductComponent {
         })
   }
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
   }
 }

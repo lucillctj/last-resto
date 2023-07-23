@@ -13,7 +13,7 @@ export class PopupInformationComponent {
   )
   {}
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
   }
 }
