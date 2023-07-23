@@ -17,6 +17,8 @@ import {
 } from "../../components/popups/product/popup-create-product/popup-create-product.component";
 import {CustomerService} from "../../services/api/customer.service";
 import {Customer} from "../../interfaces/customer-interface";
+import {AuthService} from "../../services/auth.service";
+import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
 
 @Component({
   selector: 'app-restaurant-dashboard',
@@ -42,7 +44,9 @@ export class RestaurantDashboardComponent implements OnInit {
     private modalService: NgbModal,
     private restaurantService: RestaurantService,
     private productService: ProductService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private authService: AuthService,
+    private restaurantOwnerService: RestaurantOwnerService
   ) {
     this.currentRestaurant = {} as Restaurant;
     this.currentProducts = [];
@@ -55,6 +59,11 @@ export class RestaurantDashboardComponent implements OnInit {
 
   ngOnInit() {
     const currentRestaurantId = parseInt(this.route.snapshot.paramMap.get("id")!);
+
+    this.restaurantOwnerService.getRestaurantOwnerDashboard(this.currentUserId)
+      .subscribe((data) => {
+        this.authService.setCurrentUser(data);
+      })
 
     if (currentRestaurantId) {
       this.restaurantService.getRestaurantDashboard(currentRestaurantId, this.currentUserId)

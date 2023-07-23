@@ -59,7 +59,6 @@ export class PopupUpdateCustomerComponent implements OnInit{
     if(this.newPassword != ''){
       this.updatedUser.password = this.newPassword;
     }
-
     if(this.updatedUser.first_name && this.updatedUser.last_name &&  this.updatedUser.email && this.updatedUser.phone && this.updatedUser.address && this.updatedUser.post_code && this.updatedUser.city) {
       this.customerService.updateCustomer(this.updatedUser, this.currentCustomer)
         .subscribe(() => {
