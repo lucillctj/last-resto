@@ -3,7 +3,6 @@ import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {Router} from '@angular/router';
 import {RestaurantService} from "../../../../services/api/restaurant.service";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {RestaurantDashboardComponent} from "../../../../pages/restaurant-dashboard/restaurant-dashboard.component";
 
 @Component({
   selector: 'app-popup-update-restaurant',
@@ -63,5 +62,9 @@ export class PopupUpdateRestaurantComponent implements OnInit{
     else {
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }
+  }
+
+  closePopup(){
+    this.modalService.dismissAll()
   }
 }

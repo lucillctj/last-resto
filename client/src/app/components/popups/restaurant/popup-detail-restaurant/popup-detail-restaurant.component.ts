@@ -75,4 +75,8 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
           })
     }}
+
+  closePopup(){
+    this.modalService.dismissAll()
+  }
 }

@@ -4,7 +4,6 @@ import {RestaurantOwner} from "../../../../interfaces/restaurantOwner-interface"
 import {RestaurantOwnerService} from "../../../../services/api/restaurant-owner.service";
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Customer} from "../../../../interfaces/customer-interface";
 import {AuthService} from "../../../../services/auth.service";
 
 
@@ -84,5 +83,9 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit{
     else {
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }
+  }
+
+  closePopup(){
+    this.modalService.dismissAll()
   }
 }

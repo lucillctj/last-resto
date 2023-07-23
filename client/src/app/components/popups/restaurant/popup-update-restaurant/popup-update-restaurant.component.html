@@ -1,5 +1,5 @@
+<button class="close-button" (click)="closePopup()">&times;</button>
 <h1 class="title">Modifier mon restaurant</h1>
-
 <form *ngIf="currentRestaurant" #form="ngForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label>Nom du restaurant</label>
