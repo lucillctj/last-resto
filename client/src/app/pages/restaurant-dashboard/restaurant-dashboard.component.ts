@@ -153,7 +153,5 @@ export class RestaurantDashboardComponent implements OnInit {
         (error) => {
           console.error('Une erreur s\'est produite lors de la suppression du produit.', error);
         })
-    this.ngOnInit();
   }
-
 }

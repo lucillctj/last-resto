@@ -73,3 +73,22 @@ body{
 .product-name .product-description .product-price{
   font-size: 0.7rem;
 }
+
+.header-reservation{
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: $blue;
+  background-color: transparent;
+}
+
+.bi-trash3{
+  position: relative;
+  bottom: 0.15em;
+}

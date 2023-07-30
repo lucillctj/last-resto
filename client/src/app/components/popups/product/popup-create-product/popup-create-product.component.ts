@@ -45,6 +45,7 @@ export class PopupCreateProductComponent {
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
     this.productService.createProduct(this.newProduct, this.currentUserId)
       .subscribe(() => {
+          location.reload();
           this.modalService.dismissAll();
         },
         error => {

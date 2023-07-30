@@ -114,5 +114,16 @@ export class CustomerDashboardComponent implements OnInit {
   redirectToRestaurantsList(){
     this.router.navigate(['api/v1/restaurants']);
   }
+
+  deleteReservation(){
+    this.customerService.updateProductId(this.currentUser.user_id, null)
+      .subscribe(() => {
+          // this.ngOnInit();
+        location.reload()
+        },
+        (error) => {
+          console.error('Une erreur s\'est produite lors de la mise à jour du produit.', error);
+        })
+  }
 }
 

@@ -58,23 +58,31 @@ export class PopupDetailRestaurantComponent implements OnInit {
     if (this.selectedProduct) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         this.currentCustomer = currentUser as Customer;
-      });
-      if(!this.currentCustomer) {
-        this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
-      }
-      this.customerService.updateProductId(this.currentCustomer.user_id, this.selectedProduct.product_id)
-        .subscribe(() => {
-            this.successMessage = 'Votre réservation a bien été prise en compte !'
-            setTimeout(() => {
-              this.router.navigate(['/api/v1/restaurants']);
-              this.modalService.dismissAll()
-            }, 2000)
-          },
-          error => {
-            this.errorMessage = 'Une erreur est survenue lors votre réservation, veuillez réessayer.';
 
-          })
-    }}
+        if (!this.currentCustomer) {
+          this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
+          return;
+        }
+
+        if (this.currentCustomer.product_id) {
+          this.errorMessage = 'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
+          return;
+        }
+
+        this.customerService.updateProductId(this.currentCustomer.user_id, this.selectedProduct!.product_id)
+          .subscribe(() => {
+              this.successMessage = 'Votre réservation a bien été prise en compte !';
+              setTimeout(() => {
+                this.router.navigate(['/api/v1/restaurants']);
+                this.modalService.dismissAll();
+              }, 2000);
+            },
+            error => {
+              this.errorMessage = 'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
+            });
+      });
+    }
+  }
 
   closePopup(){
     this.modalService.dismissAll()

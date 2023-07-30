@@ -39,10 +39,9 @@ export class CustomerService {
     return this.http.put<any>(url, updatedUser, {withCredentials: true});
   }
 
-  updateProductId(userId: number | undefined, productId: number | null | undefined): Observable<any> {
+  updateProductId(userId: number | undefined, productId: number | null | undefined): Observable<void> {
     const url = `${this.apiUrl}/update-product-id/${userId}`;
-    console.log(url)
-    return this.http.put<any>(url, {productId}, {withCredentials: true});
+    return this.http.put<void>(url, {productId}, {withCredentials: true});
   }
 
   //pour récupérer les produits réservés par les clients

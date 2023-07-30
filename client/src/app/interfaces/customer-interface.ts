@@ -8,6 +8,6 @@ export interface Customer {
   address: string;
   post_code: string;
   city: string;
-  productId?: number;
+  product_id?: number;
   role: 'customer';
 }
