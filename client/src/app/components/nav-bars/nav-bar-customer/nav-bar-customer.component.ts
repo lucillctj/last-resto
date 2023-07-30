@@ -4,8 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../../services/auth.service";
 import {Customer} from "../../../interfaces/customer-interface";
 import {
-  RedirectToCreateAccountComponent
-} from "../../popups/user/redirect-to-create-account/redirect-to-create-account.component";
+  RedirectToCreateAccountOrLoginComponent
+} from "../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component";
 
 @Component({
   selector: 'app-nav-bar-customer',
@@ -62,7 +62,7 @@ export class NavBarCustomerComponent implements OnInit{
       this.router.navigate([urlCustomerDashboard]);
     }
     else {
-      this.modalService.open(RedirectToCreateAccountComponent)
+      this.modalService.open(RedirectToCreateAccountOrLoginComponent)
     }
   }
 

@@ -7,8 +7,8 @@ import {Restaurant} from "../../../interfaces/restaurant-interface";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
 import {RestaurantService} from "../../../services/api/restaurant.service";
 import {
-  RedirectToCreateAccountComponent
-} from "../../popups/user/redirect-to-create-account/redirect-to-create-account.component";
+  RedirectToCreateAccountOrLoginComponent
+} from "../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -77,7 +77,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
       this.router.navigate([urlRestaurantOwnerDashboard]);
     }
     else {
-      this.modalService.open(RedirectToCreateAccountComponent)
+      this.modalService.open(RedirectToCreateAccountOrLoginComponent)
     }
   }
 }

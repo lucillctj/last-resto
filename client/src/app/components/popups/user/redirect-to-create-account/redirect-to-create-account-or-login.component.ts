@@ -5,10 +5,10 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-redirect-to-create-account',
-  templateUrl: './redirect-to-create-account.component.html',
-  styleUrls: ['./redirect-to-create-account.component.scss']
+  templateUrl: './redirect-to-create-account-or-login.component.html',
+  styleUrls: ['./redirect-to-create-account-or-login.component.scss']
 })
-export class RedirectToCreateAccountComponent {
+export class RedirectToCreateAccountOrLoginComponent {
 
   constructor(
     private modalService: NgbModal,
@@ -18,6 +18,11 @@ export class RedirectToCreateAccountComponent {
   redirectToHomePage(){
     this.modalService.dismissAll()
     this.router.navigate(['/api/v1']);
+  }
+
+  redirectToLoginPage(){
+    this.modalService.dismissAll()
+    this.router.navigate(['/api/v1/users/login']);
   }
 
   closePopup(){

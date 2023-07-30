@@ -27,7 +27,12 @@
         <h4 class="reservation-title">Ma réservation</h4>
         <div class="card-booked-product" *ngIf="currentProduct.product_id">
           <div *ngIf="currentRestaurant">
+            <div class="header-reservation">
             <p class="restaurant-name">{{currentRestaurant.name}}</p>
+            <button class="btn-icon" (click)="deleteReservation()">
+              <i class="bi bi-trash3"></i>
+            </button>
+            </div>
             <div>
               <p class="product-detail">{{currentProduct.name}} : {{currentProduct.description}} ({{currentProduct.price}} €)</p>
             </div>
