@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "express-rate-limit": "^6.8.1",
+    "wafjs": "^1.0.3"
+  }
+}
