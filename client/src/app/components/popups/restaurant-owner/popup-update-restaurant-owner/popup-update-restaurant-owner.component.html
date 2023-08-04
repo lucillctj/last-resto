@@ -1,28 +1,29 @@
-
-  <h1 class="title">Modifier mes informations</h1>
-
-  <form>
-    <div class="form-group">
-      <label>Prénom</label>
-      <input type="text" class="form-control" placeholder="prénom" [(ngModel)]="updatedUser.first_name" name="firstName">
-    </div>
-    <div class="form-group">
-      <label>Nom</label>
-      <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="updatedUser.last_name" name="lastName">
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" class="form-control" placeholder="Email" [(ngModel)]="updatedUser.email" name="email">
-    </div>
-    <label>Téléphone</label>
-    <div class="form-group">
-      <input type="tel" class="form-control" placeholder="Téléphone" [(ngModel)]="updatedUser.phone" name="phone">
-    </div>
-    <div class="form-group">
-      <label>Mot de passe</label>
-      <input type="password" class="form-control" placeholder="Mot de passe" [(ngModel)]="updatedUser.password" name="password">
-    </div>
-    <button type="submit" class="btn" (click)="updateAccount(updatedUser)">Mettre à jour !</button>
-  </form>
-  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<button class="close-button" (click)="closePopup()">&times;</button>
+<h1 class="title">Modifier mes informations</h1>
+<form *ngIf="currentRestaurantOwner" #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>Prénom</label>
+    <input type="text" [(ngModel)]="updatedUser.first_name" class="form-control" name="firstName">
+  </div>
+  <div class="form-group">
+    <label>Nom</label>
+    <input type="text" [(ngModel)]="updatedUser.last_name" class="form-control" name="lastName">
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" [(ngModel)]="updatedUser.email" class="form-control" name="email">
+    <div *ngIf="errorMessageEmail" class="error-message">{{ errorMessageEmail }}</div>
+  </div>
+  <label>Téléphone</label>
+  <div class="form-group">
+    <input type="tel" [(ngModel)]="updatedUser.phone" class="form-control" name="phone">
+    <div *ngIf="errorMessagePhone" class="error-message">{{ errorMessagePhone }}</div>
+  </div>
+  <div class="form-group">
+    <label>Mot de passe</label>
+    <input type="password" placeholder="**************" [(ngModel)]="newPassword" class="form-control" name="password" minlength="6">
+  </div>
+  <button type="submit" class="btn"> Mettre à jour ! </button>
+</form>
+<div *ngIf="successMessage" class="success-message message">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="error-message message">{{ errorMessage }}</div>

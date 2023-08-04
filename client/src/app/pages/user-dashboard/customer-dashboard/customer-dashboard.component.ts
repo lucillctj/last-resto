@@ -44,7 +44,7 @@ export class CustomerDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
     if (currentUserId) {
       this.customerService.getCustomerDashboard(currentUserId)
         .subscribe((data) => {
@@ -58,13 +58,14 @@ export class CustomerDashboardComponent implements OnInit {
                     return;
                   }
 
-                  await this.productService.getProductById(this.currentProductId!)
+                  await this.productService.getProductById(this.currentProductId!, currentUserId)
                     .subscribe((data) => {
                       this.currentProduct = data;
-                      this.productService.getRestaurantIdByProductId(this.currentProductId!)
+                      this.productService.getRestaurantIdByProductId(this.currentProductId!, currentUserId)
                         .subscribe((data) => {
                             this.currentRestaurantId = data.restaurant_id;
-                            this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!)
+                            const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+                            this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!, currentUserId)
                               .subscribe((data) => {
                                   this.currentRestaurant = data;
                                 },
@@ -83,7 +84,16 @@ export class CustomerDashboardComponent implements OnInit {
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
-            this.router.navigate(['api/v1']);
+            this.authService.forgetUser();
+            this.authService.setCurrentUser(null);
+            this.userService.logout()
+              .subscribe(() => {
+                  this.router.navigate(['api/v1']);
+                },
+                error => {
+                  console.log('error', error)
+                }
+              )
           });
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');
@@ -103,6 +113,17 @@ export class CustomerDashboardComponent implements OnInit {
 
   redirectToRestaurantsList(){
     this.router.navigate(['api/v1/restaurants']);
+  }
+
+  deleteReservation(){
+    this.customerService.updateProductId(this.currentUser.user_id, null)
+      .subscribe(() => {
+          // this.ngOnInit();
+        location.reload()
+        },
+        (error) => {
+          console.error('Une erreur s\'est produite lors de la mise à jour du produit.', error);
+        })
   }
 }
 

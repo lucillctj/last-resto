@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import { NgForm } from '@angular/forms';
+import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from "../../../../services/auth.service";
@@ -14,6 +14,8 @@ import {Product} from "../../../../interfaces/product-interface";
 })
 export class PopupCreateProductComponent {
   @Input() currentRestaurant!: Restaurant;
+  @Input() currentUserId!: number;
+
   @ViewChild('form', { static: false })
 
   form!: NgForm;
@@ -41,21 +43,17 @@ export class PopupCreateProductComponent {
       return
     }
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
-    this.productService.createProduct(this.newProduct)
+    this.productService.createProduct(this.newProduct, this.currentUserId)
       .subscribe(() => {
-          this.successMessage = 'Votre formule a bien été créé !';
-          setTimeout(() => {
-            this.router.navigate([`/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`]);
-            this.modalService.dismissAll()
-          }, 2000)
+          location.reload();
+          this.modalService.dismissAll();
         },
         error => {
-          console.log('Erreur lors de la création de la formule :', error);
           this.errorMessage = 'Erreur lors de la création de la formule, veuillez réessayer ultérieurement.';
         })
   }
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
   }
 }

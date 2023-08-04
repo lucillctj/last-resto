@@ -6,7 +6,7 @@ export interface Restaurant {
   post_code: string;
   city: string;
   phone: string;
-  website: string;
+  website: string | null;
   is_available: any;
   restaurant_owner_id: number | undefined;
 

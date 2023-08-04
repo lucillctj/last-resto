@@ -6,6 +6,9 @@ import {PopupInformationComponent} from "../../popups/restaurant/popup-informati
 import {Restaurant} from "../../../interfaces/restaurant-interface";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
 import {RestaurantService} from "../../../services/api/restaurant.service";
+import {
+  RedirectToCreateAccountOrLoginComponent
+} from "../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -17,6 +20,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   isUserDashboardActive: boolean;
   currentRestaurantOwner: RestaurantOwner;
   currentRestaurant: Restaurant;
+  currentUserId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,10 +33,11 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
     this.isUserDashboardActive = false;
     this.currentRestaurantOwner = {} as RestaurantOwner;
     this.currentRestaurant = {} as Restaurant;
+    this.currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
   }
 
   ngOnInit(){
-    if (this.router.url.includes('/api/v1/restaurants/dashboard/')) {
+    if (this.router.url.includes('/api/v1/restaurants/dashboard')) {
       this.isRestaurantDashboardActive = true;
     }
     else if (this.router.url.includes('/api/v1/restaurant-owners/dashboard')) {
@@ -41,23 +46,16 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
   }
 
   redirectToRestaurantDashboard() {
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
-    console.log(currentUserId)
-    if (currentUserId) {
-      this.restaurantService.getRestaurantByUserId(currentUserId)
+    if (this.currentUserId) {
+      this.restaurantService.getRestaurantByUserId(this.currentUserId)
         .subscribe(
           (data) => {
             this.currentRestaurant = data[0];
-
-            if(!this.currentRestaurant.restaurant_id){
+            if(data.length === 0){
               this.modalService.open(PopupInformationComponent);
-              return;
-            }
-            else if (this.router.url === urlRestaurantDashboard) {
-              return;
             }
             else{
-              const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`;
+              const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}/user/${this.currentRestaurant.restaurant_owner_id}`;
               this.router.navigate([urlRestaurantDashboard]);
             }
 
@@ -68,22 +66,18 @@ export class NavBarRestaurantOwnerComponent implements OnInit{
     } else {
       console.error('L\'ID du restaurant n\'est pas un nombre valide.');
     }
-
-    const urlRestaurantDashboard = `/api/v1/restaurants/dashboard/${this.currentRestaurant.restaurant_id}`;
   }
 
+  redirectToRestaurantOwnerDashboard() {
+    const urlRestaurantOwnerDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentUserId}`;
 
-
-  redirectToUserDashboard() {
-    this.authService.getCurrentUser().subscribe(user => {
-      this.currentRestaurantOwner = user as RestaurantOwner;
-    });
-    const urlUserDashboard = `/api/v1/restaurant-owners/dashboard/${this.currentRestaurantOwner.user_id}`;
-
-    if (this.router.url === urlUserDashboard) {
+    if (this.router.url === urlRestaurantOwnerDashboard) {
       return;
-    } else {
-      this.router.navigate([urlUserDashboard]);
+    } else if (this.currentUserId) {
+      this.router.navigate([urlRestaurantOwnerDashboard]);
+    }
+    else {
+      this.modalService.open(RedirectToCreateAccountOrLoginComponent)
     }
   }
 }

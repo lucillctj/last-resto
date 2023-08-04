@@ -4,21 +4,8 @@
 body{
   background-color: $green;
   margin-top: 0;
-}
-
-.page-title{
-  top: 1.5em;
-}
-.card-restaurant{
-  top: 5em;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-  padding: 2em;
-  border-radius: 0.3em;
-  border: none;
-  width: 150vh;
-  height: auto;
+  overflow: auto;
+  position: relative;
 }
 
 .restaurant-name{
@@ -31,15 +18,10 @@ body{
 }
 .bloc-buttons{
   margin-top: 1em;
-  position: relative;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: flex-start;
 }
 .btn-dashboard{
-  width: 75%;
+  margin: 0.6em auto;
+  width: 100%;
 }
 
 .btn-update{
@@ -69,14 +51,16 @@ body{
 .card-detail{
   position: relative;
   background-color: $grey-bright;
-  padding: 0.4em 1em;
+  padding: 0.6em 1em;
   border-radius: 0.3em;
   border: none;
   color: white;
   margin: 0.5em;
 }
+
 .text-availability{
   margin-bottom: 0;
+  padding-top: 0.2em;
   color: $green;
   display: flex;
   align-items: center;
@@ -100,15 +84,35 @@ body{
   border: none;
 }
 
-.card-product{
+.card-product {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 0.5em;
+  padding: 0.5em 0.5em 0.2em;
   margin-bottom: 0.6em;
+  background-color: white;
+  border-radius: 0.3em;
 }
 
-.products-title{
+.card-reservations{
+  margin-top: 1em;
+  position: relative;
+  background-color: $grey-bright;
+  padding: 0.6em 1em;
+  border-radius: 0.3em;
+  border: none;
+  color: white;
+}
+
+.card-reservation {
+  display: flex;
+  padding: 0.3em 0.5em 0;
+  margin-bottom: 0.6em;
+  background-color: white;
+  flex-direction: column;
+}
+
+.products-title {
   color: $green;
 }
 
@@ -147,4 +151,17 @@ body{
   border: none;
   color: $green;
   background-color: transparent;
+}
+
+.bi-trash3{
+  position: relative;
+  bottom: 0.15em;
+}
+
+.reservations-title{
+  color: $green;
+}
+
+.reservations-list{
+  padding: 0 0.5em;
 }

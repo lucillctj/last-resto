@@ -31,8 +31,7 @@ export class RestaurantsListComponent implements OnInit{
   ngOnInit(){
     this.restaurantService.getAllRestaurants()
       .subscribe((data) => {
-          console.log(data)
-            this.currentRestaurants = data.results;
+          this.currentRestaurants = data.results;
         },
         (error) => {
           console.error('Une erreur s\'est produite lors de la récupération des données du restaurant :', error);
@@ -41,7 +40,6 @@ export class RestaurantsListComponent implements OnInit{
 
 
   openPopupDetailRestaurant(currentRestaurant: Restaurant){
-    console.log('current resto: ', currentRestaurant)
     const modalRef = this.modalService.open(PopupDetailRestaurantComponent);
     modalRef.componentInstance.currentRestaurant = currentRestaurant;
   }

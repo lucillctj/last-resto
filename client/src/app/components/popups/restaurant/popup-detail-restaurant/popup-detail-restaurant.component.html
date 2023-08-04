@@ -1,7 +1,9 @@
 <div class="detail-section">
+  <button class="close-button" (click)="closePopup()">&times;</button>
+
   <h1 class="title">Réserver</h1>
 
-<div class="card card-restaurant" *ngIf="currentRestaurant">
+<div class="card-restaurant" *ngIf="currentRestaurant">
 
   <div class="row">
     <div class="col-lg-6 col-md-3 col-sm-6">
@@ -16,7 +18,7 @@
         <p>Sélection :</p>
         <select class="form-select" [(ngModel)]="selectedProduct">
           <option disabled selected>Sélectionner une formule</option>
-          <option *ngFor="let product of currentProducts" [ngValue]="product">{{product.name}} {{product.description}} {{product.price}}</option>
+          <option *ngFor="let product of currentProducts" [ngValue]="product">{{product.name}} | {{product.description}} | {{product.price}} €</option>
         </select>
       </section>
       <p *ngIf="currentProducts.length === 0">Ce restaurant ne propose aucune formule pour le moment.</p>

@@ -6,6 +6,16 @@
   padding: 0.2em 0;
 }
 
+.btn-nav-bar{
+  margin: auto;
+}
+
+.btn-dashboard{
+  font-size: 0.8rem;
+  padding: 1em;
+  color: $orange;
+}
+
 .btn-logout{
   background-color: $orange;
   font-size: 0.8rem;

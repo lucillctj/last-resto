@@ -1,6 +1,9 @@
 @import "../../../styles";
 
 .nav-bar {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
   width: 35%;
   display: flex;
   justify-content: center;
@@ -11,7 +14,21 @@
   background-color: $orange;
   z-index: 999;
   text-align: center;
-  left: 32.5%
+  left: 32.5%;
+
+  @media (max-width: 1050px) {
+    width: 50%;
+    left: 25%;
+  }
+  @media (max-width: 550px) {
+    width: 85%;
+    left: 7.7%;
+  }
+  @media (max-width: 390px) {
+    width: 100%;
+    left: 0;
+  }
+
 }
 
 .navbar-expand-lg{
@@ -38,11 +55,29 @@
   align-items: center;
   border: none;
   border-radius: 0.8em;
-  width: 3em;
-  height: 3em;
-  margin: 0.3em 3.5em;
+  width: 2.5em;
+  height: 2.5em;
+  margin: 0.3em 3em;
+
+  @media (max-width: 1050px) {
+    margin: 0.3em 2.7em;
+  }
+  @media (max-width: 550px) {
+    margin: 0.3em 2.7em;
+  }
+  @media (max-width: 390px) {
+    margin: 0.3em 2.4em;
+  }
+  @media (max-width: 300px) {
+    margin: 0.3em 1.3em;
+  }
 }
 
 .icon-profil {
   font-size: 1.6rem;
+}
+
+.buttons-icon{
+  display: flex;
+  justify-content: center;
 }

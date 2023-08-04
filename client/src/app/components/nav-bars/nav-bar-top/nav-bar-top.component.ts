@@ -26,25 +26,38 @@ export class NavBarTopComponent implements OnInit{
     });
   }
 
-  ngOnChanges(){
-    this.currentUser = this.authService.getCurrentUser();
-    console.log('2---->', this.currentUser)
-
-  }
+  // ngOnChanges(){
+  //   this.authService.getCurrentUser().subscribe(user => {
+  //     this.currentUser = user;
+  //   });  }
 
   redirectToRestaurantsList(){
-    this.router.navigate(['/api/v1/restaurants']);
+    this.router.navigate(['/api/v1']);
+  }
+
+  redirectToUserDashboard() {
+    if (this.currentUser.role === 'customer') {
+      this.router.navigate([`/api/v1/customers/dashboard/${this.currentUser.user_id}`]);
+    } else if (this.currentUser.role === 'restaurant owner') {
+      this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentUser.user_id}`]);
+    }
   }
 
   login(){
     this.router.navigate(['/api/v1/users/login']);
   }
 
-  async logout() {
+  logout() {
     this.authService.forgetUser();
     this.authService.setCurrentUser(null);
-    await this.userService.logout();
-    this.router.navigate(['api/v1']);
+    this.userService.logout()
+      .subscribe(() => {
+          this.router.navigate(['api/v1']);
+        },
+        error => {
+          console.log('error', error)
+        }
+      )
   }
 
 }

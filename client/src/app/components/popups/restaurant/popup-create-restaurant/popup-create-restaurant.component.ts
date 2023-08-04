@@ -42,24 +42,21 @@ export class PopupCreateRestaurantComponent {
     }
 
     this.newRestaurant.restaurant_owner_id = this.currentUser.user_id;
-    console.log('new resto user id', this.newRestaurant.restaurant_owner_id)
     this.restaurantService.createRestaurant(this.newRestaurant)
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été créé !';
           setTimeout(() => {
             this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.newRestaurant.restaurant_owner_id}`]);
-            location.reload();
             this.modalService.dismissAll()
           }, 2000)
         },
         error => {
-          console.log('Erreur lors de la création du restaurant :', error);
           this.errorMessage = 'Erreur lors de la création du restaurant, veuillez réessayer ultérieurement.';
         }
       );
   }
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
   }
 

@@ -57,7 +57,7 @@ export class RestaurantOwnerController {
     // }
 
     public static async getRestaurantOwnerDashboard(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
         try {
             db.query(
                 `SELECT * FROM users WHERE role = 'restaurant owner' AND user_id = ${requestId}`,
@@ -77,7 +77,7 @@ export class RestaurantOwnerController {
 
     public static async updateRestaurantOwner(req: Request, res: Response): Promise<void> {
         const body = req.body;
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
         const bodyRestaurantOwner: RestaurantOwner = {
             userId: requestId,
             firstName: body.first_name,
@@ -87,20 +87,32 @@ export class RestaurantOwnerController {
             password: body.password,
             role: 'restaurant owner'
         };
+
         try {
-            if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
-                const sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
-                const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, bodyRestaurantOwner.password];
+            let sql;
+            let params;
+
+            if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && Object.keys(body).length >= 4) {
+                if (bodyRestaurantOwner.password) {
+                    const hashPassword = await bcrypt.hash(bodyRestaurantOwner.password, 10);
+                    sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, password = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
+                    params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword];
+                }
+                else{
+                    sql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE role = 'restaurant owner' AND user_id = ${requestId}`;
+                    params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone];
+                }
+
                 db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     }
                     else {
-                        res.status(201).send(`Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`);
+                        res.status(201).send({message: `Utilisateur avec le rôle 'restaurant owner' a été mis à jour !`});
                     }
                 })
-            }else {
+            } else {
                 res.status(400).json({error: 'Certains champs sont manquants ou incorrects.'});
             }
         } catch (error) {

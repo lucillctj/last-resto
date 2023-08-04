@@ -4,16 +4,22 @@ section{
 }
 
 .title{
-  padding-top: 1em;
+  padding-top: 0.8em;
   font-style: normal;
   font-weight: 600;
   font-size: 2rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin: 0 1em;
+  }
 }
 
 form{
   padding: 0 2em 1.5em;
   margin-top: 2em;
 }
+
 .form-group{
   margin-top: 0.6em;
 }
@@ -36,22 +42,42 @@ form{
   color: white;
 }
 
+.error-message-password{
+  top: 0.7em;
+}
+
 .error-message{
   color: red;
   position: relative;
   font-size: 0.8rem;
   font-weight: 400;
   text-align: center;
-  margin-top: 0.5em;
+}
+
+.error-message-available{
+  bottom: 0;
 }
 
 .success-message{
   color: green;
   position: relative;
-  text-align: center;
-  margin-top: 0.7em;
   font-size: 0.8rem;
   font-weight: 400;
+  text-align: center;
+  bottom: 1em;
+}
+
+.success-message-available{
+  bottom: 0;
+}
+
+.success-message-delete{
+  color: green;
+  position: relative;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-align: center;
+  top: 0.6em;
 }
 
 .buttons{
@@ -79,4 +105,10 @@ form{
 .btn-cancel:hover {
   background-color: $grey;
   color: white;
+}
+
+.close-button{
+  float: right;
+  border: none;
+  background: none;
 }

@@ -7,7 +7,7 @@ const router = express.Router();
 export const restaurantOwnerRoutes = () => {
     router.post('/signup', RestaurantOwnerController.createRestaurantOwnerAccount);
     // router.get('/', RestaurantOwnerController.getAllRestaurantOwners);
-    router.get('/dashboard/:id', verifyAuth, RestaurantOwnerController.getRestaurantOwnerDashboard);
-    router.put('/update/:id', verifyAuth, RestaurantOwnerController.updateRestaurantOwner);
+    router.get('/dashboard/:user', verifyAuth, RestaurantOwnerController.getRestaurantOwnerDashboard);
+    router.put('/update/:user', verifyAuth, RestaurantOwnerController.updateRestaurantOwner);
     return router;
 }

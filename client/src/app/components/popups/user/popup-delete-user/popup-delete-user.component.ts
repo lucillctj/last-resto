@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {UserService} from "../../../../services/api/user.service";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {User} from "../../../../interfaces/user-interface";
 import {AuthService} from "../../../../services/auth.service";
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RestaurantOwnerService} from "../../../../services/api/restaurant-owner.service";
+import {RestaurantService} from "../../../../services/api/restaurant.service";
 
 
 @Component({
@@ -19,6 +21,8 @@ export class PopupDeleteUserComponent {
 
   constructor(
     private userService: UserService,
+    private restaurantOwnerService: RestaurantOwnerService,
+    private restaurantService: RestaurantService,
     private router: Router,
     private authService: AuthService,
     private modalService: NgbModal
@@ -30,23 +34,28 @@ export class PopupDeleteUserComponent {
   }
 
   async confirmToDelete() {
-    await this.userService.deleteUser(this.currentUser)
+    if (this.currentUser.role === "restaurant owner") {
+        const restaurants = await this.restaurantService.getRestaurantByUserId(this.currentUser.user_id as number).toPromise();
+        console.log(restaurants)
+        if (restaurants!.length >= 1) {
+          this.errorMessage = 'Veuillez supprimer votre restaurant, avant de réessayer.';
+        }
+      return;
+    }
+
+    this.userService.deleteUser(this.currentUser)
       .subscribe(() => {
-          this.authService.setCurrentUser(null);
           this.successMessage = 'Votre compte a bien été supprimé !';
-          setTimeout(() => {
-            this.router.navigate(['/api/v1']);
-            this.modalService.dismissAll()
-          }, 3000);
+          this.authService.setCurrentUser(null);
+          this.modalService.dismissAll()
+          this.router.navigate(['/api/v1']);
         },
-        error => {
+        _ => {
           this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.';
         })
   }
 
-  redirectToDashboard(){
+  closePopup(){
     this.modalService.dismissAll()
-    // console.log(this.currentUser..user_id)
-    // this.router.navigate([`/api/v1/customers/dashboard/${this.currentUser..user_id}`])
   }
 }

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Restaurant} from "../../../../interfaces/restaurant-interface";
 import {RestaurantService} from "../../../../services/api/restaurant.service";
 import {Product} from "../../../../interfaces/product-interface";
@@ -26,6 +26,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private productService: ProductService,
     private authService: AuthService,
@@ -41,47 +42,49 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   ngOnInit() {
     const currentRestaurantId = this.currentRestaurant.restaurant_id;
-    this.restaurantService.getRestaurantDashboard(currentRestaurantId!)
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+
+    this.productService.getProductsByRestaurantId(currentRestaurantId!, currentUserId)
       .subscribe(
         (data) => {
-          this.currentRestaurant = data;
-
-          this.productService.getProductsByRestaurantId(currentRestaurantId!)
-            .subscribe(
-              (data) => {
-                this.currentProducts = data
-              },
-              (error) => {
-                console.error('Une erreur s\'est produite lors de la récupération des données des formules.', error);
-              })
+          this.currentProducts = data
         },
         (error) => {
-          console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+          console.error('Une erreur s\'est produite lors de la récupération des données des formules.', error);
         })
   }
 
   clickToBook() {
-    console.log(this.selectedProduct)
     if (this.selectedProduct) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         this.currentCustomer = currentUser as Customer;
-        console.log(currentUser)
-      });
-      if(!this.currentCustomer) {
-        this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
-      }
-      this.customerService.bookProduct(this.currentCustomer, this.selectedProduct)
-        .subscribe(() => {
-            this.successMessage = 'Votre réservation a bien été prise en compte !'
-            setTimeout(() => {
-              this.router.navigate(['/api/v1/restaurants']);
-              this.modalService.dismissAll()
-            }, 2000)
-          },
-          error => {
-            console.log('Erreur lors de la réservation :', error);
-            this.errorMessage = 'Une erreur est survenue lors votre réservation, veuillez réessayer.';
 
-          })
-    }}
+        if (!this.currentCustomer) {
+          this.errorMessage = 'Vous devez être connecté pour pouvoir réserver !';
+          return;
+        }
+
+        if (this.currentCustomer.product_id) {
+          this.errorMessage = 'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
+          return;
+        }
+
+        this.customerService.updateProductId(this.currentCustomer.user_id, this.selectedProduct!.product_id)
+          .subscribe(() => {
+              this.successMessage = 'Votre réservation a bien été prise en compte !';
+              setTimeout(() => {
+                this.router.navigate(['/api/v1/restaurants']);
+                this.modalService.dismissAll();
+              }, 2000);
+            },
+            error => {
+              this.errorMessage = 'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
+            });
+      });
+    }
+  }
+
+  closePopup(){
+    this.modalService.dismissAll()
+  }
 }

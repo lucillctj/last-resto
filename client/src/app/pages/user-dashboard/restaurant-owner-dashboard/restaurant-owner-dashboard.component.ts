@@ -14,6 +14,7 @@ import {
 import {RestaurantOwnerService} from "../../../services/api/restaurant-owner.service";
 import {RestaurantOwner} from "../../../interfaces/restaurantOwner-interface";
 import {PopupDeleteUserComponent} from "../../../components/popups/user/popup-delete-user/popup-delete-user.component";
+import {UserService} from "../../../services/api/user.service";
 
 @Component({
   selector: 'app-restaurant-owner-dashboard',
@@ -27,6 +28,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private userService: UserService,
     private customerService: CustomerService,
     private restaurantOwnerService: RestaurantOwnerService,
     private restaurantService: RestaurantService,
@@ -38,7 +40,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   }
 
   ngOnInit(){
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
     if (currentUserId) {
       this.restaurantOwnerService.getRestaurantOwnerDashboard(currentUserId)
         .subscribe((data) => {
@@ -49,7 +51,6 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
               .subscribe((data) => {
                   if(data.length >= 1) {
                     this.currentRestaurant = data[0];
-                    this.authService.setCurrentRestaurant(data[0]);
                   }
                 },
                 (error) => {
@@ -58,25 +59,39 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
-            this.router.navigate(['api/v1']);
-          })
+            this.authService.forgetUser();
+            this.authService.setCurrentUser(null);
+            this.userService.logout()
+              .subscribe(() => {
+                  this.router.navigate(['api/v1']);
+                },
+                error => {
+                  console.log('error', error)
+                }
+              )
+          });
 
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');
+      this.router.navigate(['api/v1']);
     }
   }
 
   openPopupToUpdate() {
-    this.modalService.open(PopupUpdateRestaurantOwnerComponent);
+    const modalRef = this.modalService.open(PopupUpdateRestaurantOwnerComponent);
+    modalRef.componentInstance.currentUser = this.currentUser;
+
   }
 
   openPopupToDelete() {
     const modalRef = this.modalService.open(PopupDeleteUserComponent);
     modalRef.componentInstance.currentUser = this.currentUser;
+    modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
+
   }
 
   showRestaurantPage(restaurantId: number | undefined) {
-    this.router.navigate([`api/v1/restaurants/dashboard/${restaurantId}`]);
+    this.router.navigate([`api/v1/restaurants/dashboard/${restaurantId}/user/${this.currentUser.user_id}`]);
   }
 
   openPopupToCreateRestaurant(){

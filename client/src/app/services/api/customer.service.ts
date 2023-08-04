@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
-import {AuthService} from "../auth.service";
 import {Product} from "../../interfaces/product-interface";
+import {User} from "../../interfaces/user-interface";
 
 
 @Injectable(
@@ -24,14 +24,24 @@ export class CustomerService {
     return this.http.get<Customer>(url, { withCredentials: true });
   }
 
-  updateCustomer(user: Customer): Observable<any> {
-    const url = `${this.apiUrl}/update/${user.user_id}`;
-    return this.http.put<any>(url, user, {withCredentials: true});
+  getDataCustomer(userId: number, restaurantOwnerId: number): Observable<Customer> {
+    const url = `${this.apiUrl}/data/customer/${userId}/${restaurantOwnerId}`;
+    return this.http.get<Customer>(url, { withCredentials: true });
   }
 
-  bookProduct(user: Customer, product: Product): Observable<any> {
-    const url = `${this.apiUrl}/update-product-id/${user.user_id}`;
-    return this.http.put<any>(url, product, {withCredentials: true});
+  getUserIdByProductId(product: Product, userId: number): Observable<any> {
+    const url = `${this.apiUrl}/${product.product_id}/get-user/user/${userId}`;
+    return this.http.get<any>(url, {withCredentials: true});
+  }
+
+  updateCustomer(updatedUser: Customer, currentUser: Customer): Observable<any> {
+    const url = `${this.apiUrl}/update/${currentUser.user_id}`;
+    return this.http.put<any>(url, updatedUser, {withCredentials: true});
+  }
+
+  updateProductId(userId: number | undefined, productId: number | null | undefined): Observable<void> {
+    const url = `${this.apiUrl}/update-product-id/${userId}`;
+    return this.http.put<void>(url, {productId}, {withCredentials: true});
   }
 
   //pour récupérer les produits réservés par les clients

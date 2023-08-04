@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
 import {db} from "../app";
-import {QueryError} from "mysql2/index";
+import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from "bcryptjs";
-import {generateAccessToken, setTokenCookie} from "../middleware/auth";
-import {ResultSetHeader} from "mysql2";
+import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
+import axios from 'axios';
 
 export class UserController {
 
@@ -33,36 +33,36 @@ export class UserController {
                     });
                 }
             });
-        }
-        else {
+        } else {
             res.status(400).json({error: 'Certains champs sont manquants.'});
         }
     }
 
     public static async logoutToAccount(req: Request, res: Response): Promise<void> {
         try {
-            res.clearCookie('token');
+            clearTokenCookie(res);
             res.status(200).json({message: "Utilisateur déconnecté"});
         } catch (error) {
-            res.status(500).json({message: "Internal server error"});
+            res.status(400).json({message: "Une erreur s'est produite lors de la déconnexion"});
         }
     }
 
     public static async deleteUser(req: Request, res: Response): Promise<void> {
-        const requestId = parseInt(req.params.id);
+        const requestId = parseInt(req.params.user);
         try {
             db.execute(
                 `DELETE FROM users WHERE user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
                     if (error) throw error;
 
                     else if (results.affectedRows === 0) {
-                        res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
+                        res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
-                        res.status(200).send('L\'utilisateur a été supprimé !');
+                        clearTokenCookie(res);
+                        res.status(200).send({message: 'L\'utilisateur a été supprimé !'});
                     }
                 })
         } catch (error) {
-            res.status(500).json({message: "Internal server error"});
+            res.status(400).json({message: "Internal server error"});
         }
     }
 }
