@@ -34,6 +34,8 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.0",
     "typescript": "^5.0.4",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "express-rate-limit": "^6.8.1",
+    "wafjs": "^1.0.3"
   }
 }
