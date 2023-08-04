@@ -7,14 +7,9 @@ import {Admin} from "../../interfaces/admin-interface";
   {providedIn: 'root'}
 )
 export class AdminService {
-  private apiUrl = 'http://localhost:3000/api/v1/admins';
+  private apiUrl = '/api/v1/admins';
 
   constructor(private http: HttpClient) { }
-  createAdmin(user: Admin): Observable<any> {
-    const url = `${this.apiUrl}/signup`;
-    return this.http.post<any>(this.apiUrl, user);
-  }
-
   getAllAdmins(): Observable<Admin[]> {
     return this.http.get<Admin[]>(this.apiUrl);
   }
@@ -27,10 +22,5 @@ export class AdminService {
   updateAdmin(user: Admin): Observable<any> {
     const url = `${this.apiUrl}/update/${user.user_id}`;
     return this.http.put<any>(url, user);
-  }
-
-  deleteAdmin(userId: number): Observable<void> {
-    const url = `${this.apiUrl}/delete/${userId}`;
-    return this.http.delete<void>(url);
   }
 }

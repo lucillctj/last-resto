@@ -10,7 +10,7 @@ import {User} from "../../interfaces/user-interface";
   {providedIn: 'root'}
 )
 export class CustomerService {
-  private apiUrl = 'http://localhost:3000/api/v1/customers';
+  private apiUrl = '/api/v1/customers';
 
   constructor(private http: HttpClient) { }
 
