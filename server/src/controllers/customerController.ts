@@ -1,10 +1,10 @@
 import {Request, Response} from "express";
-import {db} from "../app";
+import {pool} from "../app";
 import {Customer} from "../models/customer";
-import {QueryError} from "mysql2";
 import bcrypt from 'bcryptjs';
 import {generateAccessToken, setTokenCookie} from "../middleware/auth"
 import {Product} from "../models/product";
+import {QueryResult} from "pg";
 
 export class CustomerController {
     public static async createCustomerAccount(req: Request, res: Response): Promise<void> {
@@ -26,16 +26,16 @@ export class CustomerController {
             if (bodyCustomer.firstName !== '' && bodyCustomer.lastName !== '' && bodyCustomer.email !== '' && bodyCustomer.phone !== '' && bodyCustomer.password !== '' && bodyCustomer.address !== '' && bodyCustomer.postCode !== '' && bodyCustomer.city !== '' && Object.keys(body).length === 8) {
                 const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role, address, post_code, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
                 const params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, hashPassword, 'customer', bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
-                db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                pool.query(sql, params, async (error: Error | null, results: QueryResult) => {
                     if (error) {
                         await errorValues(req, res, error, bodyCustomer);
                     } else {
-                        const accessToken = generateAccessToken(results.insertId);
+                        const accessToken = generateAccessToken(results.rows[0].insertId);
                         setTokenCookie(res, accessToken);
 
                         res.status(201).send({
                             message: `Utilisateur avec le rôle 'customer' a été créé !`,
-                            userId: results.insertId,
+                            userId: results.rows[0].insertId,
                             accessToken
                         });
                     }
@@ -48,29 +48,17 @@ export class CustomerController {
         }
     }
 
-    // public static async getAllCustomers(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         db.query(
-    //             `SELECT * FROM users WHERE role = 'customer'`,
-    //             (error: Error | null, results: ResultSetHeader) => {
-    //                 return res.status(200).send(results);
-    //             })
-    //     } catch (error) {
-    //         res.status(500).json({message: "Internal server error"});
-    //     }
-    // }
-
     public static async getCustomerDashboard(req: Request, res: Response): Promise<Customer | any> {
         const userId = parseInt(req.params.user);
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM users WHERE role = 'customer' AND user_id = ${userId}`,
-                (error: Error | null, results: Customer[]) => {
+                (error: Error | null, results: QueryResult<Customer[]>) => {
                     if (error) throw error;
-                    else if (results.length === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send(results[0]);
+                        res.status(200).send(results.rows[0]);
                     }
                 })
         } catch (error) {
@@ -81,14 +69,14 @@ export class CustomerController {
     public static async getDataCustomer(req: Request, res: Response): Promise<Customer | any> {
         const userId = parseInt(req.params.customer);
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM users WHERE role = 'customer' AND user_id = ${userId}`,
-                (error: Error | null, results: Customer[]) => {
+                (error: Error | null, results: QueryResult<Customer[]>) => {
                     if (error) throw error;
-                    else if (results.length === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send(results[0]);
+                        res.status(200).send(results.rows[0]);
                     }
                 })
         } catch (error) {
@@ -99,9 +87,9 @@ export class CustomerController {
     public static async getUserIdByProductId(req: Request, res: Response): Promise<any> {
         const requestId = parseInt(req.params.id);
         try {
-            db.query(
+            pool.query(
                 `SELECT user_id FROM users WHERE product_id = ${requestId}`,
-                (error: Error | null, userIds: number[]) => {
+                (error: Error | null, userIds: QueryResult<number[]>) => {
                     if (error) throw error;
                     else if (!userIds) {
                         res.status(404).send({message: "No-one has reserved this product"});
@@ -118,7 +106,7 @@ export class CustomerController {
     //     const userId = parseInt(req.params.user);
     //
     //     try {
-    //         db.query(
+    //         pool.query(
     //             `UPDATE users SET product_id = NULL WHERE role = 'customer' AND user_id = ${userId}`,
     //             (error: Error | null, results) => {
     //                 if (error) throw error;
@@ -162,9 +150,9 @@ export class CustomerController {
                     params = [bodyCustomer.firstName, bodyCustomer.lastName, bodyCustomer.email, bodyCustomer.phone, bodyCustomer.address, bodyCustomer.postCode, bodyCustomer.city];
                 }
 
-                db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                pool.query(sql, params, async (error: Error | null, results: QueryResult) => {
                     if (error) throw error;
-                    else if (results.affectedRows === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
                         res.status(201).json({message: 'Utilisateur avec le rôle customer a été mis à jour !'});
@@ -191,7 +179,7 @@ export class CustomerController {
             if (userRequestId >= 1 && productIdValue >= 1 || productIdValue === null) {
                 const sql = `UPDATE users SET product_id = ? WHERE role = 'customer' AND user_id = ${userRequestId}`;
                 const params = [productIdValue];
-                db.execute(sql, params, (error: QueryError | null) => {
+                pool.query(sql, params, (error: Error | null) => {
                     if (error) throw error.message;
                     else {
                         res.status(201).send({message: `Produit mis à jour sur l'utilisateur n°${userRequestId}!`});
@@ -208,14 +196,14 @@ export class CustomerController {
     public static async getProductIdByUserId(req: Request, res: Response): Promise<any> {
         const userRequestId = parseInt(req.params.user);
         try {
-            db.query(
+            pool.query(
                 `SELECT product_id FROM users WHERE role = 'customer' AND user_id = ${userRequestId}`,
-                (error: Error | null, results: Product[]) => {
+                (error: Error | null, results: QueryResult<Product[]>) => {
                     if (error) throw error;
                     else if (!results) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send(results[0]);
+                        res.status(200).send(results.rows[0]);
                     }
                 })
         } catch (error) {

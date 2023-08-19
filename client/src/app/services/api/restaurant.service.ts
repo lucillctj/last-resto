@@ -7,7 +7,7 @@ import {Restaurant} from "../../interfaces/restaurant-interface";
   {providedIn: 'root'}
 )
 export class RestaurantService {
-  private apiUrl = 'http://localhost:3000/api/v1/restaurants';
+  private apiUrl = '/restaurants';
 
   constructor(private http: HttpClient) { }
 

@@ -46,7 +46,7 @@ export class PopupCreateRestaurantComponent {
       .subscribe(() => {
           this.successMessage = 'Votre restaurant a bien été créé !';
           setTimeout(() => {
-            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.newRestaurant.restaurant_owner_id}`]);
+            this.router.navigate([`/restaurant-owners/dashboard/${this.newRestaurant.restaurant_owner_id}`]);
             this.modalService.dismissAll()
           }, 2000)
         },

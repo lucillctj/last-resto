@@ -17,12 +17,12 @@ export class RedirectToCreateAccountOrLoginComponent {
 
   redirectToHomePage(){
     this.modalService.dismissAll()
-    this.router.navigate(['/api/v1']);
+    this.router.navigate(['/']);
   }
 
   redirectToLoginPage(){
     this.modalService.dismissAll()
-    this.router.navigate(['/api/v1/users/login']);
+    this.router.navigate(['/users/login']);
   }
 
   closePopup(){

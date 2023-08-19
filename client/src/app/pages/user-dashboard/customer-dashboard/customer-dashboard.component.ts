@@ -88,7 +88,7 @@ export class CustomerDashboardComponent implements OnInit {
             this.authService.setCurrentUser(null);
             this.userService.logout()
               .subscribe(() => {
-                  this.router.navigate(['api/v1']);
+                  this.router.navigate(['/']);
                 },
                 error => {
                   console.log('error', error)
@@ -112,7 +112,7 @@ export class CustomerDashboardComponent implements OnInit {
   }
 
   redirectToRestaurantsList(){
-    this.router.navigate(['api/v1/restaurants']);
+    this.router.navigate(['/restaurants']);
   }
 
   deleteReservation(){

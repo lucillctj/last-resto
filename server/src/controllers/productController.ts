@@ -1,29 +1,16 @@
 import {Request, Response} from "express";
-import {db} from "../app";
-import {QueryError, ResultSetHeader} from "mysql2";
+import {pool} from "../app";
 import {Product} from "../models/product";
 import {Restaurant} from "../models/restaurant";
-import {Customer} from "../models/customer";
+import {QueryResult} from "pg";
 
 export class ProductController {
-    // public static async getAllProducts(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         db.query(
-    //             `SELECT * FROM products`,
-    //             (error: Error | null, results: ResultSetHeader) => {
-    //                 return res.status(200).send(results);
-    //             })
-    //     } catch (error) {
-    //         res.status(500).json({message: "Internal server error"});
-    //     }
-    // }
-
     public static async getProductsByRestaurantId(req: Request, res: Response): Promise<Product[] | any> {
         const restaurantRequestId = parseInt(req.params.id);
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM products WHERE restaurant_id = ${restaurantRequestId}`,
-                (error: Error | null, results: Product[]) => {
+                (error: Error | null, results: QueryResult<Product[]>) => {
                     return res.status(200).send(results);
                 })
         } catch (error) {
@@ -34,10 +21,10 @@ export class ProductController {
     public static async getRestaurantIdByProductId(req: Request, res: Response): Promise<any> {
         const productRequestId = parseInt(req.params.id);
         try {
-            db.query(
+            pool.query(
                 `SELECT restaurant_id FROM products WHERE product_id = ${productRequestId}`,
-                (error: Error | null, results: Restaurant[]) => {
-                    return res.status(200).send(results[0]);
+                (error: Error | null, results: QueryResult<Restaurant[]>) => {
+                    return res.status(200).send(results.rows[0]);
                 })
         } catch (error) {
             res.status(500).json({message: "Internal server error"});
@@ -47,14 +34,14 @@ export class ProductController {
     public static async getProductById(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM products WHERE product_id = ${requestId}`,
-                (error: Error | null, results: Product[]) => {
+                (error: Error | null, results: QueryResult<Product[]>) => {
                     if (error) throw error;
                     else if (!results) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send(results[0]);
+                        res.status(200).send(results.rows[0]);
                     }
                 })
         } catch (error) {
@@ -74,7 +61,7 @@ export class ProductController {
             if (product.name !== '' && product.description !== '' && product.price >1 && product.restaurantId >=1 && Object.keys(body).length === 4) {
                 const sql = `INSERT INTO products (name, description, price, restaurant_id) VALUES (?, ?, ?, ?)`;
                 const params = [product.name, product.description, product.price, product.restaurantId];
-                db.execute(sql, params, async (error: QueryError | null) => {
+                pool.query(sql, params, async (error: Error | null) => {
                     if (error) throw error;
                     else {
                         res.status(201).send({message: `Product ${product.name} was created!`});
@@ -103,7 +90,7 @@ export class ProductController {
     //         if (product.name !== '' && product.description !== '' && product.price >1 && product.userId! >=1 && product.restaurantId >=1 && Object.keys(body).length === 4) {
     //             const sql = `UPDATE products SET name = ?, description = ?, price = ?, user_id = ?, restaurant_id = ? WHERE product_id = ${requestId}`;
     //             const params = [product.name, product.description, product.price, product.restaurantId];
-    //             db.execute(sql, params, async (error: QueryError | null, results: any) => {
+    //             pool.query(sql, params, async (error: QueryError | null, results: any) => {
     //                 if (error) throw error;
     //                 else if (results.affectedRows === 0) {
     //                     res.status(404).send({message: "Product id doesn't exist or doesn't have the right format"});
@@ -123,11 +110,11 @@ export class ProductController {
     public static async deleteProduct(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
-            db.execute(
-                `DELETE FROM products WHERE product_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
+            pool.query(
+                `DELETE FROM products WHERE product_id = ${requestId}`, (error: Error | null, results: QueryResult) => {
                     if (error) throw error;
 
-                    else if (results.affectedRows === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send({message: "Product doesn't exist or doesn't have the right format"});
                     } else {
                         res.status(200).send({message: 'Product deleted!'});

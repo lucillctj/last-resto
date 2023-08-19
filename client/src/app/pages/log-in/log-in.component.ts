@@ -26,10 +26,10 @@ export class LogInComponent {
       .subscribe((res) => {
           this.authService.setCurrentUser(user);
           if(res.userRole === "customer"){
-            this.router.navigate([`/api/v1/customers/dashboard/${res.userId}`]);
+            this.router.navigate([`/customers/dashboard/${res.userId}`]);
           }
           else if(res.userRole === "restaurant owner"){
-            this.router.navigate([`/api/v1/restaurant-owners/dashboard/${res.userId}`]);
+            this.router.navigate([`/restaurant-owners/dashboard/${res.userId}`]);
           }
         },
         error => {

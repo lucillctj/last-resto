@@ -73,7 +73,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
           .subscribe(() => {
               this.successMessage = 'Votre réservation a bien été prise en compte !';
               setTimeout(() => {
-                this.router.navigate(['/api/v1/restaurants']);
+                this.router.navigate(['/restaurants']);
                 this.modalService.dismissAll();
               }, 2000);
             },

@@ -74,11 +74,11 @@ export class RestaurantDashboardComponent implements OnInit {
           },
           (error) => {
             console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
-            this.router.navigate(['api/v1']);
+            this.router.navigate(['/']);
           })
     } else {
       console.error('L\'ID du restaurant n\'est pas un nombre valide.');
-      this.router.navigate(['api/v1']);
+      this.router.navigate(['/']);
     }
 
     this.productService.getProductsByRestaurantId(currentRestaurantId, this.currentUserId)

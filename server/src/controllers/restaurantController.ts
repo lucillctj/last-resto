@@ -1,8 +1,7 @@
 import {Request, Response} from "express";
-import {db} from "../app";
-import {QueryError, ResultSetHeader} from "mysql2";
+import {pool} from "../app";
 import {Restaurant} from "../models/restaurant";
-import axios from 'axios';
+import {QueryResult} from "pg";
 
 export class RestaurantController {
     public static async createRestaurant(req: Request, res: Response): Promise<void> {
@@ -24,7 +23,7 @@ export class RestaurantController {
             ) {
                 const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_available, restaurant_owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
                 const params = [restaurant.name, restaurant.description, restaurant.address, restaurant.postCode, restaurant.city, restaurant.phone, restaurant.website, false, restaurant.restaurantOwnerId];
-                db.execute(sql, params, async (error: QueryError | null) => {
+                pool.query(sql, params, async (error: Error | null) => {
                     if (error) throw error;
                     else {
                         res.status(201).send({message: `Restaurant ${restaurant.name} was created!`});
@@ -40,9 +39,9 @@ export class RestaurantController {
 
     public static async getAllRestaurants(req: Request, res: Response): Promise<void> {
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM restaurants`,
-                (error: Error | null, results: ResultSetHeader) => {
+                (error: Error | null, results: QueryResult) => {
                     return res.status(200).send({results});
                 })
         } catch (error) {
@@ -53,9 +52,9 @@ export class RestaurantController {
     public static async getRestaurantByUserId(req: Request, res: Response): Promise<void> {
         const userRequestId = parseInt(req.params.user);
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM restaurants WHERE restaurant_owner_id =${userRequestId}`,
-                (error: Error | null, results: Restaurant[]) => {
+                (error: Error | null, results: QueryResult<Restaurant[]>) => {
                     return res.status(200).send(results);
                 })
         } catch (error) {
@@ -66,14 +65,14 @@ export class RestaurantController {
     public static async getRestaurantDashboard(req: Request, res: Response): Promise<Restaurant | any> {
         const requestId = parseInt(req.params.id);
         try {
-            db.query(
+            pool.query(
                 `SELECT * FROM restaurants WHERE restaurant_id = ${requestId}`,
-                (error: Error | null, results: Restaurant[]) => {
+                (error: Error | null, results: QueryResult<Restaurant[]>) => {
                     if (error) throw error;
                     else if (!results) {
                         res.status(404).send({message: "Id doesn't exist or doesn't have the right format"});
                     } else {
-                        res.status(200).send(results[0]);
+                        res.status(200).send(results.rows[0]);
                     }
                 })
         } catch (error) {
@@ -100,9 +99,9 @@ export class RestaurantController {
             if (bodyRestaurant.name !== '' && bodyRestaurant.description !== '' && bodyRestaurant.address !== '' && bodyRestaurant.postCode !== '' && bodyRestaurant.city !== '' && bodyRestaurant.phone !== '' && Object.keys(body).length >= 6) {
                 const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, restaurant_owner_id = ? WHERE restaurant_id = ${restaurantRequestId}`;
                 const params = [bodyRestaurant.name, bodyRestaurant.description, bodyRestaurant.address, bodyRestaurant.postCode, bodyRestaurant.city, bodyRestaurant.phone, bodyRestaurant.website, bodyRestaurant.restaurantOwnerId];
-                db.execute(sql, params, async (error: QueryError | null, results: any) => {
+                pool.query(sql, params, async (error: Error | null, results: QueryResult) => {
                     if (error) throw error;
-                    else if (results.affectedRows === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
                     } else {
                         res.status(201).send({message: `Restaurant ${bodyRestaurant.name} was updated!`});
@@ -124,9 +123,9 @@ export class RestaurantController {
             if (typeof isAvailable !== undefined && isAvailable !== null) {
                 const sql = `UPDATE restaurants SET is_available = ? WHERE restaurant_id = ${restaurantRequestId}`;
                 const params = [isAvailable]
-                db.execute(sql, params,async (error: QueryError | null, results: any) => {
+                pool.query(sql, params,async (error: Error | null, results: QueryResult) => {
                     if (error) throw error;
-                    else if (results.affectedRows === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
                     } else {
                         res.status(201).send({message: `Restaurant availability was updated!`});
@@ -144,10 +143,10 @@ export class RestaurantController {
     public static async deleteRestaurant(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.id);
         try {
-            db.execute(
-                `DELETE FROM restaurants WHERE restaurant_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
+            pool.query(
+                `DELETE FROM restaurants WHERE restaurant_id = ${requestId}`, (error: Error | null, results: QueryResult) => {
                     if (error) throw error;
-                    else if (results.affectedRows === 0) {
+                    else if (results.rowCount === 0) {
                         res.status(404).send({message: "Restaurant id doesn't exist or doesn't have the right format"});
                     } else {
                         res.status(200).send({message:`Restaurant ${requestId} was deleted!`});
