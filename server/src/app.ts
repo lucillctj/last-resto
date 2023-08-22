@@ -10,7 +10,6 @@ import {restaurantRoutes} from "./routes/restaurantRoutes";
 import {productRoutes} from "./routes/productRoutes";
 import {adminRoutes} from "./routes/adminRoutes";
 import {usersRoutes} from "./routes/usersRoutes";
-import path from "path";
 
 dotenv.config();
 
@@ -26,11 +25,6 @@ const apiLimiter = rateLimit({
     max: 100, // Nombre maximun de tentatives avant le verrouillage
     standardHeaders: true, // Communique sur le nombre maximun de requêtes restantes pendant une période données dans les en-têtes
     legacyHeaders: false, // Indique au middleware de ne pas utiliser les anciennes en-têtes
-});
-
-app.use(express.static(path.join(__dirname, 'view/dist')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'view', 'dist', 'index.html'));
 });
 
 app.use((req, res, next) => {
@@ -64,7 +58,6 @@ app.use('/api/v1/admins', apiLimiter, adminRoutes());
 app.use('/api/v1/users', apiLimiter, usersRoutes());
 app.use('/api/v1/restaurants', apiLimiter, restaurantRoutes());
 app.use('/api/v1/products', apiLimiter, productRoutes());
-console.log(process.env.DB_URL)
 export const db = mysql.createConnection(process.env.DB_URL ?? '');
 const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
