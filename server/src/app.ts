@@ -64,13 +64,8 @@ app.use('/api/v1/admins', apiLimiter, adminRoutes());
 app.use('/api/v1/users', apiLimiter, usersRoutes());
 app.use('/api/v1/restaurants', apiLimiter, restaurantRoutes());
 app.use('/api/v1/products', apiLimiter, productRoutes());
-
-export const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
+console.log(process.env.DB_URL)
+export const db = mysql.createConnection(process.env.DB_URL ?? '');
 const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
