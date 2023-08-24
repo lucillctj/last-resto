@@ -1,9 +1,9 @@
-import {Request, Response} from "express";
-import {pool} from "../app";
+import {NextFunction, Request, Response} from "express";
+import {db} from "../app";
 import {RestaurantOwner} from "../models/restaurantOwner";
+import {QueryError} from "mysql2";
 import bcrypt from 'bcryptjs';
 import {generateAccessToken, setTokenCookie} from "../middleware/auth"
-import {QueryResult} from "pg";
 
 export class RestaurantOwnerController {
     public static async createRestaurantOwnerAccount(req: Request, res: Response): Promise<void> {
@@ -22,15 +22,15 @@ export class RestaurantOwnerController {
             if (bodyRestaurantOwner.firstName !== '' && bodyRestaurantOwner.lastName !== '' && bodyRestaurantOwner.email !== '' && bodyRestaurantOwner.phone !== '' && bodyRestaurantOwner.password !== '' && Object.keys(body).length === 5) {
                 const sql = `INSERT INTO users (first_name, last_name, email, phone, password, role) VALUES (?, ?, ?, ?, ?, ?)`;
                 const params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone, hashPassword, 'restaurant owner'];
-                pool.query(sql, params, async (error: Error | null, results: QueryResult) => {
+                db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) {
                         await errorValues(req, res, error, bodyRestaurantOwner);
                     } else {
-                        const accessToken = generateAccessToken(results.rows[0].insertId);
+                        const accessToken = generateAccessToken(results.insertId);
                         setTokenCookie(res, accessToken);
                         res.status(201).send({
                             message: `Utilisateur avec le rôle 'restaurant owner' a été créé !`,
-                            userId: results.rows[0].insertId,
+                            userId: results.insertId,
                             accessToken
                         });
                     }
@@ -44,18 +44,30 @@ export class RestaurantOwnerController {
         }
     }
 
+    // public static async getAllRestaurantOwners(req: Request, res: Response): Promise<void> {
+    //     try {
+    //         db.query(
+    //             `SELECT * FROM users WHERE role = 'restaurant owner'`,
+    //             (error: Error | null, results: ResultSetHeader) => {
+    //                 return res.status(200).send(results);
+    //             })
+    //     } catch (error) {
+    //         res.status(500).json({message: "Internal server error"});
+    //     }
+    // }
+
     public static async getRestaurantOwnerDashboard(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.user);
         try {
-            pool.query(
+            db.query(
                 `SELECT * FROM users WHERE role = 'restaurant owner' AND user_id = ${requestId}`,
-                (error: Error | null, results: QueryResult<RestaurantOwner[]>) => {
+                (error: Error | null, results: RestaurantOwner[]) => {
 
                     if (error) throw error;
-                    else if (results.rowCount === 0) {
+                    else if (results.length === 0) {
                         res.status(404).send('L\'identifiant n\'existe pas ou n\'a pas le bon format.');
                     } else {
-                        res.status(200).send(results.rows[0]);
+                        res.status(200).send(results[0]);
                     }
                 })
         } catch (error) {
@@ -91,9 +103,9 @@ export class RestaurantOwnerController {
                     params = [bodyRestaurantOwner.firstName, bodyRestaurantOwner.lastName, bodyRestaurantOwner.email, bodyRestaurantOwner.phone];
                 }
 
-                pool.query(sql, params, async (error: Error | null, results: QueryResult) => {
+                db.execute(sql, params, async (error: QueryError | null, results: any) => {
                     if (error) throw error;
-                    else if (results.rowCount === 0) {
+                    else if (results.affectedRows === 0) {
                         res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     }
                     else {

@@ -32,7 +32,7 @@ export class NavBarTopComponent implements OnInit{
   //   });  }
 
   redirectToRestaurantsList(){
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
   }
 
   redirectToUserDashboard() {
@@ -52,7 +52,7 @@ export class NavBarTopComponent implements OnInit{
     this.authService.setCurrentUser(null);
     this.userService.logout()
       .subscribe(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['']);
         },
         error => {
           console.log('error', error)

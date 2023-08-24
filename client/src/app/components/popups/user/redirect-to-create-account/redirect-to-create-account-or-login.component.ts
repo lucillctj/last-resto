@@ -17,7 +17,7 @@ export class RedirectToCreateAccountOrLoginComponent {
 
   redirectToHomePage(){
     this.modalService.dismissAll()
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
   }
 
   redirectToLoginPage(){

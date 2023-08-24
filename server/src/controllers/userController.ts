@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
-import {pool} from "../app";
+import {db} from "../app";
+import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from "bcryptjs";
 import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
-import {QueryResult} from "pg";
 
 export class UserController {
 
@@ -13,22 +13,22 @@ export class UserController {
             password: body.password
         };
         if (bodyUser.email !== '' && bodyUser.password !== '') {
-            pool.query(`SELECT * FROM users WHERE email = ?`, [bodyUser.email], async (error: Error | null, results: QueryResult) => {
+            db.query(`SELECT * FROM users WHERE email = ?`, [bodyUser.email], async (error: QueryError | null, results: any) => {
                 if (error) throw error;
-                else if (results.rowCount === 0) {
+                else if (results.length === 0) {
                     return res.status(401).send({message: 'Aucun utilisateur trouvé !'});
                 } else {
-                    const compareHashPassword = await bcrypt.compare(bodyUser.password, results.rows[0].password);
+                    const compareHashPassword = await bcrypt.compare(bodyUser.password, results[0].password);
                     if (!compareHashPassword) {
                         return res.status(401).json({message: "Mot de passe invalide"});
                     }
-                    const accessToken = generateAccessToken(results.rows[0].user_id);
+                    const accessToken = generateAccessToken(results[0].user_id);
                     setTokenCookie(res, accessToken);
 
                     return res.status(200).send({
                         message: "Authentification réussie",
-                        userId: results.rows[0].user_id,
-                        userRole: results.rows[0].role
+                        userId: results[0].user_id,
+                        userRole: results[0].role
                     });
                 }
             });
@@ -49,11 +49,11 @@ export class UserController {
     public static async deleteUser(req: Request, res: Response): Promise<void> {
         const requestId = parseInt(req.params.user);
         try {
-            pool.query(
-                `DELETE FROM users WHERE user_id = ${requestId}`, (error: Error | null, results: QueryResult) => {
+            db.execute(
+                `DELETE FROM users WHERE user_id = ${requestId}`, (error: Error | null, results: ResultSetHeader) => {
                     if (error) throw error;
 
-                    else if (results.rowCount === 0) {
+                    else if (results.affectedRows === 0) {
                         res.status(404).send({message: 'L\'identifiant n\'existe pas ou n\'a pas le bon format.'});
                     } else {
                         clearTokenCookie(res);

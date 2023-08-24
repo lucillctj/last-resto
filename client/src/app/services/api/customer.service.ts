@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
 import {Product} from "../../interfaces/product-interface";
 
-
 @Injectable(
   {providedIn: 'root'}
 )
