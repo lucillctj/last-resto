@@ -20,6 +20,7 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.2.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "wafjs": "^1.0.3",
     "yarn": "^1.22.19"
