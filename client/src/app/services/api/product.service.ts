@@ -8,7 +8,7 @@ import {User} from "../../interfaces/user-interface";
   {providedIn: 'root'}
 )
 export class ProductService {
-  private apiUrl = '/api/v1/products';
+  private apiUrl = '/products';
 
   constructor(private http: HttpClient) { }
 

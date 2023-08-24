@@ -63,7 +63,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
             this.authService.setCurrentUser(null);
             this.userService.logout()
               .subscribe(() => {
-                  this.router.navigate(['api/v1']);
+                  this.router.navigate(['']);
                 },
                 error => {
                   console.log('error', error)
@@ -73,7 +73,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
 
     } else {
       console.error('L\'ID du client n\'est pas un nombre valide.');
-      this.router.navigate(['api/v1']);
+      this.router.navigate(['']);
     }
   }
 
@@ -91,7 +91,7 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
   }
 
   showRestaurantPage(restaurantId: number | undefined) {
-    this.router.navigate([`api/v1/restaurants/dashboard/${restaurantId}/user/${this.currentUser.user_id}`]);
+    this.router.navigate([`/restaurants/dashboard/${restaurantId}/user/${this.currentUser.user_id}`]);
   }
 
   openPopupToCreateRestaurant(){

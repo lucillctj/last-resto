@@ -32,19 +32,19 @@ export class NavBarTopComponent implements OnInit{
   //   });  }
 
   redirectToRestaurantsList(){
-    this.router.navigate(['/api/v1']);
+    this.router.navigate(['']);
   }
 
   redirectToUserDashboard() {
     if (this.currentUser.role === 'customer') {
-      this.router.navigate([`/api/v1/customers/dashboard/${this.currentUser.user_id}`]);
+      this.router.navigate([`/customers/dashboard/${this.currentUser.user_id}`]);
     } else if (this.currentUser.role === 'restaurant owner') {
-      this.router.navigate([`/api/v1/restaurant-owners/dashboard/${this.currentUser.user_id}`]);
+      this.router.navigate([`/restaurant-owners/dashboard/${this.currentUser.user_id}`]);
     }
   }
 
   login(){
-    this.router.navigate(['/api/v1/users/login']);
+    this.router.navigate(['/users/login']);
   }
 
   logout() {
@@ -52,7 +52,7 @@ export class NavBarTopComponent implements OnInit{
     this.authService.setCurrentUser(null);
     this.userService.logout()
       .subscribe(() => {
-          this.router.navigate(['api/v1']);
+          this.router.navigate(['']);
         },
         error => {
           console.log('error', error)

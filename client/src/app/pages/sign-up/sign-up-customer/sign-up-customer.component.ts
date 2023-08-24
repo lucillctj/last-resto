@@ -9,6 +9,6 @@ import { Router } from '@angular/router';
 export class SignUpCustomerComponent {
   constructor(private router: Router) { }
   returnToHomePage(){
-    this.router.navigate(['/api/v1']);
+    this.router.navigate(['']);
   }
 }

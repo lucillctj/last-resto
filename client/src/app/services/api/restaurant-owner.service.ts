@@ -7,7 +7,7 @@ import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
   {providedIn: 'root'}
 )
 export class RestaurantOwnerService {
-  private apiUrl = '/api/v1/restaurant-owners';
+  private apiUrl = '/restaurant-owners';
 
   constructor(private http: HttpClient) { }
 

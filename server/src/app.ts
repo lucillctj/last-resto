@@ -10,6 +10,7 @@ import {restaurantRoutes} from "./routes/restaurantRoutes";
 import {productRoutes} from "./routes/productRoutes";
 import {adminRoutes} from "./routes/adminRoutes";
 import {usersRoutes} from "./routes/usersRoutes";
+import helmet from 'helmet';
 
 dotenv.config();
 
@@ -19,21 +20,16 @@ const corsOptions = {
     origin: 'http://localhost:4200',
     credentials: true
 };
+app.use(cors(corsOptions));
 
 const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // Durée de la "fenêtre" de tentative, ici, 15 minutes
-    max: 100, // Nombre maximun de tentatives avant le verrouillage
-    standardHeaders: true, // Communique sur le nombre maximun de requêtes restantes pendant une période données dans les en-têtes
-    legacyHeaders: false, // Indique au middleware de ne pas utiliser les anciennes en-têtes
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
-app.use((req, res, next) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    next();
-});
+app.use(helmet());
 
 const { WAFJS } = require('wafjs')
 const baseConfig = {
@@ -48,21 +44,29 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use('/api/v1/customers', apiLimiter, customerRoutes());
-app.use('/api/v1/restaurant-owners', apiLimiter, restaurantOwnerRoutes());
-app.use('/api/v1/admins', apiLimiter, adminRoutes());
-app.use('/api/v1/users', apiLimiter, usersRoutes());
-app.use('/api/v1/restaurants', apiLimiter, restaurantRoutes());
-app.use('/api/v1/products', apiLimiter, productRoutes());
-export const db = mysql.createConnection(process.env.DB_URL ?? '');
+app.use('/customers', apiLimiter, customerRoutes());
+app.use('/restaurant-owners', apiLimiter, restaurantOwnerRoutes());
+app.use('/admins', apiLimiter, adminRoutes());
+app.use('/users', apiLimiter, usersRoutes());
+app.use('/restaurants', apiLimiter, restaurantRoutes());
+app.use('/products', apiLimiter, productRoutes());
+
 const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+// export const db = mysql.createConnection(process.env.DB_URL ?? '');
+export const db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+});
+
 
 db.connect((error: QueryError | null) => {
     if (error) {

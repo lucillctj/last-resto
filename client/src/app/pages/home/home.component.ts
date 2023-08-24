@@ -11,10 +11,10 @@ export class HomeComponent {
   }
 
   showFormToCreateAccountCustomer(){
-    this.router.navigate(['/api/v1/customers/signup']);
+    this.router.navigate(['/customers/signup']);
   }
 
   showFormToCreateAccountRestaurant(){
-    this.router.navigate(['api/v1/restaurant-owners/signup']);
+    this.router.navigate(['/restaurant-owners/signup']);
   }
 }

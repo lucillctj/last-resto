@@ -3,7 +3,6 @@ import {db} from "../app";
 import {QueryError, ResultSetHeader} from "mysql2";
 import bcrypt from "bcryptjs";
 import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
-import axios from 'axios';
 
 export class UserController {
 

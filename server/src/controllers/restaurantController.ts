@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import {db} from "../app";
 import {QueryError, ResultSetHeader} from "mysql2";
 import {Restaurant} from "../models/restaurant";
-import axios from 'axios';
 
 export class RestaurantController {
     public static async createRestaurant(req: Request, res: Response): Promise<void> {

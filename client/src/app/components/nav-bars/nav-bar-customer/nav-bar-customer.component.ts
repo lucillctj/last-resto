@@ -29,16 +29,16 @@ export class NavBarCustomerComponent implements OnInit{
   }
 
   ngOnInit(){
-    if (this.router.url.includes('/api/v1/restaurants')) {
+    if (this.router.url.includes('/restaurants')) {
       this.isSearchActive = true;
     }
-    else if (this.router.url.includes('/api/v1/customers/dashboard')) {
+    else if (this.router.url.includes('/customers/dashboard')) {
       this.isDashboardActive = true;
     }
   }
 
   redirectToRestaurantSearch() {
-    const redirectUrl = `/api/v1/restaurants`;
+    const redirectUrl = `/restaurants`;
     if (this.router.url === redirectUrl) {
       this.isSearchActive = true;
     } else {
@@ -52,11 +52,11 @@ export class NavBarCustomerComponent implements OnInit{
       this.currentCustomer = currentUser as Customer;
     });
 
-    if (this.router.url.includes(`/api/v1/customers/dashboard/`)) {
+    if (this.router.url.includes(`/customers/dashboard/`)) {
       this.isSearchActive = true;
 
     } else if (this.currentCustomer) {
-      const urlCustomerDashboard = `/api/v1/customers/dashboard/${this.currentCustomer.user_id}`;
+      const urlCustomerDashboard = `/customers/dashboard/${this.currentCustomer.user_id}`;
 
       this.isSearchActive = false;
       this.router.navigate([urlCustomerDashboard]);

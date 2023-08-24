@@ -7,7 +7,7 @@ import {Admin} from "../../interfaces/admin-interface";
   {providedIn: 'root'}
 )
 export class AdminService {
-  private apiUrl = '/api/v1/admins';
+  private apiUrl = '/admins';
 
   constructor(private http: HttpClient) { }
   getAllAdmins(): Observable<Admin[]> {

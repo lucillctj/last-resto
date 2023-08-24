@@ -48,7 +48,7 @@ export class PopupDeleteUserComponent {
           this.successMessage = 'Votre compte a bien été supprimé !';
           this.authService.setCurrentUser(null);
           this.modalService.dismissAll()
-          this.router.navigate(['/api/v1']);
+          this.router.navigate(['']);
         },
         _ => {
           this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.';

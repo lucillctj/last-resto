@@ -13,14 +13,14 @@ import {RestaurantDashboardComponent} from "./pages/restaurant-dashboard/restaur
 import {RestaurantsListComponent} from "./pages/restaurants-list/restaurants-list.component";
 
 const routes: Routes = [
-  { path: 'api/v1', component: HomeComponent },
-  { path: 'api/v1/customers/signup', component: SignUpCustomerComponent },
-  { path: 'api/v1/restaurant-owners/signup', component: SignUpRestaurantOwnerComponent },
-  { path: 'api/v1/users/login', component: LogInComponent },
-  { path: 'api/v1/customers/dashboard/:user', component: CustomerDashboardComponent },
-  { path: 'api/v1/restaurant-owners/dashboard/:user', component: RestaurantOwnerDashboardComponent },
-  { path: 'api/v1/restaurants/dashboard/:id/user/:user', component: RestaurantDashboardComponent },
-  { path: 'api/v1/restaurants', component: RestaurantsListComponent },
+  { path: '', component: HomeComponent },
+  { path: 'customers/signup', component: SignUpCustomerComponent },
+  { path: 'restaurant-owners/signup', component: SignUpRestaurantOwnerComponent },
+  { path: 'users/login', component: LogInComponent },
+  { path: 'customers/dashboard/:user', component: CustomerDashboardComponent },
+  { path: 'restaurant-owners/dashboard/:user', component: RestaurantOwnerDashboardComponent },
+  { path: 'restaurants/dashboard/:id/user/:user', component: RestaurantDashboardComponent },
+  { path: 'restaurants', component: RestaurantsListComponent },
 ];
 
 @NgModule({

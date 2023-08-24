@@ -8,7 +8,7 @@ import {User} from "../../interfaces/user-interface";
 )
 
 export class UserService {
-  private apiUrl = '/api/v1/users';
+  private apiUrl = '/users';
 
   constructor(private http: HttpClient) { }
 

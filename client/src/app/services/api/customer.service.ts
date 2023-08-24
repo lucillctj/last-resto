@@ -3,14 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Customer} from "../../interfaces/customer-interface";
 import {Product} from "../../interfaces/product-interface";
-import {User} from "../../interfaces/user-interface";
-
 
 @Injectable(
   {providedIn: 'root'}
 )
 export class CustomerService {
-  private apiUrl = '/api/v1/customers';
+  private apiUrl = 'http://localhost:3030/customers';
 
   constructor(private http: HttpClient) { }
 
