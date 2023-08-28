@@ -48,18 +48,6 @@ export class CustomerController {
         }
     }
 
-    // public static async getAllCustomers(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         db.query(
-    //             `SELECT * FROM users WHERE role = 'customer'`,
-    //             (error: Error | null, results: ResultSetHeader) => {
-    //                 return res.status(200).send(results);
-    //             })
-    //     } catch (error) {
-    //         res.status(500).json({message: "Internal server error"});
-    //     }
-    // }
-
     public static async getCustomerDashboard(req: Request, res: Response): Promise<Customer | any> {
         const userId = parseInt(req.params.user);
         try {

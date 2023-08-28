@@ -5,6 +5,18 @@ import bcrypt from "bcryptjs";
 import {clearTokenCookie, generateAccessToken, setTokenCookie} from "../middleware/auth";
 
 export class UserController {
+    public static async getAllUsers(req: Request, res: Response): Promise<[] | void> {
+             db.query(`SELECT * FROM users`, async (error: QueryError | null, results: []) => {
+                if (error) throw error;
+                else if (results.length === 0) {
+                    return res.status(401).send({message: 'Aucun utilisateur trouvé !'});
+                } else {
+                    return res.status(200).send({
+                        users: results
+                    });
+                }
+            });
+    }
 
     public static async loginToUserAccount(req: Request, res: Response): Promise<void> {
         const body = req.body;

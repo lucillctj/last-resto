@@ -31,16 +31,16 @@ const apiLimiter = rateLimit({
 
 app.use(helmet());
 
-const { WAFJS } = require('wafjs')
-const baseConfig = {
-    allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],
-    contentTypes: ['application/json', 'multipart/form-data']
-}
-let _wafjs = new WAFJS(baseConfig);
-
-app.use(async (req, res, next) => {
-    if(_wafjs.reqCheck(req.method, req.headers['content-type']))
-        res.status(403).send();
+app.use((req, res, next) => {
+    const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+    const allowedContentTypes = ['application/json', 'multipart/form-data'];
+    if (!allowedMethods.includes(req.method)) {
+        return res.status(403).send('Method not allowed');
+    }
+    const contentType = req.headers['content-type'];
+    if (!contentType || !allowedContentTypes.includes(contentType)) {
+        return res.status(403).send('Content type not allowed');
+    }
     next();
 });
 
@@ -59,14 +59,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-// export const db = mysql.createConnection(process.env.DB_URL ?? '');
-export const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
-
+export const db = mysql.createConnection(process.env.DATABASE_URL ?? '');
 
 db.connect((error: QueryError | null) => {
     if (error) {
