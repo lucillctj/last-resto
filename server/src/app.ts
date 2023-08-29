@@ -54,7 +54,6 @@ export const db = mysql.createConnection(process.env.DATABASE_URL ?? '');
 //     database: process.env.DB_DATABASE
 // });
 
-
 db.connect((error: QueryError | null) => {
     if (error) {
         console.error('Error connecting to MySQL database: ', error);
