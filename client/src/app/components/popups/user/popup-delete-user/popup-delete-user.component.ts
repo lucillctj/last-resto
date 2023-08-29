@@ -35,24 +35,29 @@ export class PopupDeleteUserComponent {
 
   async confirmToDelete() {
     if (this.currentUser.role === "restaurant owner") {
-        const restaurants = await this.restaurantService.getRestaurantByUserId(this.currentUser.user_id as number).toPromise();
-        console.log(restaurants)
-        if (restaurants!.length >= 1) {
-          this.errorMessage = 'Veuillez supprimer votre restaurant, avant de réessayer.';
-        }
-      return;
+      this.restaurantService.getRestaurantByUserId(this.currentUser.user_id as number)
+        .subscribe({
+            next: (restaurants) => {
+              if(restaurants.length >= 1) {
+                this.errorMessage = 'Veuillez supprimer votre restaurant, avant de réessayer.';
+              }
+            },
+            error: () => this.errorMessage = 'Erreur lors de la récupération des données.'
+          }
+        );
     }
-
-    this.userService.deleteUser(this.currentUser)
-      .subscribe(() => {
-          this.successMessage = 'Votre compte a bien été supprimé !';
-          this.authService.setCurrentUser(null);
-          this.modalService.dismissAll()
-          this.router.navigate(['']);
-        },
-        _ => {
-          this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.';
+    else {
+      this.userService.deleteUser(this.currentUser)
+        .subscribe({
+          next: () => {
+            this.successMessage = 'Votre compte a bien été supprimé !';
+            this.authService.setCurrentUser(null);
+            this.modalService.dismissAll()
+            this.router.navigate(['']);
+          },
+          error: () => this.errorMessage = 'Erreur lors de la suppression, veuillez réessayer ultérieurement.'
         })
+    }
   }
 
   closePopup(){

@@ -21,6 +21,8 @@ const corsOptions = {
     credentials: true
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
+app.use(express.json());
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -30,29 +32,14 @@ const apiLimiter = rateLimit({
 });
 
 app.use(helmet());
+app.use(apiLimiter);
 
-app.use((req, res, next) => {
-    const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
-    const allowedContentTypes = ['application/json', 'multipart/form-data'];
-    if (!allowedMethods.includes(req.method)) {
-        return res.status(403).send('Method not allowed');
-    }
-    const contentType = req.headers['content-type'];
-    if (!contentType || !allowedContentTypes.includes(contentType)) {
-        return res.status(403).send('Content type not allowed');
-    }
-    next();
-});
-
-app.use(cookieParser());
-app.use(express.json());
-
-app.use('/customers', apiLimiter, customerRoutes());
-app.use('/restaurant-owners', apiLimiter, restaurantOwnerRoutes());
-app.use('/admins', apiLimiter, adminRoutes());
-app.use('/users', apiLimiter, usersRoutes());
-app.use('/restaurants', apiLimiter, restaurantRoutes());
-app.use('/products', apiLimiter, productRoutes());
+app.use('/customers', customerRoutes());
+app.use('/restaurant-owners', restaurantOwnerRoutes());
+app.use('/admins', adminRoutes());
+app.use('/users', usersRoutes());
+app.use('/restaurants', restaurantRoutes());
+app.use('/products', productRoutes());
 
 const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
@@ -60,6 +47,13 @@ app.listen(PORT, () => {
 });
 
 export const db = mysql.createConnection(process.env.DATABASE_URL ?? '');
+// export const db = mysql.createConnection({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_DATABASE
+// });
+
 
 db.connect((error: QueryError | null) => {
     if (error) {

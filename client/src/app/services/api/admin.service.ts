@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Admin} from "../../interfaces/admin-interface";
+import {environment} from "../../../environments/environment";
 
 @Injectable(
   {providedIn: 'root'}
 )
 export class AdminService {
-  private apiUrl = '/admins';
+  private apiUrl = `${environment.apiUrl}/admins`;
 
   constructor(private http: HttpClient) { }
   getAllAdmins(): Observable<Admin[]> {
