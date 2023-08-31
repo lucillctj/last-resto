@@ -9,5 +9,4 @@ export interface Restaurant {
   website: string | null;
   is_available: any;
   restaurant_owner_id: number | undefined;
-
 }

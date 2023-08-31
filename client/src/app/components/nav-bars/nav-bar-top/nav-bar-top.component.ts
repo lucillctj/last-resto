@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from "../../../services/auth.service";
-import {User} from "../../../interfaces/user-interface";
-import {UserService} from "../../../services/api/user.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../interfaces/user-interface';
+import { UserService } from '../../../services/api/user.service';
 
 @Component({
   selector: 'app-nav-bar-top',
   templateUrl: './nav-bar-top.component.html',
   styleUrls: ['./nav-bar-top.component.scss']
 })
-export class NavBarTopComponent implements OnInit{
+export class NavBarTopComponent implements OnInit {
   currentUser: any;
 
   constructor(
@@ -20,8 +20,8 @@ export class NavBarTopComponent implements OnInit{
     this.currentUser = {} as User;
   }
 
-  ngOnInit(){
-    this.authService.getCurrentUser().subscribe(user => {
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe((user) => {
       this.currentUser = user;
     });
   }
@@ -31,33 +31,36 @@ export class NavBarTopComponent implements OnInit{
   //     this.currentUser = user;
   //   });  }
 
-  redirectToRestaurantsList(){
+  redirectToRestaurantsList() {
     this.router.navigate(['']);
   }
 
   redirectToUserDashboard() {
     if (this.currentUser.role === 'customer') {
-      this.router.navigate([`/customers/dashboard/${this.currentUser.user_id}`]);
+      this.router.navigate([
+        `/customers/dashboard/${this.currentUser.user_id}`
+      ]);
     } else if (this.currentUser.role === 'restaurant owner') {
-      this.router.navigate([`/restaurant-owners/dashboard/${this.currentUser.user_id}`]);
+      this.router.navigate([
+        `/restaurant-owners/dashboard/${this.currentUser.user_id}`
+      ]);
     }
   }
 
-  login(){
+  login() {
     this.router.navigate(['/users/login']);
   }
 
   logout() {
     this.authService.forgetUser();
     this.authService.setCurrentUser(null);
-    this.userService.logout()
-      .subscribe(() => {
-          this.router.navigate(['']);
-        },
-        error => {
-          console.log('error', error)
-        }
-      )
+    this.userService.logout().subscribe(
+      () => {
+        this.router.navigate(['']);
+      },
+      (error) => {
+        console.log('error', error);
+      }
+    );
   }
-
 }

@@ -1,24 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {CustomerService} from "../../services/api/customer.service";
-import {Customer} from "../../interfaces/customer-interface";
+import { CustomerService } from '../../services/api/customer.service';
+import { Customer } from '../../interfaces/customer-interface';
 import { Router } from '@angular/router';
-import {AuthService} from "../../services/auth.service";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-account-customer',
   templateUrl: './create-account-customer.component.html',
-  styleUrls: ['./create-account-customer.component.scss', '../../../styles.scss']
+  styleUrls: [
+    './create-account-customer.component.scss',
+    '../../../styles.scss'
+  ]
 })
 export class CreateAccountCustomerComponent {
   @ViewChild('form', { static: false })
-
   form!: NgForm;
   submitted = false;
   newUser: Customer;
   errorMessageEmail: string | null;
   errorMessagePhone: string | null;
-  errorMessage: string| null;
+  errorMessage: string | null;
 
   constructor(
     private customerService: CustomerService,
@@ -46,33 +48,31 @@ export class CreateAccountCustomerComponent {
 
   onSubmit() {
     this.submitted = true;
-    if(!this.form.form.valid){
-      return
+    if (!this.form.form.valid) {
+      return;
     }
 
-    this.customerService.createCustomer(this.newUser)
-      .subscribe((res) => {
-          this.authService.setCurrentUser(this.newUser);
-          this.router.navigate([`/customers/dashboard/${res.userId}`]);
-        },
-        error => {
-          if (error.status === 400 && error.error === "Cet email existe déjà !") {
-            this.errorMessageEmail = 'Cet email existe déjà !';
-          }
-          else if (error.status === 400 && error.error === "Ce numéro de téléphone existe déjà !") {
-            this.errorMessagePhone = 'Ce numéro de téléphone existe déjà !';
-          }
-          else{
-            this.errorMessage = 'Erreur lors de l\'inscription, veuillez rééssayer ultérieurement.';
-          }
+    this.customerService.createCustomer(this.newUser).subscribe(
+      (res) => {
+        this.authService.setCurrentUser(this.newUser);
+        this.router.navigate([`/customers/dashboard/${res.userId}`]);
+      },
+      (error) => {
+        if (error.status === 400 && error.error === 'Cet email existe déjà !') {
+          this.errorMessageEmail = 'Cet email existe déjà !';
+        } else if (
+          error.status === 400 &&
+          error.error === 'Ce numéro de téléphone existe déjà !'
+        ) {
+          this.errorMessagePhone = 'Ce numéro de téléphone existe déjà !';
+        } else {
+          this.errorMessage =
+            "Erreur lors de l'inscription, veuillez rééssayer ultérieurement.";
         }
-      )
+      }
+    );
   }
 }
-
-
-
-
 
 //     createAccountCustomer(newUser: Customer){
 //     this.customerService.createCustomer(newUser)
