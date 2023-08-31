@@ -55,7 +55,7 @@ export class NavBarRestaurantOwnerComponent implements OnInit {
             if (data.length === 0) {
               this.modalService.open(PopupInformationComponent);
             } else {
-              const urlRestaurantDashboard = `/restaurants/dashboard/${this.currentRestaurant.restaurant_id}/user/${this.currentRestaurant.restaurant_owner_id}`;
+              const urlRestaurantDashboard = `/restaurants/dashboard/${this.currentRestaurant.restaurant_id}/user/${this.currentRestaurant.user_id}`;
               this.router.navigate([urlRestaurantDashboard]);
             }
           },

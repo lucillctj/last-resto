@@ -8,5 +8,5 @@ export interface Restaurant {
   phone: string;
   website: string | null;
   is_available: any;
-  restaurant_owner_id: number | undefined;
+  user_id: number | undefined;
 }

@@ -32,7 +32,7 @@ export class RestaurantController {
         restaurant.restaurantOwnerId! >= 1 &&
         (Object.keys(body).length === 7 || 8)
       ) {
-        const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_available, restaurant_owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO restaurants (name, description, address, post_code, city, phone, website, is_available, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const params = [
           restaurant.name,
           restaurant.description,
@@ -83,7 +83,7 @@ export class RestaurantController {
     const userRequestId = parseInt(req.params.user);
     try {
       db.query(
-        `SELECT * FROM restaurants WHERE restaurant_owner_id =${userRequestId}`,
+        `SELECT * FROM restaurants WHERE user_id =${userRequestId}`,
         (error: Error | null, results: Restaurant[]) => {
           return res.status(200).send(results);
         }
@@ -145,7 +145,7 @@ export class RestaurantController {
         bodyRestaurant.phone !== '' &&
         Object.keys(body).length >= 6
       ) {
-        const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, restaurant_owner_id = ? WHERE restaurant_id = ${restaurantRequestId}`;
+        const sql = `UPDATE restaurants SET name = ?, description = ?, address = ?, post_code = ?, city = ?, phone = ?, website = ?, user_id = ? WHERE restaurant_id = ${restaurantRequestId}`;
         const params = [
           bodyRestaurant.name,
           bodyRestaurant.description,

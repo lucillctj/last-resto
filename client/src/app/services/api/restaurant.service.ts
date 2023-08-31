@@ -11,7 +11,7 @@ export class RestaurantService {
   constructor(private http: HttpClient) {}
 
   createRestaurant(restaurant: Restaurant): Observable<any> {
-    const url = `${this.apiUrl}/create/${restaurant.restaurant_owner_id}`;
+    const url = `${this.apiUrl}/create/${restaurant.user_id}`;
     return this.http.post<any>(url, restaurant, { withCredentials: true });
   }
 
@@ -34,7 +34,7 @@ export class RestaurantService {
   }
 
   updateRestaurant(restaurant: Restaurant): Observable<any> {
-    const url = `${this.apiUrl}/update/${restaurant.restaurant_id}/user/${restaurant.restaurant_owner_id}`;
+    const url = `${this.apiUrl}/update/${restaurant.restaurant_id}/user/${restaurant.user_id}`;
     return this.http.put<any>(url, restaurant, { withCredentials: true });
   }
 
@@ -42,12 +42,12 @@ export class RestaurantService {
     restaurant: Restaurant,
     isAvailable: boolean
   ): Observable<any> {
-    const url = `${this.apiUrl}/update-availability/${restaurant.restaurant_id}/user/${restaurant.restaurant_owner_id}`;
+    const url = `${this.apiUrl}/update-availability/${restaurant.restaurant_id}/user/${restaurant.user_id}`;
     return this.http.put<any>(url, { isAvailable }, { withCredentials: true });
   }
 
   deleteRestaurant(restaurant: Restaurant): Observable<void> {
-    const url = `${this.apiUrl}/delete/${restaurant.restaurant_id}/user/${restaurant.restaurant_owner_id}`;
+    const url = `${this.apiUrl}/delete/${restaurant.restaurant_id}/user/${restaurant.user_id}`;
     return this.http.delete<void>(url, { withCredentials: true });
   }
 }
