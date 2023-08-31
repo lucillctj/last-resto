@@ -10,11 +10,12 @@ import {restaurantRoutes} from "./routes/restaurantRoutes";
 import {productRoutes} from "./routes/productRoutes";
 import {adminRoutes} from "./routes/adminRoutes";
 import {usersRoutes} from "./routes/usersRoutes";
-import helmet from 'helmet';
+// import helmet from 'helmet';
 
 dotenv.config();
 
 const app: Express = express();
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
 const corsOptions = {
     origin: 'http://localhost:4200',
@@ -30,9 +31,10 @@ const apiLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
-
-app.use(helmet());
 app.use(apiLimiter);
+
+// app.use(express.static(process.cwd()+"/dist/view/dist/"));
+// app.use(helmet());
 
 app.use('/customers', customerRoutes());
 app.use('/restaurant-owners', restaurantOwnerRoutes());
@@ -40,6 +42,10 @@ app.use('/admins', adminRoutes());
 app.use('/users', usersRoutes());
 app.use('/restaurants', restaurantRoutes());
 app.use('/products', productRoutes());
+
+// app.get('/', (req,res) => {
+//     res.sendFile(process.cwd()+"/dist/view/dist/index.html");
+// });
 
 const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
