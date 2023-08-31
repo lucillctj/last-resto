@@ -30,7 +30,7 @@ export class PopupUpdateRestaurantComponent implements OnInit {
 
   ngOnInit() {
     this.updatedRestaurant.restaurant_id = this.currentRestaurant.restaurant_id;
-    this.updatedRestaurant.restaurant_owner_id = this.currentUserId;
+    this.updatedRestaurant.user_id = this.currentUserId;
     this.updatedRestaurant.name = this.currentRestaurant.name;
     this.updatedRestaurant.description = this.currentRestaurant.description;
     this.updatedRestaurant.address = this.currentRestaurant.address;

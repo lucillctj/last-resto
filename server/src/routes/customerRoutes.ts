@@ -22,7 +22,11 @@ export const customerRoutes = () => {
     CustomerController.getUserIdByProductId
   );
   router.put('/update/:user', verifyAuth, CustomerController.updateCustomer);
-  router.put('/update-product-id/:user', CustomerController.updateProductId);
+  router.put(
+    '/update-product-id/:user',
+    verifyAuth,
+    CustomerController.updateProductId
+  );
   router.get(
     '/:user/product',
     verifyAuth,

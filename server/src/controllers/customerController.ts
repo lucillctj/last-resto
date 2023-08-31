@@ -259,9 +259,6 @@ export class CustomerController {
   ): Promise<any> {
     const userRequestId = parseInt(req.params.user);
     const productIdValue = req.body.productId;
-    console.log(req.body);
-
-    console.log(req.body.productId);
     try {
       if (
         (userRequestId >= 1 && productIdValue >= 1) ||
