@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://domaine.com/'
+    apiUrl: 'https://last-resto-web-service.onrender.com'
 };
