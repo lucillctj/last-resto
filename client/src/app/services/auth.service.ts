@@ -1,22 +1,23 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from "../interfaces/user-interface";
-import {Customer} from "../interfaces/customer-interface";
-import {RestaurantOwner} from "../interfaces/restaurantOwner-interface";
-
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../interfaces/user-interface';
+import { Customer } from '../interfaces/customer-interface';
+import { RestaurantOwner } from '../interfaces/restaurantOwner-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User | Customer | RestaurantOwner>;
+  private currentUserSubject: BehaviorSubject<
+    User | Customer | RestaurantOwner
+  >;
   public currentUser: Observable<User | Customer | RestaurantOwner>;
 
-
-  constructor()
-  {
+  constructor() {
     const storedUser = localStorage.getItem('currentUser');
-    this.currentUserSubject = new BehaviorSubject<User | Customer | RestaurantOwner>(storedUser ? JSON.parse(storedUser) : null);
+    this.currentUserSubject = new BehaviorSubject<
+      User | Customer | RestaurantOwner
+    >(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -24,12 +25,14 @@ export class AuthService {
     this.currentUserSubject.next(user as User | Customer | RestaurantOwner);
   }
 
-  public getCurrentUser(): Observable<User | Customer | RestaurantOwner | null> {
+  public getCurrentUser(): Observable<
+    User | Customer | RestaurantOwner | null
+  > {
     return this.currentUserSubject.asObservable();
   }
 
   forgetUser() {
-    localStorage.removeItem('currentUser')
+    localStorage.removeItem('currentUser');
   }
 
   // setCurrentRestaurant(restaurant: Restaurant) {
@@ -40,12 +43,10 @@ export class AuthService {
   //   const restaurantString = localStorage.getItem('currentRestaurant');
   //   return restaurantString ? JSON.parse(restaurantString) : null;  }
 
-
-//To delete one item:
+  //To delete one item:
 
   //this.storage.delete('user').subscribe(() => {});
-//To delete all items:
+  //To delete all items:
 
-//this.storage.clear().subscribe(() => {});
-
+  //this.storage.clear().subscribe(() => {});
 }

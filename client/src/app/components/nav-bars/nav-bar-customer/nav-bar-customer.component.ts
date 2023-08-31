@@ -1,18 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from "../../../services/auth.service";
-import {Customer} from "../../../interfaces/customer-interface";
-import {
-  RedirectToCreateAccountOrLoginComponent
-} from "../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component";
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { Customer } from '../../../interfaces/customer-interface';
+import { RedirectToCreateAccountOrLoginComponent } from '../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component';
 
 @Component({
   selector: 'app-nav-bar-customer',
   templateUrl: './nav-bar-customer.component.html',
   styleUrls: ['./nav-bar-customer.component.scss', '../../../../styles.scss']
 })
-export class NavBarCustomerComponent implements OnInit{
+export class NavBarCustomerComponent implements OnInit {
   currentCustomer: Customer;
   isSearchActive: boolean;
   isDashboardActive: boolean;
@@ -28,11 +26,10 @@ export class NavBarCustomerComponent implements OnInit{
     this.isDashboardActive = false;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     if (this.router.url.includes('/restaurants')) {
       this.isSearchActive = true;
-    }
-    else if (this.router.url.includes('/customers/dashboard')) {
+    } else if (this.router.url.includes('/customers/dashboard')) {
       this.isDashboardActive = true;
     }
   }
@@ -48,22 +45,19 @@ export class NavBarCustomerComponent implements OnInit{
   }
 
   redirectToCustomerDashboard() {
-    this.authService.getCurrentUser().subscribe(currentUser => {
+    this.authService.getCurrentUser().subscribe((currentUser) => {
       this.currentCustomer = currentUser as Customer;
     });
 
     if (this.router.url.includes(`/customers/dashboard/`)) {
       this.isSearchActive = true;
-
     } else if (this.currentCustomer) {
       const urlCustomerDashboard = `/customers/dashboard/${this.currentCustomer.user_id}`;
 
       this.isSearchActive = false;
       this.router.navigate([urlCustomerDashboard]);
-    }
-    else {
-      this.modalService.open(RedirectToCreateAccountOrLoginComponent)
+    } else {
+      this.modalService.open(RedirectToCreateAccountOrLoginComponent);
     }
   }
-
 }

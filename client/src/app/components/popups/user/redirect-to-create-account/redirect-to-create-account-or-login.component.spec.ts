@@ -8,9 +8,8 @@ describe('RedirectToCreateAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RedirectToCreateAccountOrLoginComponent ]
-    })
-    .compileComponents();
+      declarations: [RedirectToCreateAccountOrLoginComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RedirectToCreateAccountOrLoginComponent);
     component = fixture.componentInstance;
