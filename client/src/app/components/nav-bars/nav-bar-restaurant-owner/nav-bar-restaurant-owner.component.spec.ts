@@ -8,9 +8,8 @@ describe('NavBarRestaurantOwnerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavBarRestaurantOwnerComponent ]
-    })
-    .compileComponents();
+      declarations: [NavBarRestaurantOwnerComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavBarRestaurantOwnerComponent);
     component = fixture.componentInstance;

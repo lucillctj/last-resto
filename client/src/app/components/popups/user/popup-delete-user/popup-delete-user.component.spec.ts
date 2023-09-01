@@ -8,9 +8,8 @@ describe('PopupDeleteUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PopupDeleteUserComponent ]
-    })
-    .compileComponents();
+      declarations: [PopupDeleteUserComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PopupDeleteUserComponent);
     component = fixture.componentInstance;

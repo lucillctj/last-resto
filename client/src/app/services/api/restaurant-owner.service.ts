@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {RestaurantOwner} from "../../interfaces/restaurantOwner-interface";
-import {environment} from "../../../environments/environment";
+import { RestaurantOwner } from '../../interfaces/restaurantOwner-interface';
+import { environment } from '../../../environments/environment';
 
-@Injectable(
-  {providedIn: 'root'}
-)
+@Injectable({ providedIn: 'root' })
 export class RestaurantOwnerService {
   private apiUrl = `${environment.apiUrl}/restaurant-owners`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createRestaurantOwner(user: RestaurantOwner): Observable<any> {
     const url = `${this.apiUrl}/signup`;
-    return this.http.post<any>(url, user, {withCredentials: true});
+    return this.http.post<any>(url, user, { withCredentials: true });
   }
 
   getRestaurantOwnerDashboard(userId: number): Observable<RestaurantOwner> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
-    return this.http.get<RestaurantOwner>(url, {withCredentials: true});
+    return this.http.get<RestaurantOwner>(url, { withCredentials: true });
   }
 
-  updateRestaurantOwner(updatedUser: RestaurantOwner, currentUser: RestaurantOwner): Observable<any> {
+  updateRestaurantOwner(
+    updatedUser: RestaurantOwner,
+    currentUser: RestaurantOwner
+  ): Observable<any> {
     const url = `${this.apiUrl}/update/${currentUser.user_id}`;
-    return this.http.put<any>(url, updatedUser, {withCredentials: true});
+    return this.http.put<any>(url, updatedUser, { withCredentials: true });
   }
 }

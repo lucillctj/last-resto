@@ -3,6 +3,5 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  user_id?: number;
   restaurant_id: number | undefined;
 }

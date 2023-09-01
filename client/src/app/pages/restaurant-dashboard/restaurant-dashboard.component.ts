@@ -1,24 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {
-  PopupUpdateRestaurantComponent
-} from "../../components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component";
-import {Restaurant} from "../../interfaces/restaurant-interface";
-import {RestaurantService} from "../../services/api/restaurant.service";
-import {
-  PopupDeleteRestaurantComponent
-} from "../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component";
-import {ProductService} from "../../services/api/product.service";
-import {Product} from "../../interfaces/product-interface";
-import {
-  PopupCreateProductComponent
-} from "../../components/popups/product/popup-create-product/popup-create-product.component";
-import {CustomerService} from "../../services/api/customer.service";
-import {Customer} from "../../interfaces/customer-interface";
-import {AuthService} from "../../services/auth.service";
-import {RestaurantOwnerService} from "../../services/api/restaurant-owner.service";
+import { PopupUpdateRestaurantComponent } from '../../components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component';
+import { Restaurant } from '../../interfaces/restaurant-interface';
+import { RestaurantService } from '../../services/api/restaurant.service';
+import { PopupDeleteRestaurantComponent } from '../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component';
+import { ProductService } from '../../services/api/product.service';
+import { Product } from '../../interfaces/product-interface';
+import { PopupCreateProductComponent } from '../../components/popups/product/popup-create-product/popup-create-product.component';
+import { CustomerService } from '../../services/api/customer.service';
+import { Customer } from '../../interfaces/customer-interface';
+import { AuthService } from '../../services/auth.service';
+import { RestaurantOwnerService } from '../../services/api/restaurant-owner.service';
 
 @Component({
   selector: 'app-restaurant-dashboard',
@@ -37,7 +31,6 @@ export class RestaurantDashboardComponent implements OnInit {
   userHasReserved!: Customer;
   productReserved!: Product;
 
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -54,66 +47,83 @@ export class RestaurantDashboardComponent implements OnInit {
     this.newAvailability = undefined;
     this.successMessage = null;
     this.errorMessage = null;
-    this.currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
+    this.currentUserId = parseInt(this.route.snapshot.paramMap.get('user')!);
   }
 
   ngOnInit() {
-    const currentRestaurantId = parseInt(this.route.snapshot.paramMap.get("id")!);
+    const currentRestaurantId = parseInt(
+      this.route.snapshot.paramMap.get('id')!
+    );
 
-    this.restaurantOwnerService.getRestaurantOwnerDashboard(this.currentUserId)
+    this.restaurantOwnerService
+      .getRestaurantOwnerDashboard(this.currentUserId)
       .subscribe((data) => {
         this.authService.setCurrentUser(data);
-      })
+      });
 
     if (currentRestaurantId) {
-      this.restaurantService.getRestaurantDashboard(currentRestaurantId, this.currentUserId)
+      this.restaurantService
+        .getRestaurantDashboard(currentRestaurantId, this.currentUserId)
         .subscribe(
           (data) => {
             this.currentRestaurant = data;
             this.isAvailable = data.is_available.data[0];
           },
           (error) => {
-            console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
+            console.error(
+              "Une erreur s'est produite lors de la récupération des données du restaurant.",
+              error
+            );
             this.router.navigate(['']);
-          })
+          }
+        );
     } else {
-      console.error('L\'ID du restaurant n\'est pas un nombre valide.');
+      console.error("L'ID du restaurant n'est pas un nombre valide.");
       this.router.navigate(['']);
     }
 
-    this.productService.getProductsByRestaurantId(currentRestaurantId, this.currentUserId)
-      .subscribe(
-        (data) => {
-          this.currentProducts = data;
+    this.productService
+      .getProductsByRestaurantId(currentRestaurantId, this.currentUserId)
+      .subscribe((data) => {
+        this.currentProducts = data;
 
-          if (this.currentProducts.length > 0) {
-            this.currentProducts.forEach(async (product: Product) => {
-              await this.customerService.getUserIdByProductId(product, this.currentUserId)
-                .subscribe((results) => {
-                    this.usersIdsHasReserved = results;
-                    this.usersIdsHasReserved.forEach((user: any) => {
-                        this.customerService.getDataCustomer(user.user_id, this.currentUserId)
-                          .subscribe((result) => {
-                              this.userHasReserved = result;
+        if (this.currentProducts.length > 0) {
+          this.currentProducts.forEach(async (product: Product) => {
+            await this.customerService
+              .getUserIdByProductId(product, this.currentUserId)
+              .subscribe(
+                (results) => {
+                  this.usersIdsHasReserved = results;
+                  this.usersIdsHasReserved.forEach(
+                    (user: any) => {
+                      this.customerService
+                        .getDataCustomer(user.user_id, this.currentUserId)
+                        .subscribe(
+                          (result) => {
+                            this.userHasReserved = result;
                             this.productReserved = product;
-
-                            },
-                            (error) => {
-                              console.error(error);
-                            })
-                      },
-                      (error: Error) => {
-                        console.error(error);
-                      })
-                  },
-                  (error) => {
-                    console.error('Une erreur s\'est produite lors de la récupération des formules du restaurant.', error);
-                  })
-            })
-          }
-        })
+                          },
+                          (error) => {
+                            console.error(error);
+                          }
+                        );
+                    },
+                    (error: Error) => {
+                      console.error(error);
+                    }
+                  );
+                },
+                (error) => {
+                  console.error(
+                    "Une erreur s'est produite lors de la récupération des formules du restaurant.",
+                    error
+                  );
+                }
+              );
+          });
+        }
+      });
   }
-
 
   openPopupToUpdate() {
     const modalRef = this.modalService.open(PopupUpdateRestaurantComponent);
@@ -129,29 +139,42 @@ export class RestaurantDashboardComponent implements OnInit {
   }
 
   updateAvailability() {
-    this.restaurantService.updateAvailability(this.currentRestaurant, this.isAvailable)
+    this.restaurantService
+      .updateAvailability(this.currentRestaurant, this.isAvailable)
       .subscribe(
         () => {
-          this.successMessage = 'La disponibilité du restaurant a bien été prise en compte !'},
+          this.successMessage =
+            'La disponibilité du restaurant a bien été prise en compte !';
+        },
         (error) => {
           this.errorMessage = 'Une erreur est survenue !';
-          console.error('Une erreur s\'est produite lors de la récupération des données du restaurant.', error);
-        })
+          console.error(
+            "Une erreur s'est produite lors de la récupération des données du restaurant.",
+            error
+          );
+        }
+      );
   }
 
-  openPopupToCreateProduct(){
+  openPopupToCreateProduct() {
     const modalRef = this.modalService.open(PopupCreateProductComponent);
     modalRef.componentInstance.currentRestaurant = this.currentRestaurant;
     modalRef.componentInstance.currentUserId = this.currentUserId;
   }
 
-  deleteProduct(currentProduct: Product){
-    this.productService.deleteProduct(currentProduct, this.currentUserId)
-      .subscribe(() => {
+  deleteProduct(currentProduct: Product) {
+    this.productService
+      .deleteProduct(currentProduct, this.currentUserId)
+      .subscribe(
+        () => {
           this.ngOnInit();
         },
         (error) => {
-          console.error('Une erreur s\'est produite lors de la suppression du produit.', error);
-        })
+          console.error(
+            "Une erreur s'est produite lors de la suppression du produit.",
+            error
+          );
+        }
+      );
   }
 }

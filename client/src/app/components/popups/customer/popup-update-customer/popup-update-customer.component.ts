@@ -1,17 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Customer} from "../../../../interfaces/customer-interface";
-import {CustomerService} from "../../../../services/api/customer.service";
-import {Router} from '@angular/router';
-import {AuthService} from "../../../../services/auth.service";
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { Customer } from '../../../../interfaces/customer-interface';
+import { CustomerService } from '../../../../services/api/customer.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-popup-update-customer',
   templateUrl: './popup-update-customer.component.html',
-  styleUrls: ['./popup-update-customer.component.scss', '../../../../../styles.scss']
+  styleUrls: [
+    './popup-update-customer.component.scss',
+    '../../../../../styles.scss'
+  ]
 })
-export class PopupUpdateCustomerComponent implements OnInit{
+export class PopupUpdateCustomerComponent implements OnInit {
   @Input() currentCustomer!: Customer;
 
   submitted = false;
@@ -40,8 +42,8 @@ export class PopupUpdateCustomerComponent implements OnInit{
     this.newPassword = '';
   }
 
-  ngOnInit(){
-    this.authService.getCurrentUser().subscribe(currentUser => {
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe((currentUser) => {
       this.currentCustomer = currentUser as Customer;
     });
 
@@ -56,37 +58,58 @@ export class PopupUpdateCustomerComponent implements OnInit{
 
   onSubmit() {
     this.submitted = true;
-    if(this.newPassword != ''){
+    if (this.newPassword != '') {
       this.updatedUser.password = this.newPassword;
     }
-    if(this.updatedUser.first_name && this.updatedUser.last_name &&  this.updatedUser.email && this.updatedUser.phone && this.updatedUser.address && this.updatedUser.post_code && this.updatedUser.city) {
-      this.customerService.updateCustomer(this.updatedUser, this.currentCustomer)
-        .subscribe(() => {
-            this.successMessage = 'Vos informations ont bien été mises à jour !';
+    if (
+      this.updatedUser.first_name &&
+      this.updatedUser.last_name &&
+      this.updatedUser.email &&
+      this.updatedUser.phone &&
+      this.updatedUser.address &&
+      this.updatedUser.post_code &&
+      this.updatedUser.city
+    ) {
+      this.customerService
+        .updateCustomer(this.updatedUser, this.currentCustomer)
+        .subscribe(
+          () => {
+            this.successMessage =
+              'Vos informations ont bien été mises à jour !';
             setTimeout(() => {
               location.reload();
-              this.modalService.dismissAll()
-            }, 2000)
+              this.modalService.dismissAll();
+            }, 2000);
           },
-          error => {
-            if (error.status === 400 && error.error === "Cet email existe déjà !") {
+          (error) => {
+            if (
+              error.status === 400 &&
+              error.error === 'Cet email existe déjà !'
+            ) {
               this.errorMessageEmail = 'Cet email existe déjà !';
-            } else if (error.status === 400 && error.error === "Ce numéro de téléphone existe déjà !") {
+            } else if (
+              error.status === 400 &&
+              error.error === 'Ce numéro de téléphone existe déjà !'
+            ) {
               this.errorMessagePhone = 'Ce numéro de téléphone existe déjà !';
-            } else if (error.status === 400 && error.error === "Certains champs sont manquants ou incorrects.") {
-              this.errorMessage = 'Certains champs sont manquants ou incorrects.';
+            } else if (
+              error.status === 400 &&
+              error.error === 'Certains champs sont manquants ou incorrects.'
+            ) {
+              this.errorMessage =
+                'Certains champs sont manquants ou incorrects.';
             } else {
-              this.errorMessage = 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.'
+              this.errorMessage =
+                'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
             }
           }
-        )
-    }
-    else {
+        );
+    } else {
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }
   }
 
-  closePopup(){
-    this.modalService.dismissAll()
+  closePopup() {
+    this.modalService.dismissAll();
   }
 }

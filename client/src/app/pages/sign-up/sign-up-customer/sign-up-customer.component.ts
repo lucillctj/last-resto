@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up-customer.component.scss', '../../../../styles.scss']
 })
 export class SignUpCustomerComponent {
-  constructor(private router: Router) { }
-  returnToHomePage(){
+  constructor(private router: Router) {}
+  returnToHomePage() {
     this.router.navigate(['']);
   }
 }
