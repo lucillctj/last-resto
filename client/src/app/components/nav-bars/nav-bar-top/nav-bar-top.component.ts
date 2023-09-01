@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { User } from '../../../interfaces/user-interface';
-import { UserService } from '../../../services/api/user.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
+import {User} from '../../../interfaces/user-interface';
+import {UserService} from '../../../services/api/user.service';
 
 @Component({
   selector: 'app-nav-bar-top',
@@ -26,12 +26,7 @@ export class NavBarTopComponent implements OnInit {
     });
   }
 
-  // ngOnChanges(){
-  //   this.authService.getCurrentUser().subscribe(user => {
-  //     this.currentUser = user;
-  //   });  }
-
-  redirectToRestaurantsList() {
+  redirectToHome() {
     this.router.navigate(['']);
   }
 

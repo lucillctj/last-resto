@@ -17,7 +17,7 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class PopupCreateRestaurantComponent {
   @Input() currentUser!: RestaurantOwner;
-  @ViewChild('form', { static: false })
+  // @ViewChild('form', { static: false })
   form!: NgForm;
   submitted = false;
   newRestaurant: Restaurant;
