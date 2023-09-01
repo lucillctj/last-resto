@@ -19,7 +19,7 @@ export class PopupCreateProductComponent {
   @Input() currentRestaurant!: Restaurant;
   @Input() currentUserId!: number;
 
-  @ViewChild('form', { static: false })
+  // @ViewChild('form', { static: false })
   form!: NgForm;
   submitted = false;
   newProduct: Product;

@@ -14,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
   ]
 })
 export class CreateAccountRestaurantComponent {
-  @ViewChild('form', { static: false })
+  // @ViewChild('form', { static: false })
   form!: NgForm;
   submitted = false;
   newUser: RestaurantOwner;
