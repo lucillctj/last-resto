@@ -2,11 +2,13 @@
 @import "../styles-nav-bar";
 
 .logo-nav-bar{
-  width: 12%;
+  width: 15%;
   padding: 0.2em 0;
-
-  @media (max-width: 600px) {
-    width: 28%;
+  @media (max-width: 900px) {
+    width: 30%;
+  }
+  @media (max-width: 540px) {
+    width: 80%;
   }
 }
 
@@ -47,8 +49,7 @@
   background-color: white;
   border: solid 0.15em;
   font-size: 0.8rem;
-  margin-top: 0.8em;
-  margin-bottom: 0.8em;
+  margin: 0.8em 1em 0.8em 0;
   display: flex;
   align-items: center;
   justify-content: center;
