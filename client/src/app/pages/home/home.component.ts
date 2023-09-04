@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +9,15 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   constructor(private router: Router) {}
 
-  showFormToCreateAccountCustomer() {
+  showRestaurantsList() {
+    this.router.navigate(['/restaurants']);
+  }
+
+  showFormToCreateAccountCustomer(){
     this.router.navigate(['/customers/signup']);
   }
 
-  showFormToCreateAccountRestaurant() {
+  showFormToCreateAccountRestaurant(){
     this.router.navigate(['/restaurant-owners/signup']);
   }
 }
