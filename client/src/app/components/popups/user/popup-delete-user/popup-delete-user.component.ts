@@ -39,30 +39,35 @@ export class PopupDeleteUserComponent {
       this.restaurantService
         .getRestaurantByUserId(this.currentUser.user_id as number)
         .subscribe({
-          next: (restaurants) => {
+          next: async (restaurants) => {
             if (restaurants.length >= 1) {
               this.errorMessage =
                 'Veuillez supprimer votre restaurant, avant de réessayer.';
+            } else {
+              await this.deleteUser();
             }
           },
           error: () =>
             (this.errorMessage = 'Erreur lors de la récupération des données.')
         });
     } else {
-      this.userService.deleteUser(this.currentUser).subscribe({
-        next: () => {
-          this.successMessage = 'Votre compte a bien été supprimé !';
-          this.authService.setCurrentUser(null);
-          this.modalService.dismissAll();
-          this.router.navigate(['']);
-        },
-        error: () =>
-          (this.errorMessage =
-            'Erreur lors de la suppression, veuillez réessayer ultérieurement.')
-      });
+      await this.deleteUser();
     }
   }
 
+  async deleteUser(){
+    this.userService.deleteUser(this.currentUser).subscribe({
+      next: () => {
+        this.successMessage = 'Votre compte a bien été supprimé !';
+        this.authService.setCurrentUser(null);
+        this.modalService.dismissAll();
+        this.router.navigate(['']);
+      },
+      error: () =>
+        (this.errorMessage =
+          'Erreur lors de la suppression, veuillez réessayer ultérieurement.')
+    });
+  }
   closePopup() {
     this.modalService.dismissAll();
   }

@@ -61,7 +61,7 @@ export class PopupUpdateRestaurantComponent implements OnInit {
             this.modalService.dismissAll();
           }, 2000);
         },
-        (error) => {
+        (_) => {
           this.errorMessage =
             'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
         }

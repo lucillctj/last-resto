@@ -93,7 +93,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
                 this.modalService.dismissAll();
               }, 2000);
             },
-            (error) => {
+            (_) => {
               this.errorMessage =
                 'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
             }

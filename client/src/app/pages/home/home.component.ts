@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   constructor(private router: Router) {}
 
+  showRestaurantsList() {
+    this.router.navigate(['/restaurants']);
+  }
+
   showFormToCreateAccountCustomer() {
     this.router.navigate(['/customers/signup']);
   }

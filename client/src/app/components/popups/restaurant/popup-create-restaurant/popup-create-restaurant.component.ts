@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestaurantOwner } from '../../../../interfaces/restaurantOwner-interface';
 import { RestaurantService } from '../../../../services/api/restaurant.service';
@@ -17,8 +17,6 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class PopupCreateRestaurantComponent {
   @Input() currentUser!: RestaurantOwner;
-  // @ViewChild('form', { static: false })
-  form!: NgForm;
   submitted = false;
   newRestaurant: Restaurant;
   successMessage: string | null;
@@ -35,9 +33,9 @@ export class PopupCreateRestaurantComponent {
     this.errorMessage = null;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!this.form.form.valid) {
+    if (!form.valid) {
       return;
     }
 
@@ -52,7 +50,7 @@ export class PopupCreateRestaurantComponent {
           this.modalService.dismissAll();
         }, 2000);
       },
-      (error) => {
+      (_) => {
         this.errorMessage =
           'Erreur lors de la création du restaurant, veuillez réessayer ultérieurement.';
       }

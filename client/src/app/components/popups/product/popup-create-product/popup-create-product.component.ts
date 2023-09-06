@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,8 +19,6 @@ export class PopupCreateProductComponent {
   @Input() currentRestaurant!: Restaurant;
   @Input() currentUserId!: number;
 
-  // @ViewChild('form', { static: false })
-  form!: NgForm;
   submitted = false;
   newProduct: Product;
   successMessage: string | null;
@@ -38,9 +36,9 @@ export class PopupCreateProductComponent {
     this.errorMessage = null;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!this.form.form.valid) {
+    if (!form.valid) {
       return;
     }
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
@@ -51,7 +49,7 @@ export class PopupCreateProductComponent {
           location.reload();
           this.modalService.dismissAll();
         },
-        (error) => {
+        (_) => {
           this.errorMessage =
             'Erreur lors de la création de la formule, veuillez réessayer ultérieurement.';
         }
