@@ -14,7 +14,6 @@ import { AuthService } from '../../services/auth.service';
   ]
 })
 export class CreateAccountCustomerComponent {
-  form!: NgForm;
   submitted = false;
   newUser: Customer;
   errorMessageEmail: string | null;
@@ -32,22 +31,9 @@ export class CreateAccountCustomerComponent {
     this.errorMessage = null;
   }
 
-  // ngOnInit() {
-  //   // this.reactiveForm = this.formBuilder.group({
-  //   //   first_name: [null, [Validators.required]],
-  //   //   last_name: [null, [Validators.required]],
-  //   //   email: [null, [Validators.required]],
-  //   //   phone: [null, [Validators.required]],
-  //   //   password: [null, [Validators.required, Validators.minLength(6)]],
-  //   //   address: [null, [Validators.required]],
-  //   //   post_code: [null, [Validators.required]],
-  //   //   city: [null, [Validators.required]],
-  //   // });
-  // }
-
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!this.form.form.valid) {
+    if (!form.valid) {
       return;
     }
 

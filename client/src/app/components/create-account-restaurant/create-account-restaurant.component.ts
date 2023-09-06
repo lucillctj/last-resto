@@ -14,7 +14,6 @@ import { AuthService } from '../../services/auth.service';
   ]
 })
 export class CreateAccountRestaurantComponent {
-  form!: NgForm;
   submitted = false;
   newUser: RestaurantOwner;
   errorMessageEmail: string | null;
@@ -32,9 +31,9 @@ export class CreateAccountRestaurantComponent {
     this.errorMessage = null;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!this.form.form.valid) {
+    if (!form.valid) {
       return;
     }
 

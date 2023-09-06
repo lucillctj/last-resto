@@ -17,7 +17,6 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class PopupCreateRestaurantComponent {
   @Input() currentUser!: RestaurantOwner;
-  form!: NgForm;
   submitted = false;
   newRestaurant: Restaurant;
   successMessage: string | null;
@@ -34,9 +33,9 @@ export class PopupCreateRestaurantComponent {
     this.errorMessage = null;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!this.form.form.valid) {
+    if (!form.valid) {
       return;
     }
 

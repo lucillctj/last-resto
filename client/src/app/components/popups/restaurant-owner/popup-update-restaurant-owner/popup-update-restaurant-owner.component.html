@@ -1,6 +1,6 @@
 <button class="close-button" (click)="closePopup()">&times;</button>
 <h1 class="title">Modifier mes informations</h1>
-<form *ngIf="currentRestaurantOwner" #form="ngForm" (ngSubmit)="onSubmit()">
+<form *ngIf="currentRestaurantOwner" #form="ngForm">
   <div class="form-group">
     <label>Prénom</label>
     <input type="text" [(ngModel)]="updatedUser.first_name" class="form-control" name="firstName">
@@ -23,7 +23,7 @@
     <label>Mot de passe</label>
     <input type="password" placeholder="**************" [(ngModel)]="newPassword" class="form-control" name="password" minlength="6">
   </div>
-  <button type="submit" class="btn"> Mettre à jour ! </button>
+  <button type="submit" class="btn" (click)="onSubmit()"> Mettre à jour ! </button>
 </form>
 <div *ngIf="successMessage" class="success-message message">{{ successMessage }}</div>
 <div *ngIf="errorMessage" class="error-message message">{{ errorMessage }}</div>

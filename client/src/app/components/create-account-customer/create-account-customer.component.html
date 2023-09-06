@@ -1,7 +1,7 @@
 <section>
 <h1 class="title">Créer un compte</h1>
 
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form #form="ngForm">
 
   <div class="form-group">
     <input type="text" [(ngModel)]="newUser.first_name" class="form-control" placeholder="Prénom" name="firstName" required>
@@ -41,7 +41,7 @@
 <!--  </div>-->
 <!--  <button type="submit" class="btn" (click)="createAccountCustomer(newUser)">Go !</button>-->
   <div class="form-group">
-    <button type="submit" class="btn"> Go ! </button>
+    <button type="submit" class="btn" (click)="onSubmit(form)"> Go ! </button>
     <div *ngIf="submitted && !form.form.valid" class="error-message">Tous les champs sont requis !</div>
   </div>
 </form>

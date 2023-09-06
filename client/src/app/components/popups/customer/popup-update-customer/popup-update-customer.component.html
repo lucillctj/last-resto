@@ -1,6 +1,6 @@
 <button class="close-button" (click)="closePopup()">&times;</button>
 <h1 class="title">Modifier mes informations</h1>
-<form *ngIf="currentCustomer" #form="ngForm" (ngSubmit)="onSubmit()">
+<form *ngIf="currentCustomer" #form="ngForm">
 
   <div class="form-group">
     <label>Prénom</label>
@@ -44,7 +44,7 @@
     <input type="text" [(ngModel)]="updatedUser.city" class="form-control" name="city">
   </div>
 
-  <button type="submit" class="btn"> Mettre à jour ! </button>
+  <button type="submit" class="btn" (click)="onSubmit()"> Mettre à jour ! </button>
 </form>
 
 <div *ngIf="successMessage" class="success-message message">{{ successMessage }}</div>
