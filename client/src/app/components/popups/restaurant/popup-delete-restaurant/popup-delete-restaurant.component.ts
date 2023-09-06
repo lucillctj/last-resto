@@ -88,7 +88,7 @@ export class PopupDeleteRestaurantComponent {
           this.modalService.dismissAll();
         }, 2000);
       },
-      (error) => {
+      (_) => {
         this.errorMessage =
           'Erreur lors de la suppression du restaurant, veuillez réessayer ultérieurement.';
       }

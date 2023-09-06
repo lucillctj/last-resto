@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +13,11 @@ export class HomeComponent {
     this.router.navigate(['/restaurants']);
   }
 
-  showFormToCreateAccountCustomer(){
+  showFormToCreateAccountCustomer() {
     this.router.navigate(['/customers/signup']);
   }
 
-  showFormToCreateAccountRestaurant(){
+  showFormToCreateAccountRestaurant() {
     this.router.navigate(['/restaurant-owners/signup']);
   }
 }

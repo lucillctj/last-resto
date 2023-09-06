@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestaurantOwner } from '../../interfaces/restaurantOwner-interface';
 import { RestaurantOwnerService } from '../../services/api/restaurant-owner.service';
@@ -14,7 +14,6 @@ import { AuthService } from '../../services/auth.service';
   ]
 })
 export class CreateAccountRestaurantComponent {
-  // @ViewChild('form', { static: false })
   form!: NgForm;
   submitted = false;
   newUser: RestaurantOwner;
