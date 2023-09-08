@@ -198,7 +198,7 @@ export class CustomerDashboardComponent implements OnInit {
         },
         (error) => {
           console.error(
-            "Une erreur s'est produite lors de la mise à jour du produit.",
+            "Une erreur s'est produite lors de la réservation.",
             error
           );
         }

@@ -55,7 +55,7 @@ export class PopupDeleteUserComponent {
     }
   }
 
-  async deleteUser(){
+  async deleteUser() {
     this.userService.deleteUser(this.currentUser).subscribe({
       next: () => {
         this.successMessage = 'Votre compte a bien été supprimé !';
