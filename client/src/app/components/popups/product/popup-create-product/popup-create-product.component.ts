@@ -44,16 +44,16 @@ export class PopupCreateProductComponent {
     this.newProduct.restaurant_id = this.currentRestaurant.restaurant_id;
     this.productService
       .createProduct(this.newProduct, this.currentUserId)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           location.reload();
           this.modalService.dismissAll();
         },
-        (_) => {
+        error: () => {
           this.errorMessage =
             'Erreur lors de la création de la formule, veuillez réessayer ultérieurement.';
         }
-      );
+      });
   }
 
   closePopup() {

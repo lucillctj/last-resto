@@ -34,7 +34,7 @@ export const setTokenCookie = (res: Response, token: string) => {
   res
     .cookie('token', token, {
       maxAge: 7200000,
-      secure: false,
+      secure: true,
       httpOnly: true
     })
     .status(200);
