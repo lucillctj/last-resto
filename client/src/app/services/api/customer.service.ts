@@ -23,7 +23,8 @@ export class CustomerService {
       'Content-Security-Policy':
         "default-src https:; script-src https: 'nonce-random'",
       'X-Frame-Options': 'SAMEORIGIN',
-      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'Permissions-Policy': 'geolocation=(self)'
     });
     this.requestOptions = { withCredentials: true, headers: this.headers };
   }
