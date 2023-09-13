@@ -26,14 +26,14 @@
       <input type="password" [(ngModel)]="newUser.password" class="form-control" placeholder="Mot de passe" name="password" required minlength="6">
       <div *ngIf="newUser.password && newUser.password.length < 6" class="error-message error-message-password">Le mot de passe doit contenir au moins 6 caractères.</div>
     </div>
-
-<!--    <div class="form-check">-->
-<!--      <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--      <label class="form-check-label" for="exampleCheck1">J'accepte la politique de confidentialité</label>-->
-<!--    </div>-->
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="isPrivacyPolicyAccepted" [(ngModel)]="isPrivacyPolicyAccepted" [ngModelOptions]="{standalone: true}">
+      <label class="form-check-label" for="isPrivacyPolicyAccepted">J'accepte la <a href="/privacy-policy" target="_blank">politique de confidentialité</a></label>
+    </div>
     <div class="form-group">
       <button type="submit" class="btn" (click)="onSubmit(form)"> Go ! </button>
       <div *ngIf="submitted && !form.form.valid" class="error-message">Tous les champs sont requis !</div>
+      <div *ngIf="submitted && !isPrivacyPolicyAccepted" class="error-message">Veuillez cocher la case.</div>
     </div>
   </form>
 

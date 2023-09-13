@@ -19,6 +19,7 @@ export class CreateAccountCustomerComponent {
   errorMessageEmail: string | null;
   errorMessagePhone: string | null;
   errorMessage: string | null;
+  isPrivacyPolicyAccepted: boolean = false;
 
   constructor(
     private customerService: CustomerService,
@@ -33,16 +34,16 @@ export class CreateAccountCustomerComponent {
 
   onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!form.valid) {
+    if (!form.valid || this.isPrivacyPolicyAccepted === false) {
       return;
     }
 
-    this.customerService.createCustomer(this.newUser).subscribe(
-      (res) => {
+    this.customerService.createCustomer(this.newUser).subscribe({
+      next: (res) => {
         this.authService.setCurrentUser(this.newUser);
         this.router.navigate([`/customers/dashboard/${res.userId}`]);
       },
-      (error) => {
+      error: (error) => {
         if (error.status === 400 && error.error === 'Cet email existe déjà !') {
           this.errorMessageEmail = 'Cet email existe déjà !';
         } else if (
@@ -55,30 +56,6 @@ export class CreateAccountCustomerComponent {
             "Erreur lors de l'inscription, veuillez rééssayer ultérieurement.";
         }
       }
-    );
+    });
   }
 }
-
-//     createAccountCustomer(newUser: Customer){
-//     this.customerService.createCustomer(newUser)
-//       .subscribe(() => {
-//           this.successMessage = 'Votre compte a bien été créé !';
-//           this.router.navigate(['/customers/dashboard/:id']);
-//         },
-//         error => {
-//           if (error.status === 400 && error.error === "Cet email existe déjà !") {
-//             this.errorMessage = 'Cet email existe déjà !';
-//           }
-//           else if (error.status === 400 && error.error === "Ce numéro de téléphone existe déjà !") {
-//             this.errorMessage = 'Ce numéro de téléphone existe déjà !';
-//           }
-//           else if (error.status === 400){
-//             this.errorMessage = 'Certains champs sont manquants ou incorrects !';
-//           }
-//           else{
-//             this.errorMessage = 'Erreur lors de l\'inscription, veuillez rééssayer ultérieurement.';
-//           }
-//         }
-//       )
-//   }
-// }

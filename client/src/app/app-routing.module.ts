@@ -9,6 +9,7 @@ import { LogInComponent } from './pages/log-in/log-in.component';
 import { RestaurantOwnerDashboardComponent } from './pages/user-dashboard/restaurant-owner-dashboard/restaurant-owner-dashboard.component';
 import { RestaurantDashboardComponent } from './pages/restaurant-dashboard/restaurant-dashboard.component';
 import { RestaurantsListComponent } from './pages/restaurants-list/restaurants-list.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,7 +28,11 @@ const routes: Routes = [
     path: 'restaurants/dashboard/:id/user/:user',
     component: RestaurantDashboardComponent
   },
-  { path: 'restaurants', component: RestaurantsListComponent }
+  { path: 'restaurants', component: RestaurantsListComponent },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
+  }
 ];
 
 @NgModule({

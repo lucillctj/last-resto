@@ -19,6 +19,7 @@ export class CreateAccountRestaurantComponent {
   errorMessageEmail: string | null;
   errorMessagePhone: string | null;
   errorMessage: string | null;
+  isPrivacyPolicyAccepted: boolean = false;
 
   constructor(
     private restaurantOwnerService: RestaurantOwnerService,
@@ -33,16 +34,16 @@ export class CreateAccountRestaurantComponent {
 
   onSubmit(form: NgForm) {
     this.submitted = true;
-    if (!form.valid) {
+    if (!form.valid || this.isPrivacyPolicyAccepted === false) {
       return;
     }
 
-    this.restaurantOwnerService.createRestaurantOwner(this.newUser).subscribe(
-      (res) => {
+    this.restaurantOwnerService.createRestaurantOwner(this.newUser).subscribe({
+      next: (res) => {
         this.authService.setCurrentUser(this.newUser);
         this.router.navigate([`/restaurant-owners/dashboard/${res.userId}`]);
       },
-      (error) => {
+      error: (error) => {
         if (error.status === 400 && error.error === 'Cet email existe déjà !') {
           this.errorMessageEmail = 'Cet email existe déjà !';
         } else if (
@@ -55,6 +56,6 @@ export class CreateAccountRestaurantComponent {
             "Erreur lors de l'inscription, veuillez rééssayer ultérieurement.";
         }
       }
-    );
+    });
   }
 }

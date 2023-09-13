@@ -35,14 +35,14 @@
   <div class="form-group">
     <input type="text" [(ngModel)]="newUser.city" class="form-control" placeholder="Ville" name="city" required>
   </div>
-<!--  <div class="form-check">-->
-<!--    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--    <label class="form-check-label" for="exampleCheck1">J'accepte la politique de confidentialité</label>-->
-<!--  </div>-->
-<!--  <button type="submit" class="btn" (click)="createAccountCustomer(newUser)">Go !</button>-->
+ <div class="form-check">
+   <input type="checkbox" class="form-check-input" id="isPrivacyPolicyAccepted" [(ngModel)]="isPrivacyPolicyAccepted" [ngModelOptions]="{standalone: true}">
+   <label class="form-check-label" for="isPrivacyPolicyAccepted">J'accepte la <a href="/privacy-policy" target="_blank">politique de confidentialité</a></label>
+ </div>
   <div class="form-group">
     <button type="submit" class="btn" (click)="onSubmit(form)"> Go ! </button>
     <div *ngIf="submitted && !form.form.valid" class="error-message">Tous les champs sont requis !</div>
+    <div *ngIf="submitted && !isPrivacyPolicyAccepted" class="error-message">Veuillez cocher la case.</div>
   </div>
 </form>
 

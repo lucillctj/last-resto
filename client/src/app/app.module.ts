@@ -32,6 +32,7 @@ import { PopupDetailRestaurantComponent } from './components/popups/restaurant/p
 import { PopupCreateProductComponent } from './components/popups/product/popup-create-product/popup-create-product.component';
 import { NavBarTopComponent } from './components/nav-bars/nav-bar-top/nav-bar-top.component';
 import { RedirectToCreateAccountOrLoginComponent } from './components/popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { RedirectToCreateAccountOrLoginComponent } from './components/popups/use
     PopupDetailRestaurantComponent,
     PopupCreateProductComponent,
     NavBarTopComponent,
-    RedirectToCreateAccountOrLoginComponent
+    RedirectToCreateAccountOrLoginComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
