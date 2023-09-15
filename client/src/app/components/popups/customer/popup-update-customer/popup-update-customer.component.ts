@@ -4,6 +4,7 @@ import { CustomerService } from '../../../../services/api/customer.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-popup-update-customer',
@@ -56,7 +57,7 @@ export class PopupUpdateCustomerComponent implements OnInit {
     this.updatedUser.city = this.currentCustomer.city;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
     if (this.newPassword != '') {
       this.updatedUser.password = this.newPassword;
@@ -68,7 +69,8 @@ export class PopupUpdateCustomerComponent implements OnInit {
       this.updatedUser.phone &&
       this.updatedUser.address &&
       this.updatedUser.post_code &&
-      this.updatedUser.city
+      this.updatedUser.city &&
+      form.valid
     ) {
       this.customerService
         .updateCustomer(this.updatedUser, this.currentCustomer)

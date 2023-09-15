@@ -30,7 +30,6 @@ export class PopupDeleteRestaurantComponent {
     private customerService: CustomerService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
     private modalService: NgbModal
   ) {
     this.successMessage = null;
@@ -67,6 +66,7 @@ export class PopupDeleteRestaurantComponent {
           .subscribe(
             () => {
               console.log('produit supprimé :', product.name);
+              this.router.navigate([`/restaurant-owners/dashboard/${this.currentUserId}`]);
             },
             (error) => {
               console.error(

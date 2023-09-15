@@ -26,8 +26,6 @@ export class PopupCreateProductComponent {
 
   constructor(
     private productService: ProductService,
-    private router: Router,
-    private authService: AuthService,
     private modalService: NgbModal
   ) {
     this.currentRestaurant = {} as Restaurant;

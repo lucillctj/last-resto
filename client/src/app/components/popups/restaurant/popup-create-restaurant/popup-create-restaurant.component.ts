@@ -24,7 +24,6 @@ export class PopupCreateRestaurantComponent {
 
   constructor(
     private restaurantService: RestaurantService,
-    private authService: AuthService,
     private router: Router,
     private modalService: NgbModal
   ) {
@@ -44,9 +43,8 @@ export class PopupCreateRestaurantComponent {
       () => {
         this.successMessage = 'Votre restaurant a bien été créé !';
         setTimeout(() => {
-          this.router.navigate([
-            `/restaurant-owners/dashboard/${this.newRestaurant.user_id}`
-          ]);
+          location.reload();
+
           this.modalService.dismissAll();
         }, 2000);
       },

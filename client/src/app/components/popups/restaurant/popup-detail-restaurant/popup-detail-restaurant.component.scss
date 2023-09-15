@@ -30,3 +30,19 @@
 .btn:hover {
   background: $blue-hover;
 }
+
+.success-message{
+  bottom: 0;
+}
+
+.btn-create-account {
+  border: none;
+  color: white;
+  font-weight: 400;
+  font-size: 0.9rem;
+  background-color: $orange;
+}
+
+.btn-create-account:hover {
+  background-color: $orange-hover;
+}

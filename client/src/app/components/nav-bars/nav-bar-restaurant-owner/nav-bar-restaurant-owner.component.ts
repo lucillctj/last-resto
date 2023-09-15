@@ -6,7 +6,9 @@ import { PopupInformationComponent } from '../../popups/restaurant/popup-informa
 import { Restaurant } from '../../../interfaces/restaurant-interface';
 import { RestaurantOwner } from '../../../interfaces/restaurantOwner-interface';
 import { RestaurantService } from '../../../services/api/restaurant.service';
-import { RedirectToCreateAccountOrLoginComponent } from '../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component';
+import {
+  RedirectToCreateAccountOrLoginComponent
+} from "../../popups/user/redirect-to-create-account-or-login/redirect-to-create-account-or-login.component";
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',

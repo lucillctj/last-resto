@@ -5,6 +5,7 @@ import { RestaurantOwnerService } from '../../../../services/api/restaurant-owne
 import { Restaurant } from '../../../../interfaces/restaurant-interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../../../services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-popup-update-customer',
@@ -54,7 +55,7 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit {
     this.updatedUser.phone = this.currentRestaurantOwner.phone;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     this.submitted = true;
     if (this.newPassword != '') {
       this.updatedUser.password = this.newPassword;
@@ -64,7 +65,8 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit {
       this.updatedUser.first_name &&
       this.updatedUser.last_name &&
       this.updatedUser.email &&
-      this.updatedUser.phone
+      this.updatedUser.phone &&
+      form.valid
     ) {
       this.restaurantOwnerService
         .updateRestaurantOwner(this.updatedUser, this.currentRestaurantOwner)
