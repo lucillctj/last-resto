@@ -22,8 +22,8 @@ export class LogInComponent {
   }
 
   loginToAccount(user: User) {
-    this.userService.login(user).subscribe(
-      (res) => {
+    this.userService.login(user).subscribe({
+      next: (res) => {
         this.authService.setCurrentUser(user);
         if (res.userRole === 'customer') {
           this.router.navigate([`/customers/dashboard/${res.userId}`]);
@@ -31,7 +31,7 @@ export class LogInComponent {
           this.router.navigate([`/restaurant-owners/dashboard/${res.userId}`]);
         }
       },
-      (error) => {
+      error: (error) => {
         console.log('error', error);
         if (
           error.status === 401 &&
@@ -48,6 +48,6 @@ export class LogInComponent {
             'Erreur lors de la connexion, veuillez rééssayer ultérieurement.';
         }
       }
-    );
+    });
   }
 }

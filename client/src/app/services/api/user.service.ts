@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Cache-Control': 'no-cache',
       'Accept-Language': 'fr-FR',
       'X-Requested-With': 'XMLHttpRequest',
@@ -27,7 +27,7 @@ export class UserService {
     this.requestOptions = { withCredentials: true, headers: this.headers };
   }
 
-  login(user: User) {
+  login(user: User): Observable<any> {
     const url = `${this.apiUrl}/login`;
     return this.http.post<any>(url, user, this.requestOptions);
   }
