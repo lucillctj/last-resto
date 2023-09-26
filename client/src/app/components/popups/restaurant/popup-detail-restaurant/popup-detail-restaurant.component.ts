@@ -79,35 +79,31 @@ export class PopupDetailRestaurantComponent implements OnInit {
           this.errorMessageNotLoggedIn =
             'Vous devez être connecté pour pouvoir réserver !';
           return;
-        }
-
-        else if (this.currentCustomer.product_id) {
+        } else if (this.currentCustomer.product_id) {
           this.errorMessage =
             'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
           return;
-        }
-
-        else {
+        } else {
           this.customerService
-          .updateProductId(
-            this.currentCustomer.user_id,
-            this.selectedProduct!.product_id
-          )
-          .subscribe({
-            next: () => {
-              this.successMessage =
-                'Votre réservation a bien été prise en compte !';
-              setTimeout(() => {
-                this.router.navigate(['/restaurants']);
-                this.modalService.dismissAll();
-              }, 2000);
-            },
-            error: () => {
-              this.errorMessage =
-                'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
-            }
-          })
-        };
+            .updateProductId(
+              this.currentCustomer.user_id,
+              this.selectedProduct!.product_id
+            )
+            .subscribe({
+              next: () => {
+                this.successMessage =
+                  'Votre réservation a bien été prise en compte !';
+                setTimeout(() => {
+                  this.router.navigate(['/restaurants']);
+                  this.modalService.dismissAll();
+                }, 2000);
+              },
+              error: () => {
+                this.errorMessage =
+                  'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
+              }
+            });
+        }
       });
     }
   }
