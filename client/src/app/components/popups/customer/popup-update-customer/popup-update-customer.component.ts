@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Customer } from '../../../../interfaces/customer-interface';
 import { CustomerService } from '../../../../services/api/customer.service';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-popup-update-customer',
@@ -74,8 +74,8 @@ export class PopupUpdateCustomerComponent implements OnInit {
     ) {
       this.customerService
         .updateCustomer(this.updatedUser, this.currentCustomer)
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             this.successMessage =
               'Vos informations ont bien été mises à jour !';
             setTimeout(() => {
@@ -83,7 +83,7 @@ export class PopupUpdateCustomerComponent implements OnInit {
               this.modalService.dismissAll();
             }, 2000);
           },
-          (error) => {
+          error: (error) => {
             if (
               error.status === 400 &&
               error.error === 'Cet email existe déjà !'
@@ -105,7 +105,7 @@ export class PopupUpdateCustomerComponent implements OnInit {
                 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
             }
           }
-        );
+        });
     } else {
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }

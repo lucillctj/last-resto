@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { Customer } from 'src/app/interfaces/customer-interface';
+import { RestaurantOwner } from 'src/app/interfaces/restaurantOwner-interface';
 import { User } from '../../../interfaces/user-interface';
 import { UserService } from '../../../services/api/user.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-nav-bar-top',
@@ -10,7 +12,7 @@ import { UserService } from '../../../services/api/user.service';
   styleUrls: ['./nav-bar-top.component.scss']
 })
 export class NavBarTopComponent implements OnInit {
-  currentUser: any;
+  currentUser: User | Customer | RestaurantOwner | null;
 
   constructor(
     private router: Router,
@@ -31,13 +33,13 @@ export class NavBarTopComponent implements OnInit {
   }
 
   redirectToUserDashboard() {
-    if (this.currentUser.role === 'customer') {
+    if (this.currentUser!.role === 'customer') {
       this.router.navigate([
-        `/customers/dashboard/${this.currentUser.user_id}`
+        `/customers/dashboard/${this.currentUser!.user_id}`
       ]);
-    } else if (this.currentUser.role === 'restaurant owner') {
+    } else if (this.currentUser!.role === 'restaurant owner') {
       this.router.navigate([
-        `/restaurant-owners/dashboard/${this.currentUser.user_id}`
+        `/restaurant-owners/dashboard/${this.currentUser!.user_id}`
       ]);
     }
   }
@@ -49,13 +51,13 @@ export class NavBarTopComponent implements OnInit {
   logout() {
     this.authService.forgetUser();
     this.authService.setCurrentUser(null);
-    this.userService.logout().subscribe(
-      () => {
+    this.userService.logout().subscribe({
+      next: () => {
         this.router.navigate(['']);
       },
-      (error) => {
+      error: (error) => {
         console.log('error', error);
       }
-    );
+    });
   }
 }

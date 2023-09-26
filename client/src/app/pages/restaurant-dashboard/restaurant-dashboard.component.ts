@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { PopupUpdateRestaurantComponent } from '../../components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component';
-import { Restaurant } from '../../interfaces/restaurant-interface';
-import { RestaurantService } from '../../services/api/restaurant.service';
-import { PopupDeleteRestaurantComponent } from '../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component';
-import { ProductService } from '../../services/api/product.service';
-import { Product } from '../../interfaces/product-interface';
 import { PopupCreateProductComponent } from '../../components/popups/product/popup-create-product/popup-create-product.component';
-import { CustomerService } from '../../services/api/customer.service';
+import { PopupDeleteRestaurantComponent } from '../../components/popups/restaurant/popup-delete-restaurant/popup-delete-restaurant.component';
+import { PopupUpdateRestaurantComponent } from '../../components/popups/restaurant/popup-update-restaurant/popup-update-restaurant.component';
 import { Customer } from '../../interfaces/customer-interface';
-import { AuthService } from '../../services/auth.service';
+import { Product } from '../../interfaces/product-interface';
+import { Restaurant } from '../../interfaces/restaurant-interface';
+import { CustomerService } from '../../services/api/customer.service';
+import { ProductService } from '../../services/api/product.service';
 import { RestaurantOwnerService } from '../../services/api/restaurant-owner.service';
+import { RestaurantService } from '../../services/api/restaurant.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-restaurant-dashboard',
@@ -57,26 +57,28 @@ export class RestaurantDashboardComponent implements OnInit {
 
     this.restaurantOwnerService
       .getRestaurantOwnerDashboard(this.currentUserId)
-      .subscribe((data) => {
-        this.authService.setCurrentUser(data);
+      .subscribe({
+        next: (data) => {
+          this.authService.setCurrentUser(data);
+        }
       });
 
     if (currentRestaurantId) {
       this.restaurantService
         .getRestaurantDashboard(currentRestaurantId, this.currentUserId)
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: (data) => {
             this.currentRestaurant = data;
             this.isAvailable = data.is_available.data[0];
           },
-          (error) => {
+          error: (error) => {
             console.error(
               "Une erreur s'est produite lors de la récupération des données du restaurant.",
               error
             );
             this.router.navigate(['']);
           }
-        );
+        });
     } else {
       console.error("L'ID du restaurant n'est pas un nombre valide.");
       this.router.navigate(['']);
@@ -89,37 +91,37 @@ export class RestaurantDashboardComponent implements OnInit {
 
         if (this.currentProducts.length > 0) {
           this.currentProducts.forEach(async (product: Product) => {
-            await this.customerService
+            this.customerService
               .getUserIdByProductId(product, this.currentUserId)
-              .subscribe(
-                (results) => {
+              .subscribe({
+                next: (results) => {
                   this.usersIdsHasReserved = results;
                   this.usersIdsHasReserved.forEach(
                     (user: any) => {
                       this.customerService
                         .getDataCustomer(user.user_id, this.currentUserId)
-                        .subscribe(
-                          (result) => {
+                        .subscribe({
+                          next: (result) => {
                             this.userHasReserved = result;
                             this.productReserved = product;
                           },
-                          (error) => {
+                          error: (error) => {
                             console.error(error);
                           }
-                        );
+                        });
                     },
                     (error: Error) => {
                       console.error(error);
                     }
                   );
                 },
-                (error) => {
+                error: (error) => {
                   console.error(
                     "Une erreur s'est produite lors de la récupération des formules du restaurant.",
                     error
                   );
                 }
-              );
+              });
           });
         }
       });
@@ -141,19 +143,19 @@ export class RestaurantDashboardComponent implements OnInit {
   updateAvailability() {
     this.restaurantService
       .updateAvailability(this.currentRestaurant, this.isAvailable)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.successMessage =
             'La disponibilité du restaurant a bien été prise en compte !';
         },
-        (error) => {
+        error: (error) => {
           this.errorMessage = 'Une erreur est survenue !';
           console.error(
             "Une erreur s'est produite lors de la récupération des données du restaurant.",
             error
           );
         }
-      );
+      });
   }
 
   openPopupToCreateProduct() {
@@ -165,16 +167,16 @@ export class RestaurantDashboardComponent implements OnInit {
   deleteProduct(currentProduct: Product) {
     this.productService
       .deleteProduct(currentProduct, this.currentUserId)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.ngOnInit();
         },
-        (error) => {
+        error: (error) => {
           console.error(
             "Une erreur s'est produite lors de la suppression du produit.",
             error
           );
         }
-      );
+      });
   }
 }

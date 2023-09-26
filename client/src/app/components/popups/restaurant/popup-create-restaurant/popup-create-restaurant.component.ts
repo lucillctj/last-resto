@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { RestaurantOwner } from '../../../../interfaces/restaurantOwner-interface';
-import { RestaurantService } from '../../../../services/api/restaurant.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Restaurant } from '../../../../interfaces/restaurant-interface';
-import { AuthService } from '../../../../services/auth.service';
+import { RestaurantOwner } from '../../../../interfaces/restaurantOwner-interface';
+import { RestaurantService } from '../../../../services/api/restaurant.service';
 
 @Component({
   selector: 'app-popup-create-restaurant',
@@ -39,8 +38,8 @@ export class PopupCreateRestaurantComponent {
     }
 
     this.newRestaurant.user_id = this.currentUser.user_id;
-    this.restaurantService.createRestaurant(this.newRestaurant).subscribe(
-      () => {
+    this.restaurantService.createRestaurant(this.newRestaurant).subscribe({
+      next: () => {
         this.successMessage = 'Votre restaurant a bien été créé !';
         setTimeout(() => {
           location.reload();
@@ -48,11 +47,11 @@ export class PopupCreateRestaurantComponent {
           this.modalService.dismissAll();
         }, 2000);
       },
-      (_) => {
+      error: () => {
         this.errorMessage =
           'Erreur lors de la création du restaurant, veuillez réessayer ultérieurement.';
       }
-    );
+    });
   }
 
   closePopup() {

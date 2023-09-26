@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Restaurant } from '../../../../interfaces/restaurant-interface';
 import { RestaurantOwner } from '../../../../interfaces/restaurantOwner-interface';
 import { RestaurantOwnerService } from '../../../../services/api/restaurant-owner.service';
-import { Restaurant } from '../../../../interfaces/restaurant-interface';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../../../services/auth.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-popup-update-customer',
@@ -70,8 +70,8 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit {
     ) {
       this.restaurantOwnerService
         .updateRestaurantOwner(this.updatedUser, this.currentRestaurantOwner)
-        .subscribe(
-          () => {
+        .subscribe({
+          next: () => {
             this.successMessage =
               'Vos informations ont bien été mises à jour !';
             setTimeout(() => {
@@ -79,7 +79,7 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit {
               this.modalService.dismissAll();
             }, 2000);
           },
-          (error) => {
+          error: (error) => {
             if (
               error.status === 400 &&
               error.error === 'Cet email existe déjà !'
@@ -101,7 +101,7 @@ export class PopupUpdateRestaurantOwnerComponent implements OnInit {
                 'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
             }
           }
-        );
+        });
     } else {
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }

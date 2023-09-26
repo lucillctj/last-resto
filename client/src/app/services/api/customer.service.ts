@@ -14,7 +14,7 @@ export class CustomerService {
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8',
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Cache-Control': 'no-cache',
       'Accept-Language': 'fr-FR',
       'X-Requested-With': 'XMLHttpRequest',

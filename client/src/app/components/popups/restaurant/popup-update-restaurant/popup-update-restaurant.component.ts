@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Restaurant } from '../../../../interfaces/restaurant-interface';
 import { Router } from '@angular/router';
-import { RestaurantService } from '../../../../services/api/restaurant.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Restaurant } from '../../../../interfaces/restaurant-interface';
+import { RestaurantService } from '../../../../services/api/restaurant.service';
 
 @Component({
   selector: 'app-popup-update-restaurant',
@@ -53,19 +53,21 @@ export class PopupUpdateRestaurantComponent implements OnInit {
       this.updatedRestaurant.city &&
       this.updatedRestaurant.phone
     ) {
-      this.restaurantService.updateRestaurant(this.updatedRestaurant).subscribe(
-        () => {
-          this.successMessage = 'Votre restaurant a bien été mis à jour !';
-          setTimeout(() => {
-            location.reload();
-            this.modalService.dismissAll();
-          }, 2000);
-        },
-        (_) => {
-          this.errorMessage =
-            'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
-        }
-      );
+      this.restaurantService
+        .updateRestaurant(this.updatedRestaurant)
+        .subscribe({
+          next: () => {
+            this.successMessage = 'Votre restaurant a bien été mis à jour !';
+            setTimeout(() => {
+              location.reload();
+              this.modalService.dismissAll();
+            }, 2000);
+          },
+          error: () => {
+            this.errorMessage =
+              'Erreur lors de la mise à jour, veuillez rééssayer ultérieurement.';
+          }
+        });
     } else {
       this.errorMessage = 'Certains champs sont manquants ou incorrects.';
     }
