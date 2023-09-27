@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
 import { Customer } from '../../../../interfaces/customer-interface';
 import { Product } from '../../../../interfaces/product-interface';
 import { Restaurant } from '../../../../interfaces/restaurant-interface';
@@ -29,7 +28,6 @@ export class PopupDetailRestaurantComponent implements OnInit {
   currentCustomer: Customer;
   errorMessageNotAvailable!: string | null;
   isAvailable!: boolean;
-  private subscription: Subscription = new Subscription();
 
   constructor(
     private router: Router,
@@ -73,38 +71,42 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   clickToBook() {
     if (this.selectedProduct) {
-      this.authService.getCurrentUser().subscribe((currentUser) => {
-        this.currentCustomer = currentUser as Customer;
-        if (!this.currentCustomer) {
-          this.errorMessageNotLoggedIn =
-            'Vous devez être connecté pour pouvoir réserver !';
-          return;
-        } else if (this.currentCustomer.product_id) {
-          this.errorMessage =
-            'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
-          return;
-        } else {
-          this.customerService
-            .updateProductId(
-              this.currentCustomer.user_id,
-              this.selectedProduct!.product_id
-            )
-            .subscribe({
-              next: () => {
-                this.successMessage =
-                  'Votre réservation a bien été prise en compte !';
-                setTimeout(() => {
-                  this.router.navigate(['/restaurants']);
-                  this.modalService.dismissAll();
-                }, 2000);
-              },
-              error: () => {
-                this.errorMessage =
-                  'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
-              }
-            });
-        }
-      });
+      this.authService
+        .getCurrentUser()
+        .subscribe((currentUser) => {
+          this.currentCustomer = currentUser as Customer;
+          if (!this.currentCustomer) {
+            this.errorMessageNotLoggedIn =
+              'Vous devez être connecté pour pouvoir réserver !';
+            return;
+          } else if (this.currentCustomer.product_id) {
+            this.errorMessage =
+              'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
+            return;
+          } else {
+            this.customerService
+              .updateProductId(
+                this.currentCustomer.user_id,
+                this.selectedProduct!.product_id
+              )
+              .subscribe({
+                next: () => {
+                  this.successMessage =
+                    'Votre réservation a bien été prise en compte !';
+                  setTimeout(() => {
+                    this.router.navigate(['/restaurants']);
+                    this.modalService.dismissAll();
+                  }, 2000);
+                },
+                error: () => {
+                  this.errorMessage =
+                    'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
+                }
+              })
+              .unsubscribe();
+          }
+        })
+        .unsubscribe();
     }
   }
 
