@@ -50,7 +50,6 @@ export class CustomerDashboardComponent implements OnInit {
           this.authService.setCurrentUser(this.currentUser);
           this.customerService.getProductIdByUserId(currentUserId).subscribe({
             next: async (data) => {
-              console.log('dashboard:', data.product_id);
               this.currentProductId = data.product_id;
               if (!this.currentProductId) {
                 return;
