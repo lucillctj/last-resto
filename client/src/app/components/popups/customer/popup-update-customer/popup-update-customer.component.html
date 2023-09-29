@@ -27,6 +27,7 @@
   <div class="form-group">
     <label>Mot de passe</label>
     <input type="password" placeholder="**************" [(ngModel)]="newPassword" class="form-control" name="password" minlength="6">
+    <div *ngIf="updatedUser.password && updatedUser.password.length < 6" class="error-message error-message-password">Le mot de passe doit contenir au moins 6 caractères.</div>
   </div>
 
   <div class="form-group">
@@ -44,7 +45,7 @@
     <input type="text" [(ngModel)]="updatedUser.city" class="form-control" name="city">
   </div>
 
-  <button type="submit" class="btn" (click)="onSubmit()"> Mettre à jour ! </button>
+  <button type="submit" class="btn" (click)="onSubmit(form)"> Mettre à jour ! </button>
 </form>
 
 <div *ngIf="successMessage" class="success-message message">{{ successMessage }}</div>

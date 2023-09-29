@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Customer } from '../../../interfaces/customer-interface';
-import { RedirectToCreateAccountOrLoginComponent } from '../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component';
+import { RedirectToCreateAccountOrLoginComponent } from '../../popups/user/redirect-to-create-account-or-login/redirect-to-create-account-or-login.component';
 
 @Component({
   selector: 'app-nav-bar-customer',

@@ -12,7 +12,7 @@ margin-top: 6em;
 }
 
 .card-restaurant{
-  top: 5em;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
   background-color: white;
@@ -21,26 +21,36 @@ margin-top: 6em;
   padding: 1em;
 }
 
-.availability{
-  right: 2em;
+.availability {
   position: absolute;
+  margin: 0.5em;
+  top: 0;
+  right: 0;
   width: 1em;
   height: 1em;
   border-radius: 1em;
-
-  @media (min-width: 550px) {
-    right: 3.5em;
-  }
-  @media (min-width: 1100px) {
-    right: 4em;
-  }
-  @media (min-width: 1250px) {
-    right: 4.5em;
-  }
-  @media (min-width: 1400px) {
-    right: 5em;
-  }
 }
+
+//.availability{
+//  right: 2em;
+//  position: absolute;
+//  width: 1em;
+//  height: 1em;
+//  border-radius: 1em;
+//
+//  @media (min-width: 550px) {
+//    right: 3.5em;
+//  }
+//  @media (min-width: 1100px) {
+//    right: 4em;
+//  }
+//  @media (min-width: 1250px) {
+//    right: 4.5em;
+//  }
+//  @media (min-width: 1400px) {
+//    right: 5em;
+//  }
+//}
 
 .name{
   color: $blue;

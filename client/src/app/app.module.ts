@@ -31,8 +31,8 @@ import { RestaurantsListComponent } from './pages/restaurants-list/restaurants-l
 import { PopupDetailRestaurantComponent } from './components/popups/restaurant/popup-detail-restaurant/popup-detail-restaurant.component';
 import { PopupCreateProductComponent } from './components/popups/product/popup-create-product/popup-create-product.component';
 import { NavBarTopComponent } from './components/nav-bars/nav-bar-top/nav-bar-top.component';
-import { RedirectToCreateAccountOrLoginComponent } from './components/popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { RedirectToCreateAccountOrLoginComponent } from './components/popups/user/redirect-to-create-account-or-login/redirect-to-create-account-or-login.component';
 
 @NgModule({
   declarations: [

@@ -1,11 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../../../../services/auth.service';
+import { Product } from '../../../../interfaces/product-interface';
 import { Restaurant } from '../../../../interfaces/restaurant-interface';
 import { ProductService } from '../../../../services/api/product.service';
-import { Product } from '../../../../interfaces/product-interface';
 
 @Component({
   selector: 'app-popup-create-product',
@@ -26,8 +24,6 @@ export class PopupCreateProductComponent {
 
   constructor(
     private productService: ProductService,
-    private router: Router,
-    private authService: AuthService,
     private modalService: NgbModal
   ) {
     this.currentRestaurant = {} as Restaurant;

@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-redirect-to-create-account',
+  selector: 'app-redirect-to-create-account-or-login',
   templateUrl: './redirect-to-create-account-or-login.component.html',
   styleUrls: ['./redirect-to-create-account-or-login.component.scss']
 })

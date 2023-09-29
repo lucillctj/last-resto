@@ -9,11 +9,12 @@ export class AdminService {
   private apiUrl = `${environment.apiUrl}/admins`;
 
   constructor(private http: HttpClient) {}
+
   getAllAdmins(): Observable<Admin[]> {
     return this.http.get<Admin[]>(this.apiUrl);
   }
 
-  getAdminDashboard(userId: number): Observable<any> {
+  getAdminDashboard(userId: number): Observable<Admin | void> {
     const url = `${this.apiUrl}/dashboard/${userId}`;
     return this.http.get<any>(url);
   }

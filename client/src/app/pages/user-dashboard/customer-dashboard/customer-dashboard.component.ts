@@ -54,7 +54,7 @@ export class CustomerDashboardComponent implements OnInit {
               if (!this.currentProductId) {
                 return;
               }
-              await this.productService
+              this.productService
                 .getProductById(this.currentProductId!, currentUserId)
                 .subscribe({
                   next: (data) => {
@@ -120,60 +120,6 @@ export class CustomerDashboardComponent implements OnInit {
     }
   }
 
-  //     this.customerService.getCustomerDashboard(currentUserId)
-  //       .subscribe((data) => {
-  //           this.currentUser = data;
-  //           this.authService.setCurrentUser(this.currentUser);
-  //           this.customerService.getProductIdByUserId(currentUserId)
-  //             .subscribe(async (data) => {
-  //                 this.currentProductId = data.product_id;
-  //
-  //                 if (!this.currentProductId) {
-  //                   return;
-  //                 }
-  //
-  //                 await this.productService.getProductById(this.currentProductId!, currentUserId)
-  //                   .subscribe((data) => {
-  //                     this.currentProduct = data;
-  //                     this.productService.getRestaurantIdByProductId(this.currentProductId!, currentUserId)
-  //                       .subscribe((data) => {
-  //                           this.currentRestaurantId = data.restaurant_id;
-  //                           const currentUserId = parseInt(this.route.snapshot.paramMap.get("user")!);
-  //                           this.restaurantService.getRestaurantDashboard(this.currentRestaurantId!, currentUserId)
-  //                             .subscribe((data) => {
-  //                                 this.currentRestaurant = data;
-  //                               },
-  //                               (error) => {
-  //                                 console.error('Une erreur s\'est produite lors de la récupération des données des données du restaurant.', error);
-  //                               });
-  //                         },
-  //                         (error) => {
-  //                           console.error('Une erreur s\'est produite lors de la récupération de l\'identifiant du restaurant.', error);
-  //                         });
-  //                   })
-  //               },
-  //               (error) => {
-  //                 console.error('Une erreur s\'est produite lors de la récupération des données des produits.', error);
-  //               });
-  //         },
-  //         (error) => {
-  //           console.error('Une erreur s\'est produite lors de la récupération des données de l\'utilisateur.', error);
-  //           this.authService.forgetUser();
-  //           this.authService.setCurrentUser(null);
-  //           this.userService.logout()
-  //             .subscribe(() => {
-  //                 this.router.navigate(['']);
-  //               },
-  //               error => {
-  //                 console.log('error', error)
-  //               }
-  //             )
-  //         });
-  //   } else {
-  //     console.error('L\'ID du client n\'est pas un nombre valide.');
-  //   }
-  // }
-
   openPopupToUpdate() {
     const modalRef = this.modalService.open(PopupUpdateCustomerComponent);
     modalRef.componentInstance.currentUser = this.currentUser;
@@ -191,17 +137,17 @@ export class CustomerDashboardComponent implements OnInit {
   deleteReservation() {
     this.customerService
       .updateProductId(this.currentUser.user_id, null)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           // this.ngOnInit();
           location.reload();
         },
-        (error) => {
+        error: (error) => {
           console.error(
             "Une erreur s'est produite lors de la réservation.",
             error
           );
         }
-      );
+      });
   }
 }

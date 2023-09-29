@@ -24,17 +24,17 @@ export class RestaurantsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restaurantService.getAllRestaurants().subscribe(
-      (data) => {
+    this.restaurantService.getAllRestaurants().subscribe({
+      next: (data) => {
         this.currentRestaurants = data.results;
       },
-      (error) => {
+      error: (error) => {
         console.error(
           "Une erreur s'est produite lors de la récupération des données du restaurant :",
           error
         );
       }
-    );
+    });
   }
 
   openPopupDetailRestaurant(currentRestaurant: Restaurant) {

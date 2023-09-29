@@ -34,19 +34,4 @@ export class AuthService {
   forgetUser() {
     localStorage.removeItem('currentUser');
   }
-
-  // setCurrentRestaurant(restaurant: Restaurant) {
-  //   localStorage.setItem('currentRestaurant', JSON.stringify(restaurant));
-  // }
-
-  // getCurrentRestaurant(){
-  //   const restaurantString = localStorage.getItem('currentRestaurant');
-  //   return restaurantString ? JSON.parse(restaurantString) : null;  }
-
-  //To delete one item:
-
-  //this.storage.delete('user').subscribe(() => {});
-  //To delete all items:
-
-  //this.storage.clear().subscribe(() => {});
 }

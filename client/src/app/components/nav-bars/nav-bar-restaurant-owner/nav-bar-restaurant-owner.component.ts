@@ -6,7 +6,7 @@ import { PopupInformationComponent } from '../../popups/restaurant/popup-informa
 import { Restaurant } from '../../../interfaces/restaurant-interface';
 import { RestaurantOwner } from '../../../interfaces/restaurantOwner-interface';
 import { RestaurantService } from '../../../services/api/restaurant.service';
-import { RedirectToCreateAccountOrLoginComponent } from '../../popups/user/redirect-to-create-account/redirect-to-create-account-or-login.component';
+import { RedirectToCreateAccountOrLoginComponent } from '../../popups/user/redirect-to-create-account-or-login/redirect-to-create-account-or-login.component';
 
 @Component({
   selector: 'app-nav-bar-restaurant-owner',
@@ -49,8 +49,8 @@ export class NavBarRestaurantOwnerComponent implements OnInit {
     if (this.currentUserId) {
       this.restaurantService
         .getRestaurantByUserId(this.currentUserId)
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: (data) => {
             this.currentRestaurant = data[0];
             if (data.length === 0) {
               this.modalService.open(PopupInformationComponent);
@@ -59,13 +59,13 @@ export class NavBarRestaurantOwnerComponent implements OnInit {
               this.router.navigate([urlRestaurantDashboard]);
             }
           },
-          (error) => {
+          error: (error) => {
             console.error(
               "Une erreur s'est produite lors de la récupération des données du restaurant.",
               error
             );
           }
-        );
+        });
     } else {
       console.error("L'ID du restaurant n'est pas un nombre valide.");
     }

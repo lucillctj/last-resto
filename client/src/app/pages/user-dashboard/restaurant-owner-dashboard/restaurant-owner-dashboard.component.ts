@@ -43,44 +43,44 @@ export class RestaurantOwnerDashboardComponent implements OnInit {
     if (currentUserId) {
       this.restaurantOwnerService
         .getRestaurantOwnerDashboard(currentUserId)
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: (data) => {
             this.currentUser = data;
             this.authService.setCurrentUser(this.currentUser);
 
             this.restaurantService
               .getRestaurantByUserId(currentUserId)
-              .subscribe(
-                (data) => {
+              .subscribe({
+                next: (data) => {
                   if (data.length >= 1) {
                     this.currentRestaurant = data[0];
                   }
                 },
-                (error) => {
+                error: (error) => {
                   console.error(
                     "Une erreur s'est produite lors de la récupération des données du restaurant :",
                     error
                   );
                 }
-              );
+              });
           },
-          (error) => {
+          error: (error) => {
             console.error(
               "Une erreur s'est produite lors de la récupération des données de l'utilisateur.",
               error
             );
             this.authService.forgetUser();
             this.authService.setCurrentUser(null);
-            this.userService.logout().subscribe(
-              () => {
+            this.userService.logout().subscribe({
+              next: () => {
                 this.router.navigate(['']);
               },
-              (error) => {
+              error: (error) => {
                 console.log('error', error);
               }
-            );
+            });
           }
-        );
+        });
     } else {
       console.error("L'ID du client n'est pas un nombre valide.");
       this.router.navigate(['']);

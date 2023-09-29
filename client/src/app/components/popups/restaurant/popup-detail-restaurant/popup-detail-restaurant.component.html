@@ -23,8 +23,13 @@
       </section>
       <p *ngIf="currentProducts.length === 0">Ce restaurant ne propose aucune formule pour le moment.</p>
 
-    <button type="button" class="btn" [disabled]="!selectedProduct" (click)="clickToBook()">C'est parti !</button>
+    <button type="button" class="btn" [disabled]="!selectedProduct || !isAvailable" (click)="clickToBook()">C'est parti !</button>
+    <div *ngIf="errorMessageNotAvailable" class="error-message">{{ errorMessageNotAvailable }}</div>
       <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+      <div *ngIf="errorMessageNotLoggedIn">
+      <div class="error-message">{{ errorMessageNotLoggedIn }}</div>
+      <button type="button" class="btn btn-create-account" (click)="redirectToHomePage()">Créer un compte</button>
+      </div>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
     </div>

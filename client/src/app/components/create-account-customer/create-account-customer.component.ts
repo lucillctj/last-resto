@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { CustomerService } from '../../services/api/customer.service';
-import { Customer } from '../../interfaces/customer-interface';
 import { Router } from '@angular/router';
+import { Customer } from '../../interfaces/customer-interface';
+import { CustomerService } from '../../services/api/customer.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
