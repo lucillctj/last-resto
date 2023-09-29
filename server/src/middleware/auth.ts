@@ -42,7 +42,3 @@ export const setTokenCookie = (res: Response, token: string) => {
 export const clearTokenCookie = (res: Response) => {
   res.clearCookie('token').status(200);
 };
-
-// export function generateRefreshToken(userId: any) {
-//     return jwt.sign({userId}, process.env.REFRESH_TOKEN_SECRET!, {expiresIn: '60d'});
-// }

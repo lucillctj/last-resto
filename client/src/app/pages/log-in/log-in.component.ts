@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/api/user.service';
 import { User } from '../../interfaces/user-interface';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-log-in',
@@ -12,19 +11,18 @@ import { AuthService } from '../../services/auth.service';
 export class LogInComponent {
   user: User;
   errorMessage: string | null;
+
   constructor(
     private userService: UserService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {
     this.user = {} as User;
     this.errorMessage = null;
   }
 
-  loginToAccount(user: User) {
-    this.userService.login(user).subscribe({
+  loginToAccount(email: string, password: string) {
+    this.userService.login(email, password).subscribe({
       next: (res) => {
-        this.authService.setCurrentUser(user);
         if (res.userRole === 'customer') {
           this.router.navigate([`/customers/dashboard/${res.userId}`]);
         } else if (res.userRole === 'restaurant owner') {
