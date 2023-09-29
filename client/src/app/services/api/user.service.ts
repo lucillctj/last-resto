@@ -27,9 +27,12 @@ export class UserService {
     this.requestOptions = { withCredentials: true, headers: this.headers };
   }
 
-  login(email: string, password: string): Observable<{message: string, userId: number, userRole: string}> {
+  login(
+    email: string,
+    password: string
+  ): Observable<{ message: string; userId: number; userRole: string }> {
     const url = `${this.apiUrl}/login`;
-    return this.http.post<any>(url, {email, password}, this.requestOptions);
+    return this.http.post<any>(url, { email, password }, this.requestOptions);
   }
 
   logout(): Observable<void> {

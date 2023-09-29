@@ -28,6 +28,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
   currentCustomer: Customer;
   errorMessageNotAvailable!: string | null;
   isAvailable!: boolean;
+  currentUserId: number | undefined;
 
   constructor(
     private router: Router,
@@ -47,7 +48,10 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   ngOnInit() {
     const currentRestaurantId = this.currentRestaurant.restaurant_id;
-    const currentUserId = parseInt(this.route.snapshot.paramMap.get('user')!);
+    this.authService.getCurrentUser().subscribe((user) => {
+      this.currentUserId = user!.user_id;
+    });
+    console.log(this.currentUserId);
     this.isAvailable = this.currentRestaurant.is_available.data[0];
     if (!this.isAvailable) {
       this.errorMessageNotAvailable =
@@ -55,7 +59,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
     }
 
     this.productService
-      .getProductsByRestaurantId(currentRestaurantId!, currentUserId)
+      .getProductsByRestaurantId(currentRestaurantId!, this.currentUserId!)
       .subscribe({
         next: (data) => {
           this.currentProducts = data;
@@ -74,36 +78,41 @@ export class PopupDetailRestaurantComponent implements OnInit {
       this.authService
         .getCurrentUser()
         .subscribe((currentUser) => {
-          this.currentCustomer = currentUser as Customer;
-          if (!this.currentCustomer) {
-            this.errorMessageNotLoggedIn =
-              'Vous devez être connecté pour pouvoir réserver !';
-            return;
-          } else if (this.currentCustomer.product_id) {
+          if (currentUser!.role === 'restaurant owner') {
             this.errorMessage =
-              'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
+              'Vous devez avoir un compte client pour pouvoir réserver.';
             return;
           } else {
-            this.customerService
-              .updateProductId(
-                this.currentCustomer.user_id,
-                this.selectedProduct!.product_id
-              )
-              .subscribe({
-                next: () => {
-                  this.successMessage =
-                    'Votre réservation a bien été prise en compte !';
-                  setTimeout(() => {
-                    this.router.navigate(['/restaurants']);
-                    this.modalService.dismissAll();
-                  }, 2000);
-                },
-                error: () => {
-                  this.errorMessage =
-                    'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
-                }
-              })
-              .unsubscribe();
+            this.currentCustomer = currentUser as Customer;
+            if (!this.currentCustomer) {
+              this.errorMessageNotLoggedIn =
+                'Vous devez être connecté pour pouvoir réserver !';
+              return;
+            } else if (this.currentCustomer.product_id) {
+              this.errorMessage =
+                'Vous avez déjà une réservation en cours, supprimez-la si vous souhaitez en effectuer une nouvelle.';
+              return;
+            } else {
+              this.customerService
+                .updateProductId(
+                  this.currentCustomer.user_id,
+                  this.selectedProduct!.product_id
+                )
+                .subscribe({
+                  next: () => {
+                    this.successMessage =
+                      'Votre réservation a bien été prise en compte !';
+                    setTimeout(() => {
+                      this.router.navigate(['/restaurants']);
+                      this.modalService.dismissAll();
+                    }, 2000);
+                  },
+                  error: () => {
+                    this.errorMessage =
+                      'Une erreur est survenue lors de votre réservation, veuillez réessayer.';
+                  }
+                });
+            }
           }
         })
         .unsubscribe();
