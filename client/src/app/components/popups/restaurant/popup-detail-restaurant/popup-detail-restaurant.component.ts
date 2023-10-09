@@ -48,10 +48,6 @@ export class PopupDetailRestaurantComponent implements OnInit {
 
   ngOnInit() {
     const currentRestaurantId = this.currentRestaurant.restaurant_id;
-    this.authService.getCurrentUser().subscribe((user) => {
-      this.currentUserId = user!.user_id;
-    });
-    console.log(this.currentUserId);
     this.isAvailable = this.currentRestaurant.is_available.data[0];
     if (!this.isAvailable) {
       this.errorMessageNotAvailable =
@@ -59,7 +55,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
     }
 
     this.productService
-      .getProductsByRestaurantId(currentRestaurantId!, this.currentUserId!)
+      .getProductsByRestaurantId(currentRestaurantId!)
       .subscribe({
         next: (data) => {
           this.currentProducts = data;
@@ -78,7 +74,7 @@ export class PopupDetailRestaurantComponent implements OnInit {
       this.authService
         .getCurrentUser()
         .subscribe((currentUser) => {
-          if (currentUser!.role === 'restaurant owner') {
+          if (currentUser && currentUser.role === 'restaurant owner') {
             this.errorMessage =
               'Vous devez avoir un compte client pour pouvoir réserver.';
             return;

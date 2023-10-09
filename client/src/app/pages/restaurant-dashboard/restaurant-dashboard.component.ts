@@ -85,7 +85,7 @@ export class RestaurantDashboardComponent implements OnInit {
     }
 
     this.productService
-      .getProductsByRestaurantId(currentRestaurantId, this.currentUserId)
+      .getProductsByRestaurantId(currentRestaurantId)
       .subscribe((data) => {
         this.currentProducts = data;
 

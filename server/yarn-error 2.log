@@ -43,7 +43,7 @@ npm manifest:
       "prettier": "npx prettier --config .prettierrc 'src/**/*.ts' --write"
     },
     "dependencies": {
-      "@tsconfig/node18": "^18.1.1",
+      "@tsconfig/node17": "^17.1.1",
       "@types/cookie-parser": "^1.4.3",
       "@types/cors": "^2.8.13",
       "bcryptjs": "^2.4.3",
@@ -135,7 +135,12 @@ Lockfile:
       open "^9.1.0"
       picocolors "^1.0.0"
       tslib "^2.6.0"
-
+  
+  "@tsconfig/node17@^17.1.1":
+    version "17.1.1"
+    resolved "https://registry.yarnpkg.com/@tsconfig/node17/-/node17-17.1.1.tgz#e5682a7f19e17d32bfcc01b98e475908558640b3"
+    integrity sha512-2Momj8YxRye4wCXIqp0EouepR3TK8PmI7MRt9u+9zDqZ0y4B31qGvY00arIbbk4E4aKp9vQRa3rvWtNTKz9/4g==
+  
   "@types/bcryptjs@^2.4.2":
     version "2.4.2"
     resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.2.tgz#e3530eac9dd136bfdfb0e43df2c4c5ce1f77dfae"

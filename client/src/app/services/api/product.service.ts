@@ -33,11 +33,8 @@ export class ProductService {
     return this.http.post<any>(url, product, this.requestOptions);
   }
 
-  getProductsByRestaurantId(
-    restaurantId: number,
-    userId: number
-  ): Observable<Product[]> {
-    const url = `${this.apiUrl}/restaurant/${restaurantId}/user/${userId}`;
+  getProductsByRestaurantId(restaurantId: number): Observable<Product[]> {
+    const url = `${this.apiUrl}/restaurant/${restaurantId}`;
     return this.http.get<Product[]>(url, this.requestOptions);
   }
 
