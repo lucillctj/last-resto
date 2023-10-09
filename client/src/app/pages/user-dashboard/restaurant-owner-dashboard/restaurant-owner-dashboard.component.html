@@ -1,7 +1,7 @@
 <body>
 <h1 class="page-title">Mon profil restaurateur</h1>
 
-<div class="card col-lg-9 col-10" *ngIf="currentUser.user_id">
+<div *ngIf="currentUser.user_id" class="card col-lg-9 col-10">
 
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -9,21 +9,25 @@
       <p class="email">{{ currentUser.email }}</p>
       <p class="phone">{{ currentUser.phone }}</p>
       <div class="bloc-buttons">
-        <button class="btn-dashboard btn-update" type="button" (click)="openPopupToUpdate()">Modifier mes informations</button>
-        <button class="btn-dashboard btn-delete" type="button" (click)="openPopupToDelete()">Supprimer mon compte</button>
+        <button (click)="openPopupToUpdate()" class="btn-dashboard btn-update" type="button">Modifier mes informations
+        </button>
+        <button (click)="openPopupToDelete()" class="btn-dashboard btn-delete" type="button">Supprimer mon compte
+        </button>
       </div>
     </div>
 
     <div class="col-lg-6 col-md-6 col-sm-6">
       <h3>Mon restaurant</h3>
       <section *ngIf="currentRestaurant.restaurant_id" class="restaurants-list-section">
-        <div class="card-restaurant" (click)="showRestaurantPage(currentRestaurant.restaurant_id)">
+        <div (click)="showRestaurantPage(currentRestaurant.restaurant_id)" class="card-restaurant" type="button">
           <div class="icons">
             <div class="restaurant-name">{{ currentRestaurant.name}}</div>
           </div>
         </div>
       </section>
-      <button *ngIf="!currentRestaurant.restaurant_id" class="btn-dashboard btn-create-restaurant" type="button" (click)="openPopupToCreateRestaurant()">+ créer un restaurant</button>
+      <button (click)="openPopupToCreateRestaurant()" *ngIf="!currentRestaurant.restaurant_id" class="btn-dashboard btn-create-restaurant"
+              type="button">+ créer un restaurant
+      </button>
 
     </div>
 

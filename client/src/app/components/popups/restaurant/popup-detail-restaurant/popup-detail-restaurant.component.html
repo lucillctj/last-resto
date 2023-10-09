@@ -1,38 +1,42 @@
 <div class="detail-section">
-  <button class="close-button" (click)="closePopup()">&times;</button>
+  <button (click)="closePopup()" class="close-button">&times;</button>
 
   <h1 class="title">Réserver</h1>
 
-<div class="card-restaurant" *ngIf="currentRestaurant">
+  <div *ngIf="currentRestaurant" class="card-restaurant">
 
-  <div class="row">
-    <div class="col-lg-6 col-md-3 col-sm-6">
-      <p class="name">{{currentRestaurant.name}}</p>
-      <p class="description">{{currentRestaurant.description}}</p>
-      <p class="address">{{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
-      <p class="phone">{{currentRestaurant.phone}}</p>
-    </div>
-
-    <div class="col-lg-6 col-md-3 col-sm-6">
-      <section class="product-selection">
-        <p>Sélection :</p>
-        <select class="form-select" [(ngModel)]="selectedProduct">
-          <option disabled selected>Sélectionner une formule</option>
-          <option *ngFor="let product of currentProducts" [ngValue]="product">{{product.name}} | {{product.description}} | {{product.price}} €</option>
-        </select>
-      </section>
-      <p *ngIf="currentProducts.length === 0">Ce restaurant ne propose aucune formule pour le moment.</p>
-
-    <button type="button" class="btn" [disabled]="!selectedProduct || !isAvailable" (click)="clickToBook()">C'est parti !</button>
-    <div *ngIf="errorMessageNotAvailable" class="error-message">{{ errorMessageNotAvailable }}</div>
-      <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-      <div *ngIf="errorMessageNotLoggedIn">
-      <div class="error-message">{{ errorMessageNotLoggedIn }}</div>
-      <button type="button" class="btn btn-create-account" (click)="redirectToHomePage()">Créer un compte</button>
+    <div class="row">
+      <div class="col-lg-6 col-sm-6">
+        <p class="name">{{currentRestaurant.name}}</p>
+        <p class="description">{{currentRestaurant.description}}</p>
+        <p class="address">{{currentRestaurant.address}} {{currentRestaurant.post_code}} {{currentRestaurant.city}}</p>
+        <p class="phone">{{currentRestaurant.phone}}</p>
       </div>
-      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
+      <div class="col-lg-6 col-sm-6">
+        <section class="product-selection">
+          <p>Sélection :</p>
+          <select [(ngModel)]="selectedProduct" class="form-select">
+            <option disabled selected>Sélectionner une formule</option>
+            <option *ngFor="let product of currentProducts" [ngValue]="product">{{product.name}}
+              | {{product.description}} | {{product.price}} €
+            </option>
+          </select>
+        </section>
+        <p *ngIf="currentProducts.length === 0">Ce restaurant ne propose aucune formule pour le moment.</p>
+
+        <button (click)="clickToBook()" [disabled]="!selectedProduct || !isAvailable" class="btn" type="button">C'est
+          parti !
+        </button>
+        <div *ngIf="errorMessageNotAvailable" class="error-message">{{ errorMessageNotAvailable }}</div>
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+        <div *ngIf="errorMessageNotLoggedIn">
+          <div class="error-message">{{ errorMessageNotLoggedIn }}</div>
+          <button (click)="redirectToHomePage()" class="btn btn-create-account" type="button">Créer un compte</button>
+        </div>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      </div>
     </div>
   </div>
-</div>
 </div>

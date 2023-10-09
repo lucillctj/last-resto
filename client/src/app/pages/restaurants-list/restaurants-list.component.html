@@ -1,12 +1,15 @@
 <body>
 <h1 class="page-title">Les restaurants</h1>
 <div class="restaurants-list">
-<div class="card-restaurant col-11 col-md-7 col-lg-5" *ngFor="let restaurant of currentRestaurants; let i = index" (click)="openPopupDetailRestaurant(restaurant)" [class.last-card]="i === currentRestaurants.length - 1">
-  <div class="availability" [ngStyle]="{'background-color': restaurant.is_available.data[0] === 1 ? 'green' : 'red'}"></div>
-  <p class="name">{{ restaurant.name }}</p>
-  <p class="city">{{ restaurant.city }}</p>
-  <p class="description">{{ restaurant.description }}</p>
-</div>
+  <div (click)="openPopupDetailRestaurant(restaurant)" *ngFor="let restaurant of currentRestaurants; let i = index"
+       [class.last-card]="i === currentRestaurants.length - 1" class="card-restaurant col-11 col-md-7 col-lg-5"
+       type="button">
+    <div [ngStyle]="{'background-color': restaurant.is_available.data[0] === 1 ? 'green' : 'red'}"
+         class="availability"></div>
+    <p class="name">{{ restaurant.name }}</p>
+    <p class="city">{{ restaurant.city }}</p>
+    <p class="description">{{ restaurant.description }}</p>
+  </div>
 </div>
 
 <div class="nav-bar">

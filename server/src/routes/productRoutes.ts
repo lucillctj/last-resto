@@ -11,10 +11,7 @@ export const productRoutes = () => {
     ProductController.createProduct
   );
   // router.get('/', ProductController.getAllProducts);
-  router.get(
-    '/restaurant/:id/user/:user',
-    ProductController.getProductsByRestaurantId
-  );
+  router.get('/restaurant/:id', ProductController.getProductsByRestaurantId);
   router.get(
     '/:id/restaurant/user/:user',
     verifyAuth,
